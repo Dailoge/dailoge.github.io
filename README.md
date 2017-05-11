@@ -1,2 +1,2 @@
-# dailoge.github.com
+# dailoge.github.io
 个人网站
