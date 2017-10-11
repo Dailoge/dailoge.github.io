@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="style/site.css" rel="stylesheet">
-    <title>bootstrap之个人简历</title>
+    <title>Dailoge的个人简历</title>
 </head>
 <body class="container" data-spy="scroll" data-target=".navbar">
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
-        <!-- 屏幕小到一定的尺寸时候导航栏发生的变化 -->
         <div class="navbar-header">
             <a class="navbar-brand" href="index.html">
                 <span class="glyphicon glyphicon-home"></span>
             </a>
+             <!-- 屏幕大于768px时,button隐藏 -->
             <button class="navbar-toggle collapsed" data-target="#navigation-list" data-toggle="collapse" type="button">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -43,7 +43,7 @@
         <h2 class="lead hidden-xs" id="info">基本信息</h2>
         <div class="col-sm-4">
             <blockquote>
-                <h3>RemmDerk</h3>
+                <h3>Dailoge</h3>
                 <footer>Web前端工程师</footer>
             </blockquote>
             <div class="row text-center">
@@ -64,30 +64,30 @@
                 <p><kbd>3</kbd>个大型网站开发项目</p>
                 <p>熟练掌握<kbd>6</kbd>门相关技术,团队合作与学习能力强</p>
                 <div class="text-right">
-                    <botton class="btn btn-primary">
-                        了解更多<span class="glyphicon glyphicon-search"></span>
-                    </botton>
+                    <a class="btn btn-primary" href="http://blog.csdn.net/dailoge" target="_blank">
+                        了解更多
+                    </a>
                 </div>
             </div>
             <div class="table-responsive text-center">
                  <table class="table table-bordered table-striped table-condensed table-hover">
                      <tr class="success">
                          <td>姓名</td>
-                         <td>Derek</td>
+                         <td>董人健</td>
                          <td>年龄</td>
-                         <td>23</td>
+                         <td>21</td>
                      </tr>
                      <tr>
                          <td>学历</td>
-                         <td>硕士</td>
+                         <td>本科</td>
                          <td>专业</td>
-                         <td>电子信息技术</td>
+                         <td>信息安全</td>
                      </tr>
                      <tr>
                          <td>手机</td>
-                         <td>13111012345</td>
+                         <td>18852857200</td>
                          <td>邮箱</td>
-                         <td>admin@qq.com</td>
+                         <td>1291804627@qq.com</td>
                      </tr>
                  </table>
             </div>
@@ -171,7 +171,7 @@
     <!--项目展示-->
     <div class="row content">
         <h3 class="lead" id="project">项目展示</h3>
-        <div class="col-sm-8">
+        <div class="col-md-12">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -215,45 +215,26 @@
                 </a>
             </div>
         </div>
-        <div class="col-sm-4">视频</div>
     </div>
     <!--请联系我-->
     <div class="row content">
         <h3 class="lead" id="contact">请联系我</h3>
         <div class="panel panel-default">
             <div class="panel-heading">如果你对我感兴趣的话</div>
-            <div class="panel-body">
-                <form method="post" action="#">
-                    <div class="form-group has-feedback has-success">
-                        <label class="control-label" for="email">Email</label>
-                        <input type="email" class="form-control" id="email">
-                        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    </div>
-                    <div class="form-group has-feedback has-warning">
-                        <label class="control-label" for="username">UserName</label>
-                        <input type="email" class="form-control" id="username">
-                        <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-                    </div>
-                    <div class="form-group has-feedback has-error">
-                        <label class="control-label" for="content">Content</label>
-                        <div class="input-group">
-                            <label class="input-group-addon">@</label>
-                            <input type="email" class="form-control" id="content">
-                        </div>
-                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                    </div>
-                    <div class="btn-group pull-right">
-                        <button type="submit" class="btn btn-success">请联系我</button>
-                        <button type="reset" class="btn btn-danger">Reset</button>
-                    </div>
-                    <div class="clearfix"></div>
-                </form>
+            <div class="panel-footer" style="border-top: 0px;">
+				 <div class="row">
+					<div class="col-md-3">
+						<p class="text-center text-primary" style="margin-bottom:0px;font-size: 18px;font-weight: bold;">联系电话 : 18852857200</p>
+					</div>
+					<div class="col-md-4">
+						<p class="text-center text-success" style="margin-bottom:0px;font-size: 18px;font-weight: bold;">电子邮箱 : 1291804627@qq.com</p>
+					</div>
+                </div>
             </div>
-            <div class="panel-footer"></div>
         </div>
     </div>
 </div>
-<footer class="text-center">All Images and Contents &copy; 2017</footer>
+<footer class="text-center" style="height: 30px;">All Images and Contents &copy; 2017</footer>
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>
