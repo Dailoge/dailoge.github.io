@@ -1,4 +1,4 @@
-h2{
+header h2{
     margin-top:70px;
 }
 header,footer,nav,div,section,aside,article{
@@ -10,4 +10,8 @@ a.a:hover{
 }
 .divContent{
     min-height:350px;
+}
+abbr[title]{
+	border-bottom: 0px !important;
+	cursor:pointer;
 }
