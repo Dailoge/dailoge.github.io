@@ -215,7 +215,7 @@ window.requestAnimationFrame = (function(){
 })();//本打算用requestAnimationFrame实现动画的
 $(function(){
 	window.duration;
-	audioDom.pause();
+	//audioDom.pause();
 	audioDom.volume = 0.2;
 	var lrc = [];
 	$.get('./ColorBlind.lrc',{},function(result){
@@ -233,9 +233,9 @@ $(function(){
 	},'text');
 	//判断播放暂停按钮的样式
 	if(audioDom.pause == true){
-		$('.controls').removeClass('fa-play').addClass('fa-pause');
-	}else{
 		$('.controls').removeClass('fa-pause').addClass('fa-play');
+	}else{
+		$('.controls').removeClass('fa-play').addClass('fa-pause');
 	}
 	//根据音量改变音量按钮样式
 	var volume = audioDom.volume;
@@ -275,7 +275,7 @@ $(function(){
 		$('.volume .progress').css('width',rate + '%');
 		
 	});
-	//main = setInterval(mainMethod,1000);//100ms改变一次
+	main = setInterval(mainMethod,1000);//100ms改变一次
 	//播放进度点击
 	$('.currentTime').click(function(e){
 		var width = e.pageX - $(this).offset().left;
