@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>audio dom对象</title>
+	<meta charset="utf-8">
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<style type="text/css">
+*{
+	margin: 0px;
+	padding: 0px;
+	outline: none;
+}
+body{
+	margin: 0px;
+	font-size: 14px;
+}
+li,ol,ul{
+	list-style: none;
+}
+#myAudio{
+	width: 500px;
+	margin:0 auto;
+	margin-top: 20px;
+}
+.time{
+	height: 60px;
+	display: table-cell;
+	vertical-align: middle;
+}
+.numberTime{
+	float: left;
+	margin-top: 24px;
+	margin-right: 25px;
+}
+.currentTime{
+	cursor: pointer;
+	float: left;
+	width: 200px;
+	height: 5px;
+	background: #ccc;
+	border-radius: 2px;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	position: relative;
+}
+.currentTime .buffer{
+	position: absolute;
+	height: 100%;
+	width: 0%;
+	background: #888;
+	border-radius: 2px;
+	z-index: 1;
+}
+.currentTime .progress{
+	position: absolute;
+	height: 100%;
+	width: 0%;
+	background: #ca1928;
+	border-radius: 2px;
+	position: relative;
+	z-index: 2;
+}
+.currentTime .progress::after{
+	content:'';
+	display: block;
+	position: absolute;
+	top: -5px;
+	right: -8px;
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	background: #ca1928;
+}
+.volumeIcon{
+	float: left;
+	margin-left: 30px;
+}
+.volumeIcon button{
+	border: none;
+	background: transparent;
+	font-size: 24px;
+	display: inline-block;
+	margin-top: 20px;
+	width: 30px;
+}
+.volume{
+	float: left;
+	margin-left: 15px;
+	margin-top: 30px;
+	width: 80px;
+	height: 5px;
+	background: #dadada;
+	position: relative;
+	cursor: pointer;
+}
+.volume .progress{
+	position: absolute;
+	height: 100%;
+	width: 0%;
+	background: #ca1928;
+	border-radius: 2px;
+	position: relative;
+	z-index: 2;
+}
+.volume .progress::after{
+	content:'';
+	display: block;
+	position: absolute;
+	top: -5px;
+	right: -8px;
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	background: #ca1928;
+}
+
+.controls{
+	border: none;
+	background: #000;
+	color: #fff;
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	border: 3px solid #fff;
+	text-align: center;
+	line-height: 40px;
+	position: relative;
+}
+.control{
+	clear: both;
+	background: #ccc;
+	padding: 20px;
+}
+.fa-play:before{
+	position: absolute;
+	display: block;
+	top: 3px;
+	left: 18px;
+}
+.lrc{
+	width: 500px;
+	height: 300px;
+	background: #ccc;
+	overflow: hidden;
+	padding-left: 50px;
+	padding-top: 30px;
+	box-sizing: border-box;
+	background: url('./timg.jpg');
+}
+.lrc .marginTop{
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+}
+.lrc ul{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.lrc ul li{
+	line-height: 30px;
+	float: left;
+	clear:both;
+	position: relative;
+}
+.lrc ul li div{
+	color: #fff;
+}
+.lrc ul li p{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	color: yellow;
+	width: 0%;
+	overflow:hidden;
+	white-space: nowrap;
+}
+</style>
+</head>
+<body>
+<audio id="audio-dom" autoplay >
+	<source src="./ColorBlind.mp3"></source>
+	你的浏览器不支持html5
+</audio>
+<div id="myAudio">
+	<div class="lrc"><div class="marginTop"><ul></ul></div></div>
+	<div class="time">
+		<div class="numberTime"><span>0:00</span> / <span>0:00</span></div>
+		<div class="currentTime">
+			<div class="buffer"></div>
+			<div class="progress"></div>
+		</div>
+		<div class="volumeIcon">
+			<button class="fa fa-volume-up"></button>
+		</div>
+		<div class="volume">
+			<div class="progress"></div>
+		</div>
+	</div>
+	<div class="control">
+		<button class="fa fa-play fa-lg controls" onclick="controls()"></button>
+	</div>
+</div>
+<script type="text/javascript">
+var audioDom = $('#audio-dom')[0];
+var main = 0, j = 0;//mian为计时器的id,j为当前播放到歌词的索引
+window.requestAnimationFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();//本打算用requestAnimationFrame实现动画的
+$(function(){
+	window.duration;
+	audioDom.pause();
+	audioDom.volume = 0.0;
+	var lrc = [];
+	$.get('./ColorBlind.lrc',{},function(result){
+		lrc = result.split("\n");
+		lrc.pop();
+		lrc.forEach(function(value,index){
+			var timeArray = value.slice(0,11).split(':');
+			var second = Number(timeArray[0].slice(1))*60 + Number(timeArray[1].slice(0,-1));
+			second = parseFloat(second.toFixed(2));
+			var lrcItem = value.slice(11);
+			var li = $('<li/>').html('<div>'+lrcItem+'</div><p>'+lrcItem+'</p>').attr('time',second);
+			$('.lrc ul').append(li);
+		});
+		window.lrcItemAll = $('.lrc ul li');
+	},'text');
+	//判断播放暂停按钮的样式
+	if(audioDom.pause == true){
+		$('.controls').removeClass('fa-play').addClass('fa-pause');
+	}else{
+		$('.controls').removeClass('fa-pause').addClass('fa-play');
+	}
+	//根据音量改变音量按钮样式
+	var volume = audioDom.volume;
+	window.volume = audioDom.volume;
+	if(volume == 0){
+		$('.volumeIcon button').removeClass().addClass('fa fa-volume-off');
+	}else if(volume < 0.5){
+		$('.volumeIcon button').removeClass().addClass('fa fa-volume-down');
+	}else{
+		$('.volumeIcon button').removeClass().addClass('fa fa-volume-up');
+	}
+	//总时间发生改变时,duration默认值是NaN
+	audioDom.addEventListener('durationchange',function(){
+		window.duration = audioDom.duration;
+		console.log('获取到总时间:' + duration);
+		var mintues = parseInt(duration/60);
+		var seconds = parseInt(duration % 60);
+		seconds = seconds.toString().length == 2 ? seconds : '0' + seconds;
+		$('.time .numberTime span').eq(1).text(mintues + ':' + seconds);
+		var timeRanges = audioDom.buffered;
+		var timeBuffered = timeRanges.end(timeRanges.length - 1);
+		var bufferRate = Math.round(timeBuffered / duration * 100);
+		$('.buffer').css({width:bufferRate + '%'});
+	});
+	if(!isNaN(audioDom.duration)){
+		window.duration = audioDom.duration;
+		console.log('获取到总时间:' + duration);
+		var mintues = parseInt(duration/60);
+		var seconds = parseInt(duration % 60);
+		seconds = seconds.toString().length == 2 ? seconds : '0' + seconds;
+		$('.time .numberTime span').eq(1).text(mintues + ':' + seconds);
+	}
+	//音量发生改变时
+	audioDom.addEventListener('volumechange',function(e){
+		var volume = audioDom.volume;
+		var rate = volume * 100;
+		$('.volume .progress').css('width',rate + '%');
+		
+	});
+	//main = setInterval(mainMethod,1000);//100ms改变一次
+	//播放进度点击
+	$('.currentTime').click(function(e){
+		var width = e.pageX - $(this).offset().left;
+		var per = width / $(this).width();
+		var currentTime = per * duration;
+		audioDom.currentTime = currentTime;
+		var rate = Math.round(per * 100);
+		$(".currentTime .progress").css({width:rate+'%'});
+		lrcItemAll.each(function(index,value){
+				if(Math.abs($(value).attr('time') - currentTime) <= 0.5){
+					if(index > 3 && index < length ){
+						var top = -(index- 3) * 30;
+						$('.lrc ul').animate({
+							top:top
+						},1000,'linear');
+					}
+					j = $(value).index();
+				}else{
+
+				}
+			});
+	});
+	//音量进度点击
+	$('.volume').click(function(e){
+		var width = e.pageX - $(this).offset().left;
+		var per = parseFloat((width / $(this).width()).toFixed(2));
+		console.log(per);
+		if(per == 0){
+			$('.volumeIcon button').removeClass().addClass('fa fa-volume-off');
+		}else if(per < 0.5){
+			$('.volumeIcon button').removeClass().addClass('fa fa-volume-down');
+		}else{
+			$('.volumeIcon button').removeClass().addClass('fa fa-volume-up');
+		}
+		var volume = width / $(this).width();
+		audioDom.volume = volume;
+		window.volume = audioDom.volume;//保存一份
+		var rate = Math.round(volume * 100);
+		$(".volume .progress").css({width:rate+'%'});
+	});
+	//音量按钮点击
+	$('.volumeIcon button').click(function(){
+		var volume = audioDom.volume;
+		if(volume != 0){
+			window.volume = audioDom.volume;
+			audioDom.volume = 0;
+			$(this).removeClass().addClass('fa fa-volume-off');
+		}else{
+			audioDom.volume = window.volume;
+			if(audioDom.volume < 0.5){
+				$(this).removeClass().addClass('fa fa-volume-down');
+			}else{
+				$(this).removeClass().addClass('fa fa-volume-up');
+			}
+		}
+	}); 
+});
+function mainMethod(){
+	console.log('mainMethod进行中');
+	if(typeof duration != "undefined"){
+		//缓存的进度条
+		var timeRanges = audioDom.buffered;
+		var timeBuffered = timeRanges.end(timeRanges.length - 1);
+		var bufferRate = Math.round(timeBuffered / duration * 100);
+		$('.buffer').css({width:bufferRate + '%'});
+		//检测是否播放结束
+		if(audioDom.currentTime.toFixed(2) == duration.toFixed(2)){
+			$('.controls').removeClass('fa-pause').addClass('fa-play');
+			audioDom.currentTime = 0;
+			$(".currentTime .progress").css({width:0+'%'});
+			$('.lrc ul').animate({
+				top:'0'
+			},1000,'linear');
+			j = 0;
+		}
+		//当前播放的进度条
+		var currentTime = parseFloat(audioDom.currentTime.toFixed(2));
+		var mintues = parseInt(currentTime / 60);
+		var seconds = parseInt(currentTime % 60);
+		seconds = seconds.toString().length == 2 ? seconds : '0' + seconds;
+		$('.time .numberTime span').eq(0).text(mintues + ':' + seconds);
+		//歌词滚动
+		if(typeof lrcItemAll != "undefined"){
+			//console.log(lrcItemAll);
+			var length = lrcItemAll.length;
+			lrcItemAll.each(function(index,value){
+				if(index > j){
+					if(Math.abs($(value).attr('time') - currentTime) <= 0.5){
+						if(index > 3 && index < length ){
+							var top = -(index- 3) * 30;
+							$('.lrc ul').animate({
+								top:top
+							},1000,'linear');
+						}
+						j = $(value).index();
+						var duration = $(value).next().attr('time')-$(value).attr('time');
+						//console.log(duration);
+						$(value).find('p').animate({
+							width:'100%'
+						},duration * 1000,function(){
+							$(this).css('width','0%');
+						});
+					}else{
+
+					}
+				}	
+			});
+		}
+		var rate = Math.round(currentTime/duration * 100);
+		$(".currentTime .progress").css({width:rate+'%'});
+	}
+	
+}
+function controls(){
+	if(audioDom.paused == true){
+		audioDom.play();
+		$('.controls').removeClass('fa-play').addClass('fa-pause');
+		clearInterval(main);//清除原先的计时
+		main = setInterval(mainMethod,1000);
+	}else{
+		audioDom.pause();
+		clearInterval(main);
+		$('.controls').removeClass('fa-pause').addClass('fa-play');
+	}
+}
+</script>
+</body>
+</html>
