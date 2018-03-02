@@ -205,6 +205,7 @@ li,ol,ul{
 <script type="text/javascript">
 var audioDom = $('#audio-dom')[0];
 var main = 0, j = 0;//mian为计时器的id,j为当前播放到歌词的索引
+var lrctime = [];
 window.requestAnimationFrame = (function(){
   return  window.requestAnimationFrame       ||
           window.webkitRequestAnimationFrame ||
@@ -225,11 +226,13 @@ $(function(){
 			var timeArray = value.slice(0,11).split(':');
 			var second = Number(timeArray[0].slice(1))*60 + Number(timeArray[1].slice(0,-1));
 			second = parseFloat(second.toFixed(2));
+			lrctime.push(second);
 			var lrcItem = value.slice(11);
 			var li = $('<li/>').html('<div>'+lrcItem+'</div><p>'+lrcItem+'</p>').attr('time',second);
 			$('.lrc ul').append(li);
 		});
 		window.lrcItemAll = $('.lrc ul li');
+		window.length = lrctime.length;
 	},'text');
 	//判断播放暂停按钮的样式
 	if(audioDom.pause == true){
@@ -284,19 +287,20 @@ $(function(){
 		audioDom.currentTime = currentTime;
 		var rate = Math.round(per * 100);
 		$(".currentTime .progress").css({width:rate+'%'});
-		lrcItemAll.each(function(index,value){
-				if(Math.abs($(value).attr('time') - currentTime) <= 0.5){
-					if(index > 3 && index < length ){
-						var top = -(index- 3) * 30;
-						$('.lrc ul').animate({
-							top:top
-						},1000,'linear');
-					}
-					j = $(value).index();
-				}else{
-
+		lrctime.forEach(function(value,index){
+			if(Math.abs(value - currentTime) <= 2){
+				if(index > 3 && index < length ){
+					var top = -(index- 3) * 30;
+					$('.lrc ul').animate({
+						top:top
+					},500,'linear');
 				}
-			});
+				j = index;
+				console.log(index);
+			}else{
+
+			}
+		});
 	});
 	//音量进度点击
 	$('.volume').click(function(e){
@@ -370,7 +374,7 @@ function mainMethod(){
 								top:top
 							},1000,'linear');
 						}
-						j = $(value).index();
+						j = index;
 						var duration = $(value).next().attr('time')-$(value).attr('time');
 						//console.log(duration);
 						$(value).find('p').animate({
