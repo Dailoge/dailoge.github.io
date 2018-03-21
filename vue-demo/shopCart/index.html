@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>购物车</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="cart">
+			<div class="cart-title"><span>购物车</span></div>
+			<div class="cart-list">
+				<div class="list-title">
+					<ul>
+						<li>商品信息</li>
+						<li>商品金额</li>
+						<li>商品数量</li>
+						<li>总金额</li>
+						<li>编辑</li>
+					</ul>
+				</div>
+				<div class="list-item">
+					<ul v-for="(item,index) in productList">
+						<li class="info" :productId="item.productId">
+                     		<div class="choose"><input type="checkbox" v-model="item.checked" name="choose" style="zoom:150%" @click="changeCheck(item)"></div>
+                     		<div class="img"><img :src="item.productImage"></div>
+                     		<div class="content">
+								<p class="title">{{item.productName}}</p>
+								<div class="gift">
+									<div class="left">赠品：</div>
+									<div class="right">
+										<dl>
+											<dd v-for="part in item.parts" :partsId="part.partsId">{{part.partsName}}</dd>
+										</dl>
+									</div>
+								</div>
+                     		</div>
+						</li>
+						<li class="price">
+							<p class="price">{{item.productPrice | formatMoney}}</p>
+						</li>
+						<li class="number">
+							<div >
+								<span class="sub commom" @click="subNumber(item)">-</span><span class="num">{{item.productQuantity}}</span><span class="add commom" @click="addNumber(item)">+</span>
+							</div>
+						</li>
+						<li class="sumPrice">
+							<p class="sum">{{item.productPrice * item.productQuantity | formatMoney}}</p>
+						</li>
+						<li class="edit">
+							<a href="javascript:;" @click="deleteProModel(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="set">
+				<div class="left">
+					<span><input type="checkbox" name="allChoose" style="zoom:150%;vertical-align: middle;"
+						@click="selectAll()" v-model="checkAllFlag"></span> <span class="all" v-if="!checkAllFlag" @click="selectAll()">全选</span><span v-if="checkAllFlag" class="all" @click="selectAll()">取消选中</span>
+				</div>
+				<div class="center">
+					<p>Item total： <span>${{totalMoney}}元</span></p>
+				</div>
+				<div class="right">
+					<button>结账</button>
+				</div>
+			</div>
+			<div class="delete" v-show="showModel"></div>
+			<div class="model animated" v-show="showModel" :class="{rollIn:showModel}">
+				<div class="close"><span @click="hiddenModel()"><i class="fa fa-times-circle" aria-hidden="true" ></i></span></div>
+				<div class="warning">你确定要删除商品吗?</div>
+				<div class="choose">
+					<button @click="deletePro()">YES</button>
+					<button @click="hiddenModel()">NO</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="https://cdn.bootcss.com/vue/2.5.15/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script type="text/javascript" src="./js/cart.js"></script>
+</body>
+</html>
