@@ -100,6 +100,9 @@ new Vue({
  		},
  		hiddenModel: function(){
  			this.showModel = false;
+ 		},
+ 		checkOut: function(){
+ 			location.href = './address.html';
  		}
 	},
 });

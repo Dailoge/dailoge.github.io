@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>配送地址</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/address.css">
+	<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="page">
+	<div id="app">
+		<div class="status">
+			<li>地址确认</li>
+			<li>查看订单</li>
+			<li>支付</li>
+			<li>订单确认</li>
+		</div>
+		<div class="addr_title"><span>配送地址</span></div>
+		<div class="addr_list">
+			<ul>
+				<li v-for="(address,index) in filterAddress" :class="{active:curSelect == index}" @click="changeSelect(index)">
+					<h4>{{address.userName}}</h4>
+					<p class="address">{{address.streetName}}</p>
+					<p class="phone">{{address.tel}}</p>
+					<span v-if="address.isDefault">默认地址</span>
+					<span v-if="index != curDefault && index == curSelect" @click="changeDefault(index)">设为默认</span>
+					<i class="fa fa-pencil-square-o edit" aria-hidden="true" v-if="index == curSelect" @click="showModal(index)"></i>
+					<i class="fa fa-trash-o trash" aria-hidden="true" v-if="index == curSelect" @click="deleteAddress(index)"></i>
+				</li>
+				<li class="add_addr" @click="addAddress()">
+					<div><i class="fa fa-plus" aria-hidden="true"></i></div>
+					<p class="add">添加新地址</p>
+				</li>
+			</ul>
+			<div class="more">
+				<a href="javascript:;" class="" @click="changeShowNum()">more
+					<span>
+						<i class="left"></i><i class="right"></i>
+					</span>
+				</a>
+			</div>
+		</div>
+		<div class="addr_title"><span>配送方式</span></div>
+		<div class="mode">
+			<ul>
+				<li :class="{active:curMode == 1}" @click="changeMode(1)">
+                	<h4>标准配送</h4>
+                	<p>Free</p>
+				</li>
+				<li :class="{active:curMode == 2}" @click="changeMode(2)">
+					<h4>高级配送</h4>
+                	<p>180</p>
+				</li>
+			</ul>
+		</div>
+		<div class="addr_title"></div>
+		<div class="next">
+			<button>下一步</button>
+		</div>
+		<div class="shade" v-show="showModalFlag"></div>
+		<div class="modal animated slideInUp" v-show="showModalFlag">
+			<div class="close"><i class="fa fa-times-circle-o" aria-hidden="true" @click="closeModal(event)"></i></div>
+			<form>
+				<label>姓名: <input type="text" name="name" v-model="editName"></label>
+				<label>地址: <input type="address" name="address" v-model="editAddress"></label>
+				<label>电话: <input type="number" name="phone" v-model="editPhone"></label>
+				<div class="submit">
+					<button @click="saveAddress(event)">保存</button>
+					<button @click="closeModal(event)">取消</button>
+				</div>
+			</form>
+			<div class="tips" v-show="showTipsFlag">
+				Tips：所有字段都必须填写，不能为空 !
+			</div>
+
+		</div>
+	</div>
+</div>
+<script src="https://cdn.bootcss.com/vue/2.5.15/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script type="text/javascript" src="./js/address.js"></script>
+</body>
+</html>
