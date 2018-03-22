@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<div class="delete" v-show="showModel"></div>
-			<div class="model animated" v-show="showModel" :class="{rollIn:showModel}">
+			<div class="model animated rollIn" v-show="showModel" :class="{opacity:showModel}">
 				<div class="close"><span @click="hiddenModel()"><i class="fa fa-times-circle" aria-hidden="true" ></i></span></div>
 				<div class="warning">你确定要删除商品吗?</div>
 				<div class="choose">

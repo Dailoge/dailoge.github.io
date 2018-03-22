@@ -59,7 +59,7 @@
 			<button>下一步</button>
 		</div>
 		<div class="shade" v-show="showModalFlag"></div>
-		<div class="modal animated slideInUp" v-show="showModalFlag">
+		<div class="modal animated slideInUp" v-show="showModalFlag" :class="{opacity:showModalFlag}">
 			<div class="close"><i class="fa fa-times-circle-o" aria-hidden="true" @click="closeModal(event)"></i></div>
 			<form>
 				<label>姓名: <input type="text" name="name" v-model="editName"></label>

@@ -264,6 +264,7 @@ body{
 	z-index: 11;
 	background: #fff;
 	animation-duration: .5s !important;
+	opacity: 0;
 }
 .modal .close{
 	text-align: right;
@@ -319,4 +320,7 @@ body{
 	top: 60px;
 	width: 80px;
 	color: #ca1928;
+}
+.opacity{
+	opacity: 1;
 }
