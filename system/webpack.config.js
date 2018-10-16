@@ -160,6 +160,7 @@ var webpackConfig = {
     ]
 };
 
+config.env =  process.env.NODE_ENV || 'beta'
 console.log(config.env);
 
 if (config.env != 'beta' && config.env != 'dev') {
