@@ -3,6 +3,11 @@ var path = require('path');
 
 
 var devPort = '2323'
+let cdn = ''
+
+if(process.env.NODE_ENV == 'beta'){
+    cdn = '/dist/'
+}
 
 module.exports = {
     //静态页存储目录
@@ -16,4 +21,5 @@ module.exports = {
     //生成目录
     "output": path.join(process.cwd(),'dist'),
     root: 'src/view/pages',
+    cdn,
 }

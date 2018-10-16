@@ -65,7 +65,7 @@ var webpackConfig = {
         path: path.join(config.output.replace('./', '')),
         filename: '[name].js',
         libraryTarget: "umd",
-        publicPath: config.cdn,
+        publicPath: config.cdn,//这个目录是用来替换每个文件引用的资源文件的路径，像less中引用的图片,不管是本地调试，还是打包生成
         chunkFilename: '[name].[chunkhash].js',
         sourceMapFilename: '[name].map',
         crossOriginLoading:'anonymous'

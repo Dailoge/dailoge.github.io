@@ -4,8 +4,8 @@ import {View,page} from 'gfs-react-dm'
 import { message, Modal, Button } from 'antd'
 
 import 'antd/dist/antd.less'
-import '../style/common.less'
-import '../style/index.less'
+import '../assert/common.less'
+import '../assert/index.less'
 
 message.config({
     top: 100,

@@ -58,7 +58,7 @@ module.exports= function(){
     var compiler = webpack(wbpk);
 
     new WebpackDevServer(compiler, {
-        publicPath: '/dist/',
+        publicPath: '/dist/',//目录必须是斜杆开头，最终dev-server在内存中生成的文件就是contentBase+publicPath
         contentBase: config.html,
         disableHostCheck: true,
         hot: true,
