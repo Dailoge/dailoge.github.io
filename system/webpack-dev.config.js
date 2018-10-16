@@ -58,7 +58,7 @@ module.exports= function(){
     var compiler = webpack(wbpk);
 
     new WebpackDevServer(compiler, {
-        publicPath: '',
+        publicPath: '/dist/',
         contentBase: config.html,
         disableHostCheck: true,
         hot: true,

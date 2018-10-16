@@ -70,7 +70,7 @@ gulp.task('clean', function(){
 gulp.task('html', function () {
     return gulp.src([config.html+ '/**/*.html'])
         .pipe(flatten())
-        .pipe(gulp.dest(config.output ));
+        .pipe(gulp.dest('./' ));//直接把html文件拷贝到根目录中
 });
 gulp.task('default', function(){
   runSequence('clean','webpack','html');
