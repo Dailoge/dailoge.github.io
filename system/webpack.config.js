@@ -144,6 +144,7 @@ var webpackConfig = {
     },
     plugins: [
         //new webpack.optimize.UglifyJsPlugin(),
+        //生成单独的css文件
         new ExtractTextPlugin("[name].css", {
             disable: false,
             allChunks: true
@@ -166,6 +167,7 @@ console.log(config.env);
 if (config.env != 'beta' && config.env != 'dev') {
     console.log('..........----pro----.............');
     webpackConfig.plugins.push(
+        //压缩js
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
@@ -180,10 +182,13 @@ if (config.env != 'beta' && config.env != 'dev') {
         })
     );
     webpackConfig.plugins.push(
-        new es3ifyPlugin()
+        new es3ifyPlugin() //兼容ie8
     );
     webpackConfig.plugins.push(
-        new webpack.optimize.DedupePlugin()
+        new webpack.optimize.DedupePlugin() //查找相等或近似的模块，避免在最终生成的文件中出现重复的模块，比如可以用它去除依赖中重复的插件；
+    );
+    webpackConfig.plugins.push(
+        new webpack.optimize.OccurrenceOrderPlugin(true) //通过模块调用次数给模块分配ids，常用的ids就会分配更短的id，使ids可预测，减小文件大小
     );
 }
 
