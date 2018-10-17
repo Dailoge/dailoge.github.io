@@ -83,7 +83,7 @@ export default class Index extends Component{
                 </div>
                 <Modal
                     visible={visible}
-                    title="Title"
+                    title="你就是喜欢我"
                     closable={false}
                     footer={[
                         <Button  type="primary"  onClick={this.handleOk.bind(this)}>

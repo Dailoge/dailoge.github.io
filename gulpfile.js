@@ -18,7 +18,7 @@ var devPort = config.devPort;
 
 gulp.task('open', function () {
   gulp.src(__filename)
-      .pipe(open({uri: "http://"+(internalIP.v4() || '127.0.0.1')+":" + devPort +config.defaultStartPage}));
+      .pipe(open({uri: "http://"+('127.0.0.1')+":" + devPort +config.defaultStartPage}));
 });
 
 gulp.task('hot', function (callback) {
