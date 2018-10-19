@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import {View,page} from 'gfs-react-dm'
 import { message, Modal, Button } from 'antd'
 
-import 'antd/dist/antd.less'
+//import 'antd/dist/antd.less'
 import '../assert/common.less'
 import '../assert/index.less'
 
