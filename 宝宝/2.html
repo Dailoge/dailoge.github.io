@@ -1,0 +1,5008 @@
+<!DOCTYPE html>
+<!-- saved from url=(0219)https://ziji0.kagirl.cn/kphoto/gotoshow.php?onmake=true&wxid=kawa&bookid=31NJwuGLiKG2ARIZa_fnkD0QySsapnCGsLmvSzmMtmI&olwxid=&shareflag=1&from=groupmessage&isappinstalled=0&scene=1&clicktime=1581933070&enterid=1581933070 -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>一起来制作相册，记录生活</title>
+
+    <link
+      rel="shortcut icon"
+      href="https://wx.qlogo.cn/mmhead/Q3auHgzwzM5VzLWwcQrQ0sia6W7Ry1kUpK2d7Yia4Jv6dVPS0sQ5QZqg/0"
+    />
+		<script type="module" src="./common/js/playSong.js"></script>
+    <script
+      type="text/javascript"
+      async=""
+      charset="utf-8"
+      src="./2_files/core.php"
+    ></script>
+    <script src="./2_files/stats.js" name="MTAH5" sid="500639727"></script>
+    <script src="./2_files/hm.js"></script>
+    <script>
+      var _speedMark = new Date()
+      function init_viewport() {
+        if (navigator.userAgent.indexOf('Android') != -1) {
+          var version = parseFloat(RegExp.$1)
+
+          if (version > 2.3) {
+            var width =
+              window.outerWidth == 0 ? window.screen.width : window.outerWidth
+            var phoneScale = parseInt(width) / 500
+            // if(phoneScale < 2)
+            // {
+            document.write(
+              '<meta name="viewport" content="width=500, minimum-scale = ' +
+                phoneScale +
+                ', maximum-scale = ' +
+                phoneScale +
+                ', target-densitydpi=device-dpi">'
+            )
+
+            // }
+            // else
+            // {
+            //     document.write('<meta name="viewport" content="target-densitydpi=320, width=500, min-height:850px, user-scalable=no"/>');
+            // }
+          } else {
+            document.write(
+              '<meta name="viewport" content="width=500, target-densitydpi=device-dpi, user-scalable=0">'
+            )
+          }
+        } else if (navigator.userAgent.indexOf('iPhone') != -1) {
+          var phoneScale = parseInt(window.screen.width) / 500
+          document.write(
+            '<meta name="viewport" content="width=500, min-height=750, initial-scale=' +
+              phoneScale +
+              ', maximum-scale=' +
+              phoneScale +
+              ', user-scalable=0" /> '
+          ) //0.75   0.82
+        } else {
+          document.write(
+            '<meta name="viewport" content="width=500, height=750, initial-scale=0.64" /> '
+          ) //0.75   0.82
+        }
+      }
+
+      init_viewport()
+    </script>
+    <meta name="viewport" content="width=500, height=750, initial-scale=0.64" />
+    <script src="./2_files/message.js"></script>
+    <script src="./2_files/jweixin-1.2.0.js"></script>
+    <script>
+      var module_inits = []
+
+      var upload_permission = true
+      var atkname = 'klyy'
+
+      wx.config({
+        debug: false,
+        appId: 'wxebb2f1e4c128e000',
+        timestamp: 10000,
+        nonceStr: 'helloklyy',
+        signature: '768f05a88ef48bfa5664585ea4aaa59b784fe7ce',
+        jsApiList: [
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'onMenuShareQQ',
+          'onMenuShareQZone',
+          'closeWindow',
+          'hideAllNonBaseMenuItem',
+          'showMenuItems',
+          'showAllNonBaseMenuItem',
+          'chooseImage',
+          'uploadImage',
+          'getLocalImgData'
+        ]
+      })
+
+      var load_flag = true
+
+      var wxready = false
+      function load_init_modules() {
+        wxready = true
+        if (!load_flag) return
+
+        for (var i = 0; i < module_inits.length; i++) {
+          module_inits[i]()
+        }
+        load_flag = false
+      }
+
+      function call_me(fun) {
+        module_inits.push(fun)
+      }
+
+      var ua = navigator.userAgent.toLowerCase()
+
+      wx.ready(function() {
+        console.log('ready')
+
+        load_init_modules()
+
+        //                if(typeof(vid) != 'undefined' && vid != '')   video.play();
+      })
+
+      function e() {
+        if (ua.match(/MicroMessenger/i) != 'micromessenger') {
+          load_init_modules()
+          return
+        }
+        const time = 2000
+        const timer = setTimeout(load_init_modules, time)
+      }
+
+      function clearClipBoardData() {
+        var r,
+          n,
+          o,
+          i,
+          u,
+          a = !1
+        e || (e = {}), (r = e.debug || !1)
+        try {
+          if (
+            ((n = clearRangeForClearBoardClip()),
+            (o = document.createRange()),
+            (i = document.getSelection()),
+            ((u = document.createElement('span')).textContent = ' '),
+            (u.style.all = 'unset'),
+            (u.style.position = 'fixed'),
+            (u.style.top = 0),
+            (u.style.clip = 'rect(0, 0, 0, 0)'),
+            (u.style.whiteSpace = 'pre'),
+            (u.style.webkitUserSelect = 'text'),
+            (u.style.MozUserSelect = 'text'),
+            (u.style.msUserSelect = 'text'),
+            (u.style.userSelect = 'text'),
+            document.body.appendChild(u),
+            o.selectNode(u),
+            i.addRange(o),
+            !document.execCommand('copy'))
+          )
+            throw new Error('copy command was unsuccessful')
+          a = !0
+        } catch (e) {
+          r && console.error('unable to copy using execCommand: ', e),
+            r && console.warn('trying IE specific stuff')
+          try {
+            window.clipboardData.setData('text', ' '), (a = !0)
+          } catch (t) {
+            console.error('unable to copy using clipboardData: ', t)
+          }
+        } finally {
+          i &&
+            ('function' == typeof i.removeRange
+              ? i.removeRange(o)
+              : i.removeAllRanges()),
+            u && document.body.removeChild(u),
+            clearRangeForClearBoardClip()
+        }
+        return a
+      }
+
+      function clearRangeForClearBoardClip() {
+        var t = document.getSelection()
+        if (!t.rangeCount) return function() {}
+        for (
+          var e = document.activeElement, r = [], n = 0;
+          n < t.rangeCount;
+          n++
+        )
+          r.push(t.getRangeAt(n))
+        switch (e.tagName.toUpperCase()) {
+          case 'INPUT':
+          case 'TEXTAREA':
+            e.blur()
+            break
+          default:
+            e = null
+        }
+        return (
+          t.removeAllRanges(),
+          function() {
+            'Caret' === t.type && t.removeAllRanges(),
+              t.rangeCount ||
+                r.forEach(function(e) {
+                  t.addRange(e)
+                }),
+              e && e.focus()
+          }
+        )
+      }
+
+      window.addEventListener('load', e, false)
+    </script>
+
+    <script type="text/javascript">
+      var XMLHttp = {
+        _objPool: [],
+        _getInstance: function() {
+          for (var i = 0; i < this._objPool.length; i++) {
+            if (
+              this._objPool[i].readyState == 0 ||
+              this._objPool[i].readyState == 4
+            ) {
+              return this._objPool[i]
+            }
+          }
+          this._objPool[this._objPool.length] = this._createObj()
+          return this._objPool[this._objPool.length - 1]
+        },
+        _createObj: function() {
+          if (window.XMLHttpRequest) {
+            var objXMLHttp = new XMLHttpRequest()
+          } else {
+            var MSXML = [
+              'MSXML2.XMLHTTP.5.0',
+              'MSXML2.XMLHTTP.4.0',
+              'MSXML2.XMLHTTP.3.0',
+              'MSXML2.XMLHTTP',
+              'Microsoft.XMLHTTP'
+            ]
+            for (var n = 0; n < MSXML.length; n++) {
+              try {
+                var objXMLHttp = new ActiveXObject(MSXML[n])
+                break
+              } catch (e) {}
+            }
+          }
+          if (objXMLHttp.readyState == null) {
+            objXMLHttp.readyState = 0
+            objXMLHttp.addEventListener(
+              'load',
+              function() {
+                objXMLHttp.readyState = 4
+                if (typeof objXMLHttp.onreadystatechange == 'function') {
+                  objXMLHttp.onreadystatechange()
+                }
+              },
+              false
+            )
+          }
+          return objXMLHttp
+        },
+        sendReq: function(method, url, data, callback) {
+          var objXMLHttp = this._getInstance()
+          with (objXMLHttp) {
+            try {
+              if (url.indexOf('?') > 0) {
+                url += '&randnum=' + Math.random()
+              } else {
+                url += '?randnum=' + Math.random()
+              }
+              open(method, url, true)
+              if (method.toLowerCase() == 'post') {
+                setRequestHeader(
+                  'Content-Type',
+                  'application/x-www-form-urlencoded; charset=UTF-8'
+                )
+              }
+              send(data)
+              onreadystatechange = function() {
+                if (
+                  objXMLHttp.readyState == 4 &&
+                  (objXMLHttp.status == 200 || objXMLHttp.status == 304) &&
+                  callback
+                ) {
+                  callback(objXMLHttp)
+                }
+              }
+            } catch (e) {
+              alert(e)
+            }
+          }
+        }
+      }
+    </script>
+    <script>
+      var slider_images_url = []
+      var slider_images_urlmin = []
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172812918662?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172812918662?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172812971186?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172812971186?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172813067734?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172813067734?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172813173802?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172813173802?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172813266452?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172813266452?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172813355285?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172813355285?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172813475763?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172813475763?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172813585212?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172813585212?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      slider_images_url.push(
+        'https://alipic.kagirl.cn/kawa_22172813729180?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/'
+      )
+      slider_images_urlmin.push(
+        'https://alipic.kagirl.cn/kawa_22172813729180?x-oss-process=image/resize,w_300,p_0/auto-orient,1/'
+      )
+      var date = 20200217
+      var zan_num = 0
+      var user_liulan = 5
+      var e_bookid = '31NJwuGLiKG2ARIZa_fnkD0QySsapnCGsLmvSzmMtmI'
+      var e_desc = {
+        de:
+          '\u4e00\u8d77\u6765\u5236\u4f5c\u76f8\u518c\uff0c\u8bb0\u5f55\u751f\u6d3b'
+      }['de']
+      var e_openid = null
+      var e_scene = 'rose'
+      var editmode = false
+      var wxid = 'kawa'
+      var olwxid = ''
+      var shareid = ''
+      var guanzhu_url =
+        'https://kawa0.kagirl.cn/kphoto/makebook.php?wxid=kawa&olwxid=&videofm='
+      var e_guanzhu_url =
+        'https%3A%2F%2Fkawa0.kagirl.cn%2Fkphoto%2Fmakebook.php%3Fwxid%3Dkawa%26olwxid%3D%26videofm%3D'
+      var e_gz_group = '0'
+      var e_gz_make = '0'
+      var e_gz_collect = '0'
+      var words = {}
+      var e_mywords = {}
+      var rotatepics = {}
+      var app = ''
+      var onmake = true
+      var editdesc = '0'
+      var Onload_imgs_url = []
+      var article_wxid = ''
+      var fm = ''
+      var videofm = ''
+      var shareflag = 1
+      var begin_titletime
+      var newyearUrl = ''
+      var videoUrl = ''
+      var isMina = false
+      var mineJump = ''
+      var is_flag = 0
+      var gcshare = 0
+      var out_code = ''
+      var vid = ''
+      var shipin_user = ''
+      var shipin_selectd_pid = '[]'
+      var shipin_config =
+        '{"pic_max":1,"word_edit":0,"scene":"","single_circle_num":0,"subvideo":[]}'
+      shipin_config = JSON.parse(shipin_config)
+      var isactive = false
+      var e_music_url = 'lzyKugou_943395_DE5728A56A17BFE5430D1E3746A961C8'
+      var kugou_unactive_flag = 'uncheck'
+      var e_music_title = ''
+      var kugou_music = {
+        id: '943395',
+        hash: 'DE5728A56A17BFE5430D1E3746A961C8',
+        tag: 'lzyKugou_',
+        isShow: 1,
+        isActive: 1,
+        lyricShow: 0
+      }
+      var tbssaveoff = false
+      var isguangchang = ''
+      var isshow = 'show'
+      var gotomake = 'make'
+      var istiaozhuan = ''
+      var isfinish = 'yes'
+      var isLitixc = false
+    </script>
+
+    <style type="text/css">
+      * {
+        padding: 0px;
+        margin: 0px;
+        -webkit-box-sizing: border-box;
+      }
+
+      body {
+        background-color: white;
+      }
+
+      #container {
+        width: 500px;
+        height: 815px;
+        position: absolute;
+        overflow: hidden;
+      }
+      #container > div,
+      #container > img {
+        position: absolute;
+      }
+      .meigui1 {
+        top: 592px;
+        left: 0px;
+        width: 228px;
+        height: 224px;
+        -webkit-transform-origin: 20% 100%;
+        -webkit-animation: meigui 2s ease-in-out infinite alternate;
+      }
+      .meigui2 {
+        top: 454px;
+        left: 0px;
+        width: 206px;
+        height: 361px;
+        -webkit-transform-origin: 20% 100%;
+        -webkit-animation: meigui 3s ease-in-out infinite alternate;
+      }
+      @-webkit-keyframes meigui {
+        from {
+          -webkit-transform: rotate(0deg);
+        }
+        to {
+          -webkit-transform: rotate(3deg);
+        }
+      }
+      .dian1 {
+        left: 175px;
+        top: 720px;
+        opacity: 0;
+        -webkit-animation: dian 4s 2s linear infinite;
+      }
+      .dian2 {
+        left: 175px;
+        top: 720px;
+        -webkit-animation: dian 4s linear infinite;
+      }
+      @-webkit-keyframes dian {
+        0% {
+          -webkit-transform: translate(0px, 0px);
+          opacity: 0;
+        }
+        50% {
+          -webkit-transform: translate(0px, -50px);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translate(0px, -100px);
+          opacity: 0;
+        }
+      }
+      .yezi1 {
+        left: 22px;
+        top: 267px;
+        position: absolute;
+      }
+      .yezi2 {
+        left: 5px;
+        top: 129px;
+        position: absolute;
+      }
+      #potdiv {
+        width: 500px;
+        height: 150px;
+        /*background-color: #fff;*/
+      }
+      @-webkit-keyframes pot {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.6;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      .xin1 {
+        left: 58px;
+        top: 83px;
+        width: 30px;
+        -webkit-transform: rotate(-40deg);
+        -webkit-animation: xin1 2s linear infinite alternate;
+      }
+      .xin2 {
+        left: 79px;
+        top: 82px;
+        width: 23px;
+        -webkit-transform: rotate(-30deg);
+        -webkit-animation: xin2 2s linear infinite alternate;
+      }
+      .xin3 {
+        left: 226px;
+        top: 116px;
+        width: 24px;
+        -webkit-transform: rotate(13deg);
+        -webkit-animation: xin3 2s linear infinite alternate;
+      }
+      .xin4 {
+        left: 435px;
+        top: 110px;
+        width: 33px;
+        -webkit-transform: rotate(-13deg);
+        -webkit-animation: fadeout 2s linear infinite alternate;
+      }
+      .xin9 {
+        left: 431px;
+        top: 106px;
+        width: 40px;
+        -webkit-transform: rotate(-13deg);
+      }
+      .xin5 {
+        left: 236px;
+        top: 757px;
+        width: 30px;
+        -webkit-transform: rotate(0deg);
+        -webkit-animation: xin5 2s linear infinite alternate;
+      }
+      .xin6 {
+        left: 255px;
+        top: 767px;
+        width: 23px;
+        -webkit-transform: rotate(11deg);
+        -webkit-animation: xin6 2s linear infinite alternate;
+      }
+      .xin7 {
+        left: 332px;
+        top: 772px;
+        width: 22px;
+        -webkit-transform: rotate(0deg);
+        -webkit-animation: fade1 2s linear infinite alternate;
+      }
+      .xin8 {
+        left: 452px;
+        top: 740px;
+        width: 35px;
+        -webkit-transform: rotate(-18deg);
+        -webkit-animation: fadeout 2s linear infinite alternate;
+      }
+      .xin10 {
+        left: 447px;
+        top: 734px;
+        width: 47px;
+        -webkit-transform: rotate(-18deg);
+      }
+
+      @-webkit-keyframes xin1 {
+        from {
+          -webkit-transform: translate(0px, 0px) rotate(-40deg);
+        }
+        to {
+          -webkit-transform: translate(-5px, -5px) rotate(-40deg);
+        }
+      }
+      @-webkit-keyframes xin2 {
+        from {
+          -webkit-transform: translate(0px, 0px) rotate(-30deg);
+        }
+        to {
+          -webkit-transform: translate(-5px, -5px) rotate(-30deg);
+        }
+      }
+      @-webkit-keyframes xin3 {
+        from {
+          -webkit-transform: translate(0px, 0px) rotate(13deg);
+        }
+        to {
+          -webkit-transform: translate(3px, -4px) rotate(13deg);
+        }
+      }
+      @-webkit-keyframes fadeout {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes fade1 {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0.6;
+        }
+      }
+      @-webkit-keyframes xin5 {
+        from {
+          -webkit-transform: translate(0px, 0px) rotate(0deg);
+        }
+        to {
+          -webkit-transform: translate(0px, -5px) rotate(0deg);
+        }
+      }
+      @-webkit-keyframes xin6 {
+        from {
+          -webkit-transform: translate(0px, 0px) rotate(11deg);
+        }
+        to {
+          -webkit-transform: translate(0px, -5px) rotate(11deg);
+        }
+      }
+      .xin11 {
+        left: 58px;
+        top: 459px;
+        width: 60px;
+        opacity: 0;
+        -webkit-animation: xin11 4s linear infinite;
+      }
+      @-webkit-keyframes xin11 {
+        0% {
+          -webkit-transform: translate(0px, 0px) rotate(0deg);
+          opacity: 0;
+        }
+        50% {
+          -webkit-transform: translate(0px, -60px) rotate(15deg);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translate(0px, -120px) rotate(30deg);
+          opacity: 0;
+        }
+      }
+      .xin12 {
+        left: 349px;
+        top: 657px;
+        -webkit-animation: xin12 4s linear infinite;
+      }
+      @-webkit-keyframes xin12 {
+        0% {
+          -webkit-transform: translate(0px, 0px) rotate(-10deg);
+          opacity: 0;
+        }
+        50% {
+          -webkit-transform: translate(0px, -50px) rotate(5deg);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translate(0px, -100px) rotate(20deg);
+          opacity: 0;
+        }
+      }
+      .xin13 {
+        left: 369px;
+        top: 407px;
+        opacity: 0;
+        -webkit-animation: xin13 3s linear infinite;
+      }
+      @-webkit-keyframes xin13 {
+        0% {
+          -webkit-transform: translate(0px, 0px) rotate(10deg);
+          opacity: 0;
+        }
+        50% {
+          -webkit-transform: translate(0px, -50px) rotate(-5deg);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translate(0px, -100px) rotate(-20deg);
+          opacity: 0;
+        }
+      }
+      .pot {
+        left: 239px;
+        top: 563px;
+        width: 30px;
+        -webkit-animation: potting 2s linear infinite;
+      }
+      @-webkit-keyframes potting {
+        0% {
+          opacity: 0;
+        }
+        40% {
+          opacity: 1;
+        }
+        48% {
+          opacity: 0.5;
+        }
+        56% {
+          opacity: 1;
+        }
+        64% {
+          opacity: 0.5;
+        }
+        72% {
+          opacity: 1;
+        }
+        /*80%  {opacity: 1}*/
+        100% {
+          opacity: 0;
+        }
+      }
+      #xindiv {
+        width: 500px;
+        height: 200px;
+        top: 274px;
+        left: -100px;
+      }
+      @-webkit-keyframes myfadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes titlein {
+        from {
+          -webkit-clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+        }
+        to {
+          -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+      }
+      @-webkit-keyframes xinmove {
+        0% {
+          -webkit-transform: translate(0px, 0px);
+          opacity: 0;
+        }
+        10% {
+          -webkit-transform: translate(30px, 0px);
+          opacity: 1;
+        }
+        90% {
+          -webkit-transform: translate(250px, 0px);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translate(280px, 0px);
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes titleout {
+        from {
+          -webkit-transform: translate(0px, 0px) scale(1, 1);
+          opacity: 1;
+        }
+        to {
+          -webkit-transform: translate(0px, 100px) scale(1, 0);
+          opacity: 0;
+        }
+      }
+      .div {
+        border: 4px solid #fff;
+        opacity: 0;
+      }
+      @-webkit-keyframes div_in {
+        0% {
+          -webkit-transform: translate(0px, -280px) rotate(-12deg);
+          opacity: 0;
+        }
+        40% {
+          -webkit-transform: translate(0px, -50px) rotate(-2deg);
+          opacity: 1;
+        }
+        80% {
+          -webkit-transform: translate(0px, 0px) rotate(2deg);
+          opacity: 1;
+          -webkit-animation-timing-function: ease-in;
+        }
+        100% {
+          -webkit-transform: translate(0px, 150px) rotate(8deg);
+          opacity: 0;
+        }
+      }
+      .wordspan {
+        width: 50%;
+        right: 3%;
+        position: absolute;
+        color: #fff;
+        font-size: 25px;
+        text-align: center;
+        bottom: 7px;
+        text-shadow: 1px 1px 2px #000;
+        font-weight: bold;
+      }
+      .guang1 {
+        position: absolute;
+        left: 169px;
+        top: 43px;
+        width: 32px;
+        -webkit-transform-origin: 50% 40%;
+        /*-webkit-transform:rotate(90deg);*/
+        -webkit-animation: guang1 2s linear infinite;
+      }
+      .guang2 {
+        position: absolute;
+        left: 188px;
+        top: 51px;
+        width: 30px;
+        -webkit-transform-origin: 50% 40%;
+        -webkit-animation: guang1 2s linear infinite;
+      }
+      @-webkit-keyframes guang1 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          opacity: 0;
+        }
+        20% {
+          -webkit-transform: rotate(0deg);
+          opacity: 1;
+        }
+        50% {
+          -webkit-transform: rotate(90deg);
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      .guang3 {
+        position: absolute;
+        left: 80px;
+        top: 10px;
+        width: 30px;
+        -webkit-transform-origin: 50% 40%;
+        -webkit-animation: guang3 2s 1s linear infinite;
+      }
+      @-webkit-keyframes guang3 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          opacity: 0;
+        }
+        20% {
+          -webkit-transform: rotate(0deg);
+          opacity: 1;
+        }
+        35% {
+          -webkit-transform: rotate(45deg);
+          opacity: 0.6;
+        }
+        50% {
+          -webkit-transform: rotate(0deg);
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <style></style>
+    <script type="text/javascript" src="./2_files/index.php"></script>
+  </head>
+  <body>
+    <div id="container">
+      <img src="./2_files/bg.jpg" />
+      <img class="pot" src="./2_files/pot.png" />
+
+      <div
+        id="div1"
+        class="div"
+        style='background-image: url("https://alipic.kagirl.cn/kawa_22172813067734?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/"); width: 337.5px; height: 600px; left: 81.25px; top: 80px; background-size: 329.5px 592px;'
+      >
+        <div id="word1" class="wordspan"></div>
+      </div>
+      <div
+        id="div2"
+        class="div"
+        style='background-image: url("https://alipic.kagirl.cn/kawa_22172813173802?x-oss-process=image/resize,w_1000,p_0/auto-orient,1/"); width: 337.5px; height: 600px; left: 81.25px; top: 80px; background-size: 329.5px 592px; animation: 8s linear 0s 1 normal both running div_in;'
+      >
+        <div id="word2" class="wordspan"></div>
+      </div>
+
+      <img src="./2_files/up.png" />
+      <img class="dian1" src="./2_files/dian.png" />
+      <img class="dian2" src="./2_files/dian02.png" />
+
+      <div id="potdiv">
+        <img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 0px; top: 63px; width: 30px; opacity: 0; animation: 2s linear 0.55s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 50px; top: 29px; width: 30px; opacity: 0; animation: 2s linear 0.15s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 100px; top: 41px; width: 30px; opacity: 0; animation: 2s linear 0.6s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 150px; top: 89px; width: 30px; opacity: 0; animation: 2s linear 0s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 200px; top: 100px; width: 30px; opacity: 0; animation: 2s linear 1s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 250px; top: 4px; width: 30px; opacity: 0; animation: 2s linear 0.2s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 300px; top: 43px; width: 30px; opacity: 0; animation: 2s linear 0.05s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 350px; top: 78px; width: 30px; opacity: 0; animation: 2s linear 0.75s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 400px; top: 93px; width: 30px; opacity: 0; animation: 2s linear 0.3s infinite normal none running pot;"
+        /><img
+          src="./2_files/pot.png"
+          style="position: absolute; left: 450px; top: 76px; width: 30px; opacity: 0; animation: 2s linear 0.5s infinite normal none running pot;"
+        />
+      </div>
+
+      <img class="xin9" src="./2_files/xin02.png" />
+      <img class="xin10" src="./2_files/xin02.png" />
+      <img class="xin1" src="./2_files/xin01.png" />
+      <img class="xin2" src="./2_files/xin01.png" />
+      <img class="xin3" src="./2_files/xin01.png" />
+      <img class="xin4" src="./2_files/xin01.png" />
+      <img class="xin5" src="./2_files/xin01.png" />
+      <img class="xin6" src="./2_files/xin01.png" />
+      <img class="xin7" src="./2_files/xin01.png" />
+      <img class="xin8" src="./2_files/xin01.png" />
+
+      <img class="xin11" src="./2_files/xin03.png" />
+      <img class="xin12" src="./2_files/xin03.png" />
+      <img class="xin13" src="./2_files/xin03.png" />
+
+      <div class="meigui2">
+        <img src="./2_files/meigui2.png" />
+        <img class="yezi1" src="./2_files/yezi01.png" />
+        <img class="yezi2" src="./2_files/yezi02.png" />
+        <img class="guang2" src="./2_files/g.png" />
+      </div>
+      <div class="meigui1">
+        <img src="./2_files/meigui.png" />
+        <img class="guang1" src="./2_files/g.png" />
+        <img class="guang3" src="./2_files/g.png" />
+      </div>
+
+      <div
+        id="xindiv"
+        style="animation: 4.2s linear 0s 1 normal both running xinmove;"
+      >
+        <img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.05s infinite normal none running heart0;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.85s infinite normal none running heart1;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.3s infinite normal none running heart2;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.1s infinite normal none running heart3;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 1.15s infinite normal none running heart4;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.8s infinite normal none running heart5;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0s infinite normal none running heart6;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.55s infinite normal none running heart7;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.7s infinite normal none running heart8;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.75s infinite normal none running heart9;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.55s infinite normal none running heart10;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 1.15s infinite normal none running heart11;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 1.05s infinite normal none running heart12;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 1.45s infinite normal none running heart13;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.25s infinite normal none running heart14;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.5s infinite normal none running heart15;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.55s infinite normal none running heart16;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.65s infinite normal none running heart17;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.9s infinite normal none running heart18;"
+        /><img
+          src="./2_files/xin.png"
+          style="position: absolute; left: 200px; top: 100px; animation: 1.5s linear 0.45s infinite normal none running heart19;"
+        />
+      </div>
+
+      <div
+        id="pagetitle"
+        style="position: absolute; top: 280px; left: 89px; opacity: 0; width: 323px; height: 200px; animation: 1.5s linear 0s 1 normal both running titleout;"
+      >
+        <img
+          style="position:absolute;left:15px;top:-45px"
+          src="./2_files/wenzidi.png"
+        />
+        <img
+          style="position:absolute;left:15px;top:153px;-webkit-transform: scale(1,-1)"
+          src="./2_files/wenzidi.png"
+        />
+        <div
+          id="titlediv"
+          style="position: absolute; width: 288px; height: 150px; top: 22px; left: 17px; overflow: hidden; display: table; clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%); animation: 4s linear 0.1s 1 normal both running titlein;"
+        >
+          <div
+            id="titlecontent"
+            style="width:288px;height:150px;vertical-align:middle;display:table-cell;text-align:center;font-size:26px;line-height:34px;color:#fff;"
+          >
+            一起来制作相册，记录生活
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function id(name) {
+        return document.getElementById(name)
+      }
+
+      function rand(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1))
+      }
+
+      function showtitle() {
+        id('pagetitle').style.webkitAnimation = 'myfadein 0.5s linear both'
+        id('titlecontent').innerHTML = e_desc
+        id('titlediv').style.webkitAnimation = 'titlein 4s 0.1s linear both'
+        id('xindiv').style.webkitAnimation = 'xinmove 4.2s linear both'
+
+        // setTimeout(distitle,6000)
+      }
+
+      function liangziyun_kawa() {
+        id('pagetitle').style.webkitAnimation = 'titleout 1.5s linear both'
+
+        timeout[3] = setTimeout(show1, 1000)
+      }
+
+      function show1() {
+        setImage('1')
+        id('div1').style.webkitAnimation = 'div_in 8s linear both'
+        id('div2').style.webkitAnimation = ''
+
+        timeout[1] = setTimeout(show2, 8000)
+      }
+
+      function show2() {
+        setImage('2')
+        id('div2').style.webkitAnimation = 'div_in 8s linear both'
+        id('div1').style.webkitAnimation = ''
+
+        timeout[2] = setTimeout(show1, 8000)
+      }
+
+      function loading() {
+        createpot()
+        createxin()
+        load_images()
+      }
+
+      function createxin() {
+        var xindiv = id('xindiv')
+        var radius = 80
+
+        for (var i = 0; i < 20; i++) {
+          var img = new Image()
+          img.src = 'https://qnphoto.kagirl.cn/pic/rose/xin.png'
+          img.style.position = 'absolute'
+          img.style.left = '200px'
+          img.style.top = '100px'
+
+          var angle = rand(0, 360)
+          var totop = Math.sin((angle * Math.PI) / 180) * radius
+          var toleft = Math.cos((angle * Math.PI) / 180) * radius
+
+          var csstext =
+            '@-webkit-keyframes heart' +
+            i +
+            ' {from{-webkit-transform:translate(0px,0px);opacity:1;} to{-webkit-transform:translate(' +
+            toleft +
+            'px,' +
+            totop +
+            'px);opacity:0;}}'
+          var style = document.createElement('style')
+          document.head.appendChild(style)
+          var sheet = style.sheet
+          sheet.insertRule(csstext, 0)
+
+          img.style.webkitAnimation =
+            'heart' + i + ' 1.5s ' + rand(0, 30) / 20 + 's linear infinite'
+
+          xindiv.appendChild(img)
+        }
+      }
+
+      function createpot() {
+        var potdiv = id('potdiv')
+        var potnum = 10
+        for (var i = 0; i < potnum; i++) {
+          var img = new Image()
+          img.src = 'https://qnphoto.kagirl.cn/pic/rose/pot.png'
+          img.style.position = 'absolute'
+          img.style.left = i * (500 / potnum) + 'px'
+          img.style.top = rand(0, 100) + 'px'
+          img.style.width = '30px'
+          img.style.opacity = 0
+          img.style.webkitAnimation =
+            'pot 2s ' + rand(0, 20) / 20 + 's linear infinite'
+
+          potdiv.appendChild(img)
+        }
+      }
+
+      //本模板为深圳量子云科技有限公司版权所有，已申请版权保护，侵权必究。
+      function setImage(idname) {
+        if (reshow == true) return
+
+        while (
+          Onload_imgs_url[image_url_index] == 'not find' ||
+          Onload_imgs_url[image_url_index] == 'loading'
+        ) {
+          if (image_url_index % step_loadnum == 0) {
+            step_load()
+          }
+          image_url_index++
+          if (image_url_index == Onload_imgs_url.length) image_url_index = 0
+        }
+
+        if (image_url_index % step_loadnum == 0) {
+          step_load()
+        }
+        var img_bili =
+          image_size_width[image_url_index] / image_size_height[image_url_index]
+
+        var div = id('div' + idname)
+
+        div.style.backgroundImage =
+          "url('" + Onload_imgs_url[image_url_index] + "')"
+
+        var word = id('word' + idname)
+        var str = words[get_pid(Onload_imgs_url[image_url_index])]
+        if (str != undefined) {
+          word.innerHTML = str
+        } else {
+          word.innerHTML = ''
+        }
+        //500 760
+        if (img_bili < 380 / 600) {
+          var height = 600
+          var width = 600 * img_bili
+          var top = 80
+          var left = (500 - width) / 2
+        } else if (img_bili <= 1) {
+          var width = 420
+          var height = 420 / img_bili
+          var left = 40
+          var top = (740 - height) / 2
+        } else if (img_bili > 1) {
+          var width = 480
+          var height = 480 / img_bili
+          var left = 10
+          var top = (760 - height) / 2
+        }
+
+        div.style.width = width + 'px'
+        div.style.height = height + 'px'
+        div.style.left = left + 'px'
+        div.style.top = top + 'px'
+        div.style.backgroundSize = width - 8 + 'px ' + (height - 8) + 'px'
+
+        image_url_index++
+        if (image_url_index == Onload_imgs_url.length) image_url_index = 0
+      }
+
+      var get_pid = function(url) {
+        var index1 = url.indexOf('?')
+        if (index1 != -1) {
+          url = url.substr(0, index1)
+        }
+        return url.toString().substr(url.lastIndexOf('/') + 1)
+      }
+
+      //每次执行加载后5张图片
+      var bl_keepload = 'first'
+      var step_loadnum = 5
+      function step_load() {
+        var load_num = 0
+        //初步加载X张
+        if (image_url_index == 0 && bl_keepload == 'first') {
+          console.log('loading continue')
+          if (slider_images_url.length > step_loadnum) {
+            load_num = step_loadnum
+            bl_keepload = 'next'
+          } else {
+            load_num = slider_images_url.length
+            bl_keepload = 'end'
+          }
+          for (var i = 0; i < load_num; i++) {
+            var img = new Image()
+            img.index = i
+            img.src = slider_images_url[i]
+            img.onload = image_onload
+            img.onerror = image_onerror
+            Onload_imgs_url[i] = 'loading'
+          }
+        } else if (bl_keepload == 'end') {
+          return
+        } else {
+          console.log('loading continue')
+          if (slider_images_url.length - image_url_index > step_loadnum * 2) {
+            load_num = step_loadnum
+          } else {
+            load_num = slider_images_url.length - image_url_index - step_loadnum
+            bl_keepload = 'end'
+          }
+          for (
+            var i = image_url_index + step_loadnum;
+            i < image_url_index + step_loadnum + load_num;
+            i++
+          ) {
+            var img = new Image()
+            img.index = i
+            img.src = slider_images_url[i]
+            img.onload = image_onload
+            img.onerror = image_onerror
+            Onload_imgs_url[i] = 'loading'
+          }
+        }
+      }
+      function load_images() {
+        reshow = false
+        image_size_width = []
+        image_size_height = []
+        Onload_imgs_url = []
+        image_url_index = 0
+        have_num = 0
+        error_num = 0
+        begin_titletime = new Date()
+        begin_titletime = begin_titletime.getTime()
+        canshow = true
+        showtitle()
+        bl_keepload = 'first'
+        step_load()
+      }
+
+      function image_onerror(event) {
+        var img = event.target
+        var index = img.index
+        if (index < step_loadnum) error_num++
+        Onload_imgs_url[index] = 'not find'
+
+        if (
+          (have_num + error_num >= step_loadnum ||
+            slider_images_url.length == have_num + error_num) &&
+          canshow == true
+        ) {
+          reshow = false
+          canshow = false
+          if (have_num == 0) return
+          var end_titletime = new Date()
+          end_titletime = end_titletime.getTime()
+          var dis_titletime = Math.abs(end_titletime - begin_titletime)
+          if (dis_titletime > delaytime) {
+            liangziyun_kawa()
+          } else {
+            dis_titletime = delaytime - dis_titletime
+            timeout[0] = setTimeout(function() {
+              liangziyun_kawa()
+            }, dis_titletime)
+          }
+        }
+      }
+
+      function image_onload(event) {
+        if (reshow == true) return
+
+        var img = event.target
+        var index = img.index
+
+        if (index < step_loadnum) {
+          have_num++
+        }
+        Onload_imgs_url[index] = img.src
+        image_size_height[index] = img.height
+        image_size_width[index] = img.width
+
+        console.log(Onload_imgs_url[index])
+        // console.log(have_num + '-' + error_num);
+
+        if (
+          (have_num + error_num >= step_loadnum ||
+            slider_images_url.length == have_num + error_num) &&
+          canshow == true
+        ) {
+          reshow = false
+          canshow = false
+          if (have_num == 0) return
+          var end_titletime = new Date()
+          end_titletime = end_titletime.getTime()
+          var dis_titletime = Math.abs(end_titletime - begin_titletime)
+          if (dis_titletime > delaytime) {
+            liangziyun_kawa()
+          } else {
+            dis_titletime = delaytime - dis_titletime
+            timeout[0] = setTimeout(function() {
+              liangziyun_kawa()
+            }, dis_titletime)
+          }
+        }
+      }
+      var image_size_width = []
+      var image_size_height = []
+      var image_url_index = 0
+      var have_num = 0
+      var error_num = 0
+      var canshow = true
+      var reshow = false
+      var delaytime = 6000
+      var timeout = []
+
+      call_me(loading)
+
+      function reload_scene() {
+        clearnode()
+        reshow = true
+        setTimeout(load_images, 100)
+      }
+
+      function clearnode() {
+        for (var i = 0; i < timeout.length; i++) {
+          clearTimeout(timeout[i])
+        }
+
+        var itemlist = ['pagetitle', 'titlediv', 'xindiv', 'div1', 'div2']
+
+        for (var i = 0; i < itemlist.length; i++) {
+          id(itemlist[i]).style.webkitAnimation = ''
+        }
+      }
+    </script>
+
+    <!-- <link type="text/css" rel="stylesheet" href="css/guanzhu.css?ver=3" />  -->
+    <link rel="stylesheet" type="text/css" href="./2_files/buttonsdev.css" />
+    <meta
+      name="copyright"
+      content="我司的相册模板为版权所有，请停止抄袭，否则将按照侵权起诉！"
+    />
+    <style type="text/css">
+      @-webkit-keyframes zhuan {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+
+      @-webkit-keyframes aa_out_bounce_left {
+        0% {
+          -webkit-transform: translateX(0);
+        }
+        20% {
+          -webkit-transform: translateX(20px);
+        }
+        100% {
+          -webkit-transform: translateX(-125px);
+        }
+      }
+      @-webkit-keyframes aa_in_bounce_center {
+        0% {
+          opacity: 0;
+          -webkit-transform: scale(0.3);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: scale(1.05);
+        }
+        70% {
+          -webkit-transform: scale(0.9);
+        }
+        100% {
+          -webkit-transform: scale(1);
+        }
+      }
+      @-webkit-keyframes jinbi {
+        from {
+          -webkit-transform: rotateY(0deg);
+        }
+        to {
+          -webkit-transform: rotateY(180deg);
+        }
+      }
+
+      @-webkit-keyframes kugou {
+        0% {
+          -webkit-transform: scale(1);
+        }
+        20% {
+          -webkit-transform: scale(0.85);
+        }
+        60% {
+          -webkit-transform: scale(1.18);
+        }
+        80% {
+          -webkit-transform: scale(0.85);
+        }
+        100% {
+          -webkit-transform: scale(1);
+        }
+      }
+      @-webkit-keyframes kugou_xz {
+        0% {
+          -webkit-transform: scale(0);
+        }
+        20% {
+          -webkit-transform: scale(0);
+        }
+        60% {
+          -webkit-transform: scale(1.08);
+        }
+        80% {
+          -webkit-transform: scale(0.94);
+        }
+        100% {
+          -webkit-transform: scale(1);
+        }
+      }
+      @-webkit-keyframes kugou_xz_out {
+        0% {
+          -webkit-transform: scale(1);
+        }
+        30% {
+          -webkit-transform: scale(1.14);
+        }
+        100% {
+          -webkit-transform: scale(0);
+        }
+      }
+      @-webkit-keyframes kugou_xz_img {
+        0% {
+          -webkit-transform: translate(0px, 0px);
+        }
+        100% {
+          -webkit-transform: translate(0px, 2px);
+        }
+      }
+      .jubao-item {
+        position: relative;
+        float: left;
+        width: 360px;
+        height: 55px;
+        top: 0px;
+        font-size: 20px;
+        line-height: 55px;
+        margin-left: 20px;
+        border-bottom: 1px solid #ebebeb;
+      }
+      .jubao-radio {
+        position: absolute;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        top: 20px;
+      }
+
+      .jubao-detail {
+        position: relative;
+        float: left;
+        width: 360px;
+        margin-left: 20px;
+      }
+      .jubao-detail textarea {
+        width: 360px;
+        height: 80px;
+        font-size: 20px;
+        resize: none;
+        line-height: 40px;
+        border: none;
+        background-color: #eee;
+        border-radius: 10px;
+        padding-left: 10px;
+      }
+      @-webkit-keyframes guangzhu_ani {
+        from {
+          -webkit-transform: scale(1);
+          opacity: 1;
+        }
+        to {
+          -webkit-transform: scale(1.05);
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes che_ani {
+        0% {
+          -webkit-transform: translate(-20px, 0px);
+          opacity: 1;
+        }
+        8% {
+          -webkit-transform: translate(100px, 0px) scale(0.95, 1.05);
+          opacity: 1;
+        }
+        10% {
+          -webkit-transform: translate(100px, 0px) scale(1, 1);
+          opacity: 1;
+        }
+        12% {
+          -webkit-transform: translate(100px, 0px);
+          opacity: 1;
+        }
+        14% {
+          -webkit-transform: translate(100px, 0px);
+          opacity: 1;
+        }
+        16% {
+          -webkit-transform: translate(100px, 0px);
+          opacity: 1;
+        }
+        18% {
+          -webkit-transform: translate(100px, 0px);
+          opacity: 1;
+        }
+        20% {
+          -webkit-transform: translate(100px, 0px);
+          opacity: 1;
+        }
+        45% {
+          -webkit-transform: translate(100px, 0px) scale(0.97, 1.03);
+          opacity: 1;
+        }
+        50% {
+          -webkit-transform: translate(100px, 0px);
+          opacity: 1;
+        }
+        60% {
+          -webkit-transform: translate(200px, 0px);
+          opacity: 0;
+        }
+        100% {
+          -webkit-transform: translate(200px, 0px);
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes che1_ani {
+        0% {
+          opacity: 1;
+        }
+        12% {
+          opacity: 1;
+        }
+        14% {
+          opacity: 0.5;
+        }
+        16% {
+          opacity: 1;
+        }
+        18% {
+          opacity: 0.5;
+        }
+        20% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes baoming {
+        0% {
+          opacity: 0;
+        }
+        58% {
+          opacity: 0;
+          -webkit-transform: scale(1.4);
+        }
+        59% {
+          opacity: 1;
+          -webkit-transform: scale(1.4);
+        }
+        70% {
+          opacity: 1;
+          -webkit-transform: scale(0.95);
+        }
+        72% {
+          opacity: 1;
+          -webkit-transform: scale(1);
+        }
+        80% {
+          opacity: 0.8;
+          -webkit-transform: scale(1.1);
+        }
+        88% {
+          opacity: 1;
+          -webkit-transform: scale(1);
+        }
+        93% {
+          opacity: 0;
+          -webkit-transform: scale(1.3);
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes shijia {
+        0% {
+          -webkit-transform: rotate(20deg) scale(0.8);
+          opacity: 0;
+        }
+        10% {
+          -webkit-transform: rotate(20deg) scale(0.75);
+          opacity: 1;
+        }
+        20% {
+          -webkit-transform: rotate(20deg) scale(0.85);
+        }
+        28% {
+          -webkit-transform: rotate(20deg) scale(0.75);
+        }
+        38% {
+          -webkit-transform: rotate(20deg) scale(0.85);
+        }
+        47% {
+          -webkit-transform: rotate(20deg) scale(0.75);
+          opacity: 1;
+        }
+        55% {
+          -webkit-transform: rotate(20deg) scale(0.9);
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes biaozhi_ani {
+        0% {
+          opacity: 0;
+        }
+        10% {
+          opacity: 0;
+        }
+        20% {
+          opacity: 1;
+        }
+        45% {
+          opacity: 1;
+        }
+        55% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      #musicinfo {
+        color: #fff;
+        text-shadow: 1px 1px 2px #000;
+        font-size: 15px;
+        position: fixed;
+        left: 432px;
+        top: 82px;
+        width: 60px;
+        height: 20px;
+        z-index: 100;
+        display: none;
+        opacity: 1;
+      }
+      /*		@-webkit-keyframes heart_beating
+                {
+                    from {opacity: 1;-webkit-transform: scale(1);}
+                    to   {opacity: 0.8;-webkit-transform: scale(0.8);}
+                }
+                @-webkit-keyframes heart1_moving
+                {
+                    from  {opacity: 1;-webkit-transform: translate(0px,0px) scale(1);}
+                    to    {opacity: 0;-webkit-transform: translate(-20px,-50px) scale(1.5);}
+                }
+                @-webkit-keyframes heart2_moving
+                {
+                    from  {opacity: 1;-webkit-transform: translate(0px,0px) scale(1);}
+                    to    {opacity: 0;-webkit-transform: translate(20px,-60px) scale(2);}
+                }
+                @-webkit-keyframes heart3_moving
+                {
+                    from  {opacity: 1;-webkit-transform: translate(0px,0px) scale(1);}
+                    to    {opacity: 0;-webkit-transform: translate(70px,-40px) scale(2);}
+                }*/
+      #enddiv {
+        position: absolute;
+        width: 500px;
+        height: 815px;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 10000;
+        display: none;
+        opacity: 0;
+      }
+      #title_div {
+        width: 320px;
+        height: 200px;
+        left: 90px;
+        top: 250px;
+        color: #fff;
+        font-size: 25px;
+        position: relative;
+        line-height: 45px;
+        text-align: center;
+        font-family: '微软雅黑';
+        display: table;
+      }
+      #title_line {
+        position: absolute;
+        width: 370px;
+        height: 2px;
+        background-color: #fff;
+        top: 415px;
+        left: 65px;
+      }
+      #reshowbtn {
+        position: absolute;
+        width: 150px;
+        height: 44px;
+        border-radius: 10px;
+        background-color: rgba(94, 159, 177, 0.9);
+        color: #fff;
+        font-size: 22px;
+        text-align: center;
+        line-height: 44px;
+        top: 446px;
+        left: 74px;
+      }
+      #guanzhubtn {
+        position: absolute;
+        width: 150px;
+        height: 44px;
+        border-radius: 10px;
+        background-color: rgba(185, 91, 83, 0.9);
+        color: #fff;
+        font-size: 22px;
+        text-align: center;
+        line-height: 44px;
+        top: 446px;
+        left: 268px;
+      }
+      #morexiangce {
+        position: fixed;
+        width: 220px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        border-radius: 25px;
+        bottom: 20px;
+        left: 280px;
+        padding: 0px;
+        margin: 0px;
+        -webkit-box-sizing: border-box;
+        font-size: 24px;
+        padding-top: 11px;
+        z-index: 9999;
+        line-height: 28px;
+        border: 1px solid #fff;
+        display: none;
+      }
+      .bottombtn {
+        position: fixed;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        border-radius: 25px;
+        bottom: 20px;
+        padding: 0px;
+        margin: 0px;
+        font-size: 14pt;
+        z-index: 9999;
+        line-height: 50px;
+        border: 1px solid #fff;
+        display: none;
+      }
+      #saveoff,
+      #savepic {
+        left: 170px;
+        width: 100px;
+      }
+      #backtomore {
+        left: 80px;
+        width: 80px;
+      }
+      @-webkit-keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+      #loadingdiv {
+        width: 500px;
+        height: 815px;
+        z-index: 20000;
+        background-color: rgba(255, 255, 255, 0.5);
+        position: absolute;
+        pointer-events: none;
+        display: none;
+      }
+      .loadingword {
+        font-size: 25px;
+        color: rgba(82, 82, 82, 0.9);
+        font-family: '微软雅黑';
+        text-align: center;
+        width: 500px;
+        position: relative;
+        top: 300px;
+        line-height: 50px;
+      }
+      .gspan1 {
+        -webkit-animation: spanmove 3s linear infinite;
+        position: absolute;
+        left: 50px;
+      }
+      .gspan2 {
+        -webkit-animation: spanmove 3s 0.6s linear infinite;
+        position: absolute;
+        left: 75px;
+      }
+      .gspan3 {
+        -webkit-animation: spanmove 3s 1.2s linear infinite;
+        position: absolute;
+        left: 100px;
+      }
+      .gspan4 {
+        -webkit-animation: spanmove 3s 1.8s linear infinite;
+        position: absolute;
+        left: 125px;
+      }
+      .gspan5 {
+        -webkit-animation: spanmove 3s 2.4s linear infinite;
+        position: absolute;
+        left: 150px;
+      }
+      @-webkit-keyframes spanmove {
+        0% {
+          -webkit-transform: scale(1);
+        }
+        10% {
+          -webkit-transform: scale(1.5);
+        }
+        20% {
+          -webkit-transform: scale(1);
+        }
+        100% {
+          -webkit-transform: scale(1);
+        }
+      }
+      #letter {
+        /*position: fixed;*/
+        /*	left: 25px;
+                bottom: 30px;*/
+        width: 120px;
+        height: 80px;
+        /*-webkit-animation: lettermove 2s linear infinite alternate;*/
+        z-index: 10000;
+        position: absolute;
+        top: 0px;
+      }
+      #letterpicdiv {
+        /*	position: fixed;
+                left: 25px;
+                bottom: 30px;
+                width: 120px;
+                height: 80px;
+                -webkit-animation: lettermove 2s linear infinite alternate;
+                z-index: 10000;
+                display: none;*/
+        position: fixed;
+        left: -19px;
+        bottom: -12px;
+        width: 120px;
+        height: 80px;
+        z-index: 10000;
+        -webkit-transform: scale(0.6);
+        display: none;
+      }
+      @-webkit-keyframes lettermove {
+        from {
+          -webkit-transform: rotate(15deg) scale(1);
+        }
+        to {
+          -webkit-transform: rotate(-15deg) scale(1);
+        }
+      }
+      #letterdiv {
+        width: 500px;
+        position: absolute;
+        height: 815px;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 10001;
+        display: none;
+      }
+      .lettercon {
+        width: 350px;
+        height: 450px;
+        background-color: #fff;
+        left: 75px;
+        top: 150px;
+        position: absolute;
+      }
+      .lettertitle {
+        width: 100%;
+        height: 45px;
+        background-color: #f44336;
+        color: #fff;
+        font-size: 25px;
+        text-align: center;
+        line-height: 45px;
+      }
+      .lettercontent {
+        width: 310px;
+        margin-top: 15px;
+        margin-left: 20px;
+        font-size: 22px;
+        line-height: 35px;
+        text-align: center;
+      }
+      .letterimg {
+        width: 150px;
+        text-align: center;
+        height: 150px;
+        border-radius: 75px;
+        /*margin-left: 75px;*/
+      }
+      #lettername {
+        width: 100%;
+        font-size: 18px;
+        text-align: right;
+        margin-top: 10px;
+      }
+      .newxiangce {
+        width: 250px;
+        height: 50px;
+        background-color: #f44336;
+        border-radius: 10px;
+        margin-top: 10px;
+        color: #fff;
+        margin-left: 50px;
+        font-size: 24px;
+        line-height: 50px;
+        text-align: center;
+        -webkit-animation: guangzhu_ani 0.7s linear infinite alternate;
+        position: absolute;
+        bottom: 20px;
+      }
+      a {
+        text-decoration: none;
+      }
+      .letterclose {
+        font-size: 40px;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: 305px;
+        top: 0px;
+        color: #fff;
+        line-height: 45px;
+      }
+      #letternotice {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: #ff0000;
+        border-radius: 15px;
+        left: 103px;
+        top: -10px;
+        z-index: 10000;
+        color: #fff;
+        font-size: 22px;
+        text-align: center;
+        line-height: 30px;
+        font-weight: bold;
+        display: none;
+      }
+      @-webkit-keyframes guanzhu_test {
+        0% {
+          -webkit-transform: translate(-400px, 0px) scale(1.1);
+          opacity: 1;
+        }
+        10% {
+          -webkit-transform: translate(0px, 0px) scale(1.1);
+          opacity: 1;
+        }
+        20% {
+          -webkit-transform: translate(0px, 0px) scale(1.15);
+          opacity: 1;
+        }
+        30% {
+          -webkit-transform: translate(0px, 0px) scale(1.1);
+          opacity: 1;
+        }
+        40% {
+          -webkit-transform: translate(0px, 0px) scale(1.15);
+          opacity: 1;
+        }
+        50% {
+          -webkit-transform: translate(0px, 0px) scale(1.1);
+          opacity: 1;
+        }
+        60% {
+          -webkit-transform: translate(0px, 0px) scale(1.15);
+          opacity: 1;
+        }
+        70% {
+          -webkit-transform: translate(0px, 0px) scale(1.1);
+          opacity: 1;
+        }
+        80% {
+          -webkit-transform: translate(0px, 0px) scale(1.15);
+          opacity: 1;
+        }
+        90% {
+          -webkit-transform: translate(0px, 0px) scale(1.1);
+          opacity: 1;
+        }
+        94% {
+          -webkit-transform: translate(0px, 0px) scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translate(0px, 0px) scale(0.5);
+          opacity: 0;
+        }
+      }
+      #madiv {
+        width: 500px;
+        height: 815px;
+        background-color: rgba(0, 0, 0, 0.8);
+        position: absolute;
+        z-index: 20000;
+        top: 0px;
+        display: none;
+      }
+      .closema {
+        width: 70px;
+        height: 70px;
+        top: 0px;
+        position: absolute;
+        left: 430px;
+      }
+      #maimg {
+        position: absolute;
+        width: 100px;
+        bottom: 0px;
+        z-index: 10000;
+        display: none;
+      }
+
+      #songhua {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 275px;
+        opacity: 0;
+        display: none;
+        z-index: 10000;
+      }
+      @-webkit-keyframes songhua {
+        0% {
+          opacity: 0;
+          -webkit-transform: translate(0px, 0px);
+          -webkit-animation-timing-function: ease-out;
+        }
+        20% {
+          opacity: 1;
+          -webkit-transform: translate(0px, -15px);
+        }
+        40% {
+          opacity: 1;
+          -webkit-transform: translate(0px, -30px) rotate(0deg);
+          -webkit-animation-timing-function: linear;
+        }
+        70% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          -webkit-transform: translate(-220px, -310px) scale(0.3) rotate(-10deg);
+        }
+      }
+      #finishnotice {
+        width: 500px;
+        height: 43px;
+        background-color: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        top: -43px;
+        left: 0;
+        z-index: 10000;
+        color: #fff;
+        font-size: 20px;
+        text-align: center;
+        line-height: 44px;
+      }
+      @-webkit-keyframes finish-ani1 {
+        0% {
+          -webkit-transform: translate(0px, 0px);
+        }
+        20% {
+          -webkit-transform: translate(0px, 43px);
+        }
+        80% {
+          -webkit-transform: translate(0px, 43px);
+        }
+        100% {
+          -webkit-transform: translate(0px, 0px);
+        }
+      }
+      #hidebtn {
+        position: absolute;
+        top: 0px;
+        font-size: 15px;
+        left: 5px;
+        width: 103px;
+        height: 30px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        top: 7px;
+        line-height: 30px;
+        text-align: center;
+      }
+      @-webkit-keyframes addpicnotice {
+        0% {
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      #kugou_xz {
+        /*top: 0;*/
+        /* right: -12px; */
+        /*position: relative;*/
+        -webkit-transform: scale(0);
+        width: 102px;
+        height: 23px;
+        background: url(https://tu.kagirl.cn/pic/kugou_xz3.png) no-repeat center
+          center;
+        padding: 20px 55px;
+        -webkit-box-sizing: border-box;
+      }
+      #kugou_xz_img {
+        top: 14px;
+        left: 12px;
+        position: absolute;
+      }
+      #kugou_music_lyric {
+        position: absolute;
+        bottom: 180px;
+        width: 100%;
+        height: 30px;
+        font-size: 25px;
+        color: rgb(222, 229, 28);
+        line-height: 25px;
+        text-align: center;
+        opacity: 0;
+        text-shadow: 0px 1px 2px #000;
+      }
+      .lyric {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 2.5px;
+      }
+      #lyricDefault {
+        opacity: 1;
+        top: 40px;
+        font-size: 15px;
+      }
+      @-webkit-keyframes lyric_show {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes lyric_out {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      body {
+        background-color: #ffffff;
+      }
+      /*#savepic
+        {
+            position: fixed;
+            width: 90px;
+            height: 50px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            text-align: center;
+            bottom: 20px;
+            left: 0px;
+            padding: 0px;
+            margin: 0px;
+            font-size: 14pt;
+            z-index: 9999;
+            line-height: 50px;
+            border: 1px solid #fff;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+            display: none;
+        }*/
+    </style>
+    <script type="text/javascript">
+      shipin_selectd_pid = JSON.parse(shipin_selectd_pid)
+      // shipin_config =  JSON.parse(shipin_config);
+      var guid = getGuid() + '_' + shipin_config['scene']
+
+      var get_pid = function(url) {
+        if (url != undefined) {
+          var index1 = url.indexOf('?')
+          if (index1 != -1) {
+            url = url.substr(0, index1)
+          }
+          url = url.toString().substr(url.lastIndexOf('/') + 1)
+          var index2 = url.indexOf('.jpg')
+          if (index2 != -1) {
+            url = url.substr(0, index2)
+          }
+
+          return url
+        } else {
+          return ''
+        }
+      }
+
+      if (typeof objid === 'undefined') {
+        var objid = function(id) {
+          return document.getElementById(id)
+        }
+      }
+
+      function random(min, max) {
+        return Math.floor(min + Math.random() * (max - min))
+      }
+
+      function share_url() {
+        // if(editmode == false && (wxid == 'xinqing' || wxid == 'mofa' || wxid == 'youpin' || wxid == 'youmei' || wxid == 'xingfu' || wxid == 'sjyy' || wxid == 'keji' || wxid == 'youran' || wxid == 'donggan' || wxid == 'dongtai') )
+        // {
+        // objid('guanzhu_container').style.display = 'block';
+        // }
+
+        var locationurl = window.location.href
+        if (locationurl.indexOf('hidden') != -1) {
+          objid('guanzhu_container').style.display = 'none'
+        }
+
+        if (locationurl.indexOf('noshow') != -1) {
+          objid('guanzhu_container').style.display = 'none'
+        }
+
+        if (locationurl.indexOf('more=true') != -1) {
+          objid('morexiangce').style.display = 'block'
+          objid('notice').style.display = 'none'
+          objid('guanzhu_container').style.display = 'none'
+          if (!tbssaveoff) {
+            objid('savepic').style.display = 'block'
+            objid('backtomore').style.display = 'block'
+          }
+        }
+
+        // objid('guanzhu_container').style.display = 'none';
+        var index = random(0, 5)
+        index = index >= 5 ? 4 : index
+
+        var newAccount = [
+          'chunfengdeyixiangce',
+          'mangemiaowuxiangce',
+          'zhuyuanyurunxiangce',
+          'xingyunliushuixiangce',
+          'manmiaodianzixiangce',
+          'manmiaodongtaixiangce',
+          'chunshenruhuaxiangce',
+          'shengyixiangce',
+          'shengyiyinyuexiangce',
+          'shengyidianzixiangce',
+          'shengyidongtai',
+          'piaoxiangxiangce',
+          'piaoxiangyinyue',
+          'piaoxiangdianzi',
+          'piaoxiangdongtai',
+          'jiahuixiangce',
+          'jiahuiyinyuexiangce',
+          'jiahuidianzixiangce',
+          'manmansuiyuexiangce',
+          'shiyiyinyuexiangce',
+          'lingqixiangce',
+          'yuanfendongtaixiangce',
+          'haomeixiangce',
+          'haomeiyinyuexiangce',
+          'tuanjuxiangce'
+        ]
+        if (newAccount.indexOf(wxid) > -1) {
+          index = 0
+        }
+        // var index = 0;
+
+        // if(((e_bookid == 'KPFArkq_BczWB-JZomFBnzTU-XRIgcos' && wxid == 'chuanqi') || (e_bookid == 'dD2nhG888UwtloewAuQhNpNkAKLhhjMbPVmwpJ5UxaM' && wxid == 'kawa') ) && editmode == false && e_scene == 'qian')
+        // 	objid('fudai').style.display = 'block';
+
+        // if(wxid == 'youyi' || shareid == 'youyi')
+        // {
+        // 	return "http://"+wxid+index+".kawabody.cn/kphoto/doubleshowbook.php?bookid=" + e_bookid + "&wxid=" + wxid + '&shareid=' + shareid;
+        // }
+        var urlname = '.kagirl.cn'
+        if (locationurl.indexOf('kawabody') != -1) {
+          urlname = '.kawabody.cn'
+        }
+
+        // if(e_bookid == 'KPFArkq_BcwZfjCqkKubod2ZRYlNdNpb' && wxid == 'manman')
+        // {
+        // 	var index = random(0, 5);
+        // 	return "http://manman"+index+".kawabody.cn/kphoto/doublebook.php?bookid=" + e_bookid + "&wxid=" + wxid + '&shareid=' + shareid+ "&onmake=" + onmake;
+        // }
+
+        var chanel = ''
+        if (typeof getQueryStr != 'undefined') {
+          chanel = getQueryStr('chanel')
+          if (chanel) {
+            chanel = '&chanel=' + chanel
+          } else {
+            chanel = ''
+          }
+        }
+
+        var common_url_pattern =
+          '&wxid=' +
+          wxid +
+          '&bookid=' +
+          e_bookid +
+          '&olwxid=' +
+          olwxid +
+          '&shareflag=1'
+        if (
+          (locationurl.indexOf('more=true') != -1 && !tbssaveoff) ||
+          locationurl.indexOf('gcshare=1') > -1
+        )
+          common_url_pattern += '&gcshare=1' //为了记录用户从广场进入相册后分享相册链接，其他用户点击该链接进入的人
+        if (shareid == '') {
+          if (wxid == 'kawa') {
+            return (
+              location.protocol +
+              '//ziji' +
+              index +
+              urlname +
+              '/kphoto/doublebook.php?onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else if (wxid == 'aiche') {
+            return (
+              location.protocol +
+              '//aiche0.kagirl.cn/kphoto/doublebook.php?showid=' +
+              wxid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else if (
+            (wxid == 'hqyx' || wxid == 'shishang') &&
+            locationurl.indexOf('cuscuna.cn') != -1
+          ) {
+            return (
+              'http://alistar.cuscuna.cn/kphoto/doublebook.php?showid=' +
+              wxid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else if (wxid == 'hhm' || wxid == 'mgbt' || wxid == 'zzh') {
+            return (
+              'http://amumu.cuscuna.cn/kphoto/doublebook.php?showid=' +
+              wxid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else {
+            return (
+              location.protocol +
+              '//' +
+              wxid +
+              index +
+              urlname +
+              '/kphoto/doublebook.php?onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          }
+        } else {
+          if (wxid == 'kawa') {
+            return (
+              location.protocol +
+              '//ziji' +
+              index +
+              urlname +
+              '/kphoto/doublebook.php?shareid=' +
+              shareid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else if (wxid == 'aiche') {
+            if (index == 2) {
+              index = index + random(1, 3)
+            }
+            return (
+              location.protocol +
+              '//aiche' +
+              index +
+              '.kagirl.cn/kphoto/doublebook.php?showid=' +
+              wxid +
+              '&shareid=' +
+              shareid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else if (
+            (wxid == 'hqyx' || wxid == 'shishang') &&
+            locationurl.indexOf('cuscuna.cn') != -1
+          ) {
+            return (
+              'http://alistar.cuscuna.cn/kphoto/doublebook.php?showid=' +
+              wxid +
+              '&shareid=' +
+              shareid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else if (wxid == 'hhm' || wxid == 'mgbt' || wxid == 'zzh') {
+            return (
+              'http://amumu.cuscuna.cn/kphoto/doublebook.php?showid=' +
+              wxid +
+              '&shareid=' +
+              shareid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          } else {
+            return (
+              location.protocol +
+              '//' +
+              wxid +
+              index +
+              urlname +
+              '/kphoto/doublebook.php?shareid=' +
+              shareid +
+              '&onmake=' +
+              onmake +
+              chanel +
+              common_url_pattern
+            )
+          }
+        }
+      }
+
+      function share_img() {
+        var url = slider_images_url[0]
+        var index = url.indexOf('?')
+        if (index != -1) {
+          return url.substr(0, index)
+        }
+        return url
+      }
+
+      function on_weixin_share() {
+        if (!window.wx) {
+          return
+        }
+        try {
+          window.wx.hideAllNonBaseMenuItem()
+          // var index = random(0, 5);
+          // console.log('wxshow' + index);
+          // if(e_bookid == 'KPFArkq_BcwZfjCqkKubod2ZRYlNdNpb' && wxid == 'manman' && index != 0)
+          // {
+          // 	wx.showMenuItems({
+          // 	    menuList: ["menuItem:share:qq", "menuItem:share:QZone", "menuItem:favorite", "menuItem:profile", "menuItem:refresh", "menuItem:copyUrl"] // 要显示的菜单项，所有menu项见附录3
+          // 	});
+          // }
+          // else if(e_bookid == 'dD2nhG888UwSF8zBOtStmbqzioD8I1gWPVmwpJ5UxaM' && wxid == 'kawa' && index != 0)
+          // {
+          // 	wx.showMenuItems({
+          // 	    menuList: ["menuItem:share:qq", "menuItem:share:QZone", "menuItem:favorite", "menuItem:profile", "menuItem:refresh", "menuItem:copyUrl"] // 要显示的菜单项，所有menu项见附录3
+          // 	});
+          // // }
+          // else
+          // {
+          window.wx.showMenuItems({
+            menuList: [
+              'menuItem:share:appMessage',
+              'menuItem:share:timeline',
+              'menuItem:share:qq',
+              'menuItem:share:QZone',
+              'menuItem:favorite',
+              'menuItem:profile',
+              'menuItem:addContact',
+              'menuItem:refresh',
+              'menuItem:copyUrl'
+            ] // 要显示的菜单项，所有menu项见附录3
+          })
+          // }
+
+          var desc = e_desc.replace('<br>', '\n').replace('<br/>', '\n')
+          var subdesc = isLitixc
+            ? '最美最新的立体相册，送给你！'
+            : '这个相册，送给你'
+          if (vid != '') {
+            subdesc = '这个视频，送给你'
+            var videodesc = [
+              '我制作的精彩视频，打开看看吧！',
+              '超级炫酷的视频，来看看吧！',
+              '点击进来看看我做的精彩视频',
+              '超美的视频，值得一看！',
+              '在吗？送你一个好看的视频'
+            ]
+            var videodesci = Math.round(Math.random() * (videodesc.length - 1))
+            desc = videodesc[videodesci]
+          }
+
+          window.wx.onMenuShareAppMessage({
+            title: desc,
+            desc: subdesc,
+            link: share_url(),
+            imgUrl: share_img(),
+            type: 'link',
+            dataUrl: '',
+            success: function() {
+              share_callback('message')
+            },
+            cancel: function() {}
+          })
+
+          window.wx.onMenuShareTimeline({
+            title: desc,
+            link: share_url(),
+            imgUrl: share_img(),
+            success: function() {
+              share_callback('timeline')
+            },
+            cancel: function() {}
+          })
+          window.wx.onMenuShareQQ({
+            title: '音乐相册',
+            desc: desc,
+            link: share_url(),
+            imgUrl: share_img(),
+            type: 'link',
+            success: function() {
+              share_callback('message')
+            },
+            cancel: function() {}
+          })
+          window.wx.onMenuShareQZone({
+            title: '音乐相册',
+            desc: desc,
+            link: share_url(),
+            imgUrl: share_img(),
+            type: 'link',
+            success: function() {
+              share_callback('message')
+            },
+            cancel: function() {}
+          })
+        } catch (e) {}
+      }
+      //		share_callback('message');
+      function share_callback(type) {
+        url =
+          'adpv.php?click=' +
+          type +
+          '&openid=' +
+          e_openid +
+          '&bookid=' +
+          e_bookid +
+          '&wxid=' +
+          wxid +
+          '&fm=' +
+          fm
+        XMLHttp.sendReq('GET', url, '', function() {
+          callback_next(type)
+        }) //测试
+        //统计分享
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'sceneShare', e_scene)
+          if (isMina == true) {
+            new lzyStatistics().call(wxid, 'mina', 'h5showShare') //小程序分享统计
+          }
+          if (vid != '') {
+            new lzyStatistics().call(wxid, 'videophoto', 'detailshare')
+          }
+        }
+
+        if (editmode == false) {
+          // XMLHttp.sendReq('GET', 'adpv.php?click=8', '', function(){})
+        } else {
+          XMLHttp.sendReq(
+            'GET',
+            'tongjiscene.php?scene=' +
+              e_scene +
+              '&type=edit' +
+              '&olwxid=' +
+              olwxid,
+            '',
+            function() {}
+          )
+        }
+      }
+
+      function callback_next(type) {
+        var locationurl = location.href
+        var url =
+          'editbook.php?type=' +
+          type +
+          '&bookid=' +
+          e_bookid +
+          '&wxid=' +
+          wxid +
+          '&shareid=' +
+          shareid +
+          '&edit=' +
+          editmode +
+          '&olwxid=' +
+          olwxid
+
+        if (e_openid != null) {
+          url = url + '&openid=' + e_openid
+        }
+
+        url = url + '&scene=' + e_scene
+
+        if ((wxid == 'aiche' && shareid == '') || isMina) {
+          XMLHttp.sendReq('GET', url, '', function() {})
+          return
+        } else if (editmode == true && onmake == false) {
+          XMLHttp.sendReq('GET', url, '', function() {})
+          visit_guangchang()
+          return
+        } else {
+          location.href = url
+          return
+        }
+      }
+
+      function on_wx_music_init() {
+        if (e_desc != '') {
+          document.title = e_desc.replace('<br>', '\n').replace('<br/>', '\n')
+        } else {
+          document.title = '音乐相册'
+        }
+
+        // loadingdiv_out();
+        create_music()
+        on_weixin_share()
+        setTimeout(get_address, 500)
+
+        if (isfinish == 'yes') read_localstorage()
+        var locationurl = window.location.href
+        // if(locationurl.indexOf('debug')!=-1)
+        // {
+        check_cookie()
+        // }
+
+        if (editmode == false) {
+          var obj = document.getElementById('guanzhu_container')
+          obj.style.visibility = 'visible'
+          if (navigator.userAgent.match(/MicroMessenger/) == null) {
+            // obj.innerHTML = "点我更多精彩";
+            obj.style.display = 'none'
+          }
+          // objid('guanzhu_container').style.display = 'none';
+          objid('jubao-click').style.display = 'block'
+          //var obj = document.getElementById("kawa-youli");
+          //obj.style.visibility = 'visible';
+        }
+        var locationurl = window.location.href
+        if (locationurl.indexOf('hidden') != -1) {
+          objid('guanzhu_container').style.display = 'none'
+        }
+
+        if (locationurl.indexOf('noshow') != -1) {
+          objid('guanzhu_container').style.display = 'none'
+        }
+
+        if (editmode == false && app == 'xdxj') {
+          objid('guanzhu_container').style.display = 'block'
+        }
+        // if(isguangchang == 'guangchang')
+        objid('guanzhu_container').style.display = 'none'
+        // if((isshow == 'show' || isshow == 'ma') && editmode == false)
+        // {
+        // 	objid('notice').style.display = 'block';
+        // }
+        checkletter()
+
+        if (article_wxid) {
+          //				objid('add_same').style.display = 'block';
+        }
+
+        if (fm == 'woa' || fm == 'woam' || videofm == 'videoplay') {
+          if (e_bookid != 'Fpx5HcVlzcq5TJ2sLvlMOBzFQZ9Kg90T') {
+            objid('backtomake').style.display = 'block'
+          }
+        }
+
+        if (editmode != true) {
+          if (
+            locationurl.indexOf('noshow=true') != -1 ||
+            navigator.userAgent.match(/MicroMessenger/) == null
+          ) {
+            objid('notice').style.display = 'none'
+            objid('add_same').style.display = 'none'
+            // objid('maimg').style.display = 'none';
+          } else if (
+            editmode == false &&
+            locationurl.indexOf('noshow=true') == -1 &&
+            gotomake == 'make' &&
+            navigator.userAgent.match(/MicroMessenger/) != null &&
+            locationurl.indexOf('more=true') == -1
+          ) {
+            objid('guanzhu_container').style.display = 'block'
+            objid('notice').style.display = 'block'
+            if (gcshare == 1) {
+              objid('gotomore').style.display = 'block'
+              if (typeof lzyStatistics != 'undefined') {
+                new lzyStatistics().call(
+                  wxid,
+                  'photoEditButton',
+                  'gotomoreshow'
+                )
+              }
+            }
+          }
+
+          if (
+            isMina == true &&
+            navigator.userAgent.match(/MicroMessenger/) != null
+          ) {
+            objid('mina_share').style.display = 'block'
+            objid('guanzhu_container').style.display = 'block'
+            opensharemask()
+          }
+        }
+
+        if (tbssaveoff && isguangchang == 'guangchang') {
+          objid('saveoff').style.display = 'block'
+        }
+
+        if (editmode == false) {
+          id('mengban').style.display = 'block'
+        }
+
+        if (locationurl.indexOf('printmodule=true') != -1) {
+          objid('guanzhu_container').style.display = 'none'
+          var container = objid('morexiangce')
+          container.style.display = 'block'
+          container.style.backgroundImage = ''
+          container.innerText = '立即打印'
+          container.onclick = function() {
+            event.stopPropagation()
+            location.href =
+              'hzprint.php?wxid=' +
+              wxid +
+              '&bookid=' +
+              e_bookid +
+              '&scene=' +
+              e_scene
+          }
+        }
+        if (wxid == 'aiche' && shareid == '') {
+          objid('notice').style.display = 'none'
+        }
+        if (article_wxid) {
+          objid('notice').style.display = 'none'
+        }
+        //中秋2018活动
+        if (typeof isactive !== 'undefined' && isactive) {
+          objid('notice').style.display = 'none'
+          objid('guanzhu_container').style.display = 'block'
+        }
+      }
+
+      //创建存储cookie的函数
+      function set_cookie(value) {
+        // value = "";
+        var locationurl = window.location.href
+        if (locationurl.indexOf('kawabody') != -1)
+          document.cookie = 'books=' + value + ';domain=.kawabody.cn'
+        else document.cookie = 'books=' + value + ';domain=.kagirl.cn'
+        // alert('write:'+document.cookie);
+      }
+
+      function get_cookie(c_name) {
+        // alert(document.cookie);
+        if (document.cookie.length > 0) {
+          var c_start = document.cookie.indexOf(c_name + '=')
+          if (c_start != -1) {
+            c_start = c_start + c_name.length + 1
+            var c_end = document.cookie.indexOf(';', c_start)
+            if (c_end == -1) c_end = document.cookie.length
+            return unescape(document.cookie.substring(c_start, c_end))
+          }
+        }
+        return ''
+      }
+
+      function check_cookie() {
+        var thisbook = e_bookid + '&' + wxid
+
+        books = get_cookie('books')
+        // alert(books);
+        console.log('cookie:' + books)
+
+        var locationurl = window.location.href
+
+        if (editmode == true || locationurl.indexOf('hidden') != -1) {
+          objid('guanzhu_container').style.display = 'none'
+          if (objid('guanzhubtn')) {
+            objid('guanzhubtn').style.display = 'none'
+            objid('reshowbtn').style.left = '163px'
+          }
+
+          //还没存进去
+          cookie_str = ''
+          if (books != null && books != '' && books.indexOf(thisbook) == -1) {
+            cookie_str = books + ':' + thisbook
+          } else if (books.indexOf(thisbook) != -1) {
+            return
+          } else if (books == null || books == '') {
+            cookie_str = thisbook
+          }
+
+          set_cookie(cookie_str)
+        } else {
+          if (books != null && books != '' && books.indexOf(thisbook) != -1) {
+            objid('guanzhu_container').style.display = 'none'
+            if (objid('guanzhubtn')) {
+              objid('guanzhubtn').style.display = 'none'
+              objid('reshowbtn').style.left = '163px'
+            }
+          } else {
+            objid('guanzhu_container').style.display = 'block'
+          }
+        }
+
+        // objid('guanzhu_container').style.webkitAnimation = 'guangzhu_ani 0.8s linear infinite alternate';
+      }
+
+      var videoready = false
+      call_me(on_wx_music_init)
+
+      //音乐播放
+
+      var music_header = 'http://sound.kagirl.net/sound/'
+      var e_music_player = new Audio()
+
+      function play_music() {
+        if (e_music_url == '') {
+          return
+        }
+        //检查
+
+        //音乐转圈图标，初始化
+
+        sound_image_init()
+
+        if (kugou_music_check(e_music_url)) {
+          return kugou_play_music(e_music_url)
+        } else if (e_music_url.indexOf('qqmusic') != -1) {
+          mymusic = 'https://qnphoto.kagirl.cn/music/688042.m4a'
+        } else {
+          mymusic = e_music_url
+        }
+        if (
+          typeof e_music_player == 'undefined' &&
+          typeof onerror_tips != 'undefined'
+        ) {
+          onerror_tips = 'typof Audio: ' + typeof Audio
+        }
+        e_music_player.src = mymusic
+        e_music_player.loop = 'loop'
+
+        console.log(e_music_player.src)
+        e_music_player.onerror = function() {
+          mymusic = mymusic.replace('.mp4', '.mp3')
+
+          e_music_player.src = mymusic
+          e_music_player.play()
+          e_music_player.onerror = null
+        }
+        //检查音乐是否缓冲成功
+        if (vid == '' || (vid != '' && videoready == true))
+          e_music_player.play()
+        checkMusicBufferTimer = window.setInterval('checkMusicBuffer()', 1000)
+
+        //检查音乐是否缓冲成功
+        /*setTimeout(function()
+			 {
+			 var timeRanges = e_music_player.buffered;
+			 var timeBuffered = timeRanges.end(timeRanges.length - 1);
+			 var bufferPercent = timeBuffered /e_music_player.duration;
+			 console.log('music:'+bufferPercent);
+
+			 if(isNaN(bufferPercent) || bufferPercent == 0)
+			 {
+			 if(e_music_url.indexOf("http://sound.kagirl.net") != -1)
+			 {
+			 var url = e_music_url.replace("http://sound.kagirl.net", "http://sound.kagirl.net");
+			 }
+			 else
+			 {
+			 var url = e_music_url.replace("https://music.kagirl.cn", "http://sound.kagirl.net");
+			 }
+			 e_music_player.src = url;
+			 e_music_player.play();
+			 }
+			 },5000);*/
+
+        //音乐转圈图标，初始化
+        sound_image_init()
+        bplay = 1
+      }
+
+      var checkMusicBufferTimer = ''
+      function checkMusicBuffer() {
+        // var timeRanges = e_music_player.buffered;
+        // var timeBuffered = timeRanges.end(timeRanges.length - 1);
+        // var bufferPercent = timeBuffered /e_music_player.duration;
+        var bufferPercent = 1
+        var notStart = bplay == 1 && bufferPercent == 1 && e_music_player.paused
+        console.log('music:' + bufferPercent)
+        //尚未播放
+        if (isNaN(bufferPercent) || bufferPercent == 0 || notStart) {
+          if (vid == '' || (vid != '' && videoready == true))
+            e_music_player.play()
+          console.log('尚未播放')
+        }
+        //已经在播放
+        if (bplay == 1 && !e_music_player.paused) {
+          console.log('已经在播放')
+          window.clearInterval(checkMusicBufferTimer)
+        }
+      }
+
+      var bplay = 0 //播放状态：0未开始，1播放中
+      function create_music() {
+        if (e_music_url == '') {
+          return
+        }
+        //音乐转圈图标，初始化
+        sound_image_init()
+        //音乐播放  视频延迟播放音乐
+        play_music()
+      }
+
+      function stop_music() {
+        if (kugou_music.isActive) {
+          kugou_stop_music()
+        }
+        if (e_music_player != null) {
+          e_music_player.pause()
+        }
+        if (objid('sound_image')) {
+          objid('sound_image').style.webkitAnimation = ''
+        }
+      }
+
+      function switchsound() {
+        if (kugou_music && kugou_music.isActive) {
+          //酷狗音乐-音乐暂停和播放
+          kugou_music_toggle()
+        } else {
+          var ai = objid('sound_image')
+          var au = e_music_player
+          var text = objid('music_txt')
+
+          if (au.paused) {
+            bplay = 1
+            au.play()
+          } else {
+            bplay = 0
+            au.pause()
+          }
+
+          if (bplay == 1) {
+            ai.style.webkitAnimation = 'zhuan 3s linear infinite'
+            text.innerHTML = '打开'
+          } else {
+            ai.style.webkitAnimation = ''
+            text.innerHTML = '关闭'
+          }
+          text.style.webkitAnimation = 'fadeout 2.5s steps(1)'
+          setTimeout(function() {
+            text.style.webkitAnimation = ''
+          }, 2500)
+        }
+      }
+
+      function change_video_music_status(status, time) {
+        console.log(status)
+
+        if (status == 'reset') {
+          // 重新播放
+          e_music_player.pause()
+          e_music_player.currentTime = 0
+          if (bplay == 0) {
+            console.log('用户自己暂停了')
+            return
+          }
+          e_music_player.play()
+        } else if (status == 'play') {
+          if (time != 0) {
+            e_music_player.currentTime = time
+          }
+          e_music_player.play()
+          sound_image_init()
+        } else if (status == 'pause') {
+          e_music_player.pause()
+          if (objid('sound_image')) {
+            objid('sound_image').style.webkitAnimation = ''
+          }
+        }
+      }
+
+      function statReadySec(guid, se) {
+        guid = guid + '_' + se
+        var url = 'editbook.php?'
+        url = url + 'type=statistic_video_ready_sec'
+        url = url + '&wxid=' + wxid
+        url = url + '&bookid=' + e_bookid
+        url = url + '&time=' + Date.now()
+        url = url + '&guid=' + guid
+        XMLHttp.sendReq('get', url, '', function(ret) {})
+      }
+
+      function getGuid() {
+        return (
+          Math.random()
+            .toString()
+            .substr(3, 23) +
+          '_' +
+          Date.now()
+        ).toString(36)
+      }
+
+      function visit_more() {
+        //统计
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'photoShareButton', 'visitMore')
+          if (shareid) {
+            new lzyStatistics().call(wxid, 'moreBookVisitMore', e_bookid)
+          }
+        }
+        location.href = 'makebook.php?wxid=' + wxid + '&olwxid=' + olwxid
+      }
+
+      function visit_guanzhu() {
+        //统计
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'photoShareButton', 'visit_guanzhu')
+          if (article_wxid) {
+            new lzyStatistics().call(
+              wxid,
+              'photoShareButton',
+              'article_visit_guanzhu'
+            )
+          }
+
+          if (vid != '') {
+            new lzyStatistics().call(wxid, 'videophoto', 'detailfreemake')
+          }
+
+          if (e_bookid == 'Fpx5HcVlzcpGDR4_qc0g3_s5AL4redHF') {
+            new lzyStatistics().call(wxid, 'photoshowup', 'photomake')
+          }
+        }
+
+        //小程序跳转
+        if (isMina == true && mineJump != '') {
+          if (typeof lzyStatistics != 'undefined') {
+            new lzyStatistics().call(wxid, 'mina', 'h5showMakeBtn')
+          }
+          location.href = mineJump
+          return false
+        }
+
+        if (typeof e_gz_make != 'undefined' && e_gz_make > 0 && vid == '') {
+          XMLHttp.sendReq(
+            'GET',
+            'traceland.php?type=make&wxid=' +
+              wxid +
+              '&olwxid=' +
+              olwxid +
+              '&bookid=' +
+              e_bookid,
+            '',
+            function(objXMLHttp) {
+              var ret = JSON.parse(objXMLHttp.responseText)
+              location.href = ret.url
+            }
+          )
+          return
+        }
+
+        if (gotomake == 'make' && vid != '' && shareflag == 1) {
+          location.href =
+            'makebook.php?wxid=' +
+            wxid +
+            '&olwxid=' +
+            olwxid +
+            '&videofm=videoshowshare'
+          return
+        }
+        if (istiaozhuan == 'no') {
+          location.href = guanzhu_url
+          return
+        }
+        if (istiaozhuan == 'hide') {
+          return
+        }
+
+        if (gotomake == 'make') {
+          if (article_wxid) {
+            location.href = guanzhu_url
+          } else if (shareid == '') {
+            location.href = 'makebook.php?wxid=' + wxid + '&olwxid=' + olwxid
+          } else {
+            location.href = 'makebook.php?from=shareid&wxid=' + shareid
+          }
+        }
+
+        if (navigator.userAgent.match(/MicroMessenger/)) {
+          // var sceneurl = 'adpv.php?click=7&scene='+e_scene+'&bookid='+e_bookid+'&wxid='+wxid;
+          // XMLHttp.sendReq('GET', sceneurl, '', function(){
+          //    });
+          // XMLHttp.sendReq('GET', 'tongjiscene.php?scene='+e_scene+'&type=guanzhu', '', function(){});
+          // location.href = guanzhu_url;
+        } else {
+          // location.href = "http://article.mp.qq.com/index.php/preview/show?p=cd8c8cf61eb8c661b2163815a8f35a59&m=1442370092841159&i=0&t=c005e9f4d683429f35044a50ba3c4ab1&_wv=134217729&v=3&env=10003&mpu=33303236323133363530";
+        }
+      }
+
+      function gotoguanzhu() {
+        //统计
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'photoShareButton', 'gotoguanzhu')
+        }
+        // if(isshow == 'show')
+        if (shareid == 'aiche') {
+          location.href = 'makebook.php?wxid=aiche'
+        } else {
+          if (typeof e_gz_group != 'undefined' && e_gz_group > 0) {
+            XMLHttp.sendReq(
+              'GET',
+              'traceland.php?type=more&wxid=' + wxid + '&olwxid=' + olwxid,
+              '',
+              function(objXMLHttp) {
+                var ret = JSON.parse(objXMLHttp.responseText)
+                location.href = ret.url
+              }
+            )
+          } else {
+            location.href = guanzhu_url
+          }
+        }
+        // else
+        // 	openma();
+      }
+
+      function gotomore() {
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'photoEditButton', 'gotomore')
+        }
+        location.href = './more2.php?wxid=' + wxid
+      }
+
+      function get_address() {
+        if (
+          location.href.indexOf('bookid=FalD4jB6GUtphMyZUexe9A') == -1 &&
+          editmode == false
+        ) {
+          url = 'getip.php?'
+          //XMLHttp.sendReq('GET', url, '', get_address_callback);
+        }
+      }
+      function get_address_callback(objXMLHttp) {
+        if (objXMLHttp.responseText.indexOf('深圳') != -1) {
+          objid('guanzhu_container').style.webkitAnimation =
+            'aa_out_bounce_left 0.5s .2s ease both'
+          var obj = objid('shenzhen')
+          obj.style.visibility = 'visible'
+          obj.style.webkitAnimation = 'aa_in_bounce_center 0.5s .2s ease both'
+          obj.href =
+            'http://kphoto.kagirl.cn/kphoto/showbook.php?bookid=FalD4jB6GUtphMyZUexe9A&wxid=zhi&fromsz=true'
+        }
+      }
+
+      function close_searchmusic() {
+        objid('search_music').style.display = 'none'
+        objid('search_music_result_div').innerHTML = ''
+        e_music_player.play()
+        reflush()
+      }
+      function search_musicshow() {
+        objid('search_music').style.display = 'block'
+        var width = document.body.clientWidth
+        var height = document.body.clientHeight
+
+        var div_height = 500 / (width / height)
+        if (objid('search_music_result') !== null) {
+          objid('search_music_result').style.height = div_height - 170 + 'px'
+        }
+      }
+      add_music_xml = new XMLHttpRequest()
+      function submit_addmusic() {
+        var musicname = objid('music_name').value
+        if (musicname == null || musicname == '') {
+          alert('音乐名称不能为空！')
+        } else {
+          var url = 'music_feedback.php?musicname=' + musicname
+          add_music_xml.open('GET', url, true)
+          add_music_xml.onreadystatechange = add_music_callback
+          add_music_xml.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+          )
+          add_music_xml.send(null)
+        }
+      }
+      function trim(str) {
+        return str.replace(/(^\s*)|(\s*$)/g, '')
+      }
+      function add_music_callback() {
+        if (add_music_xml.readyState == 4) {
+          if (add_music_xml.status == 200) {
+            var result = add_music_xml.responseText
+            console.log(result)
+            if (result.indexOf('1')) {
+              objid('add_music_result').style.display = 'block'
+            } else alert('提交失败，请稍后再试。')
+          }
+          // else
+          // 	alert('提交失败，请稍后再试。');
+        }
+        // else
+        // {
+        // 	alert('提交失败，请稍后再试。');
+        // }
+      }
+      music_xml = new XMLHttpRequest()
+      function search_music() {
+        objid('search_music_result_div').innerHTML = ''
+        objid('search_music_notice').style.display = 'block'
+
+        var word = objid('search_musicname').value
+        word = trim(word)
+        if (word == '' || word == null || word == undefined) {
+          alert('输入不能为空')
+        }
+        word = encodeURIComponent(word)
+
+        // if(wxid == 'meiwen')
+        // {
+        // 	// url = 'http://kphoto.kagirl.cn/music/189/search.php?keyword='+word;
+        // 	url = 'http://kphoto.kagirl.cn/music/search.php?music='+word;
+
+        // 	objid('search_music_result_div').style.display = 'none';
+        // }
+        // else
+        // {
+        url = '/music/search.php?music=' + word
+        // url = 'http://kphoto.kagirl.cn/kphoto/musicsearch.php?music='+word;
+        // }
+
+        music_xml.open('GET', url, true)
+        music_xml.onreadystatechange = SearchMusic_onCallback
+        music_xml.setRequestHeader(
+          'Content-type',
+          'application/x-www-form-urlencoded'
+        )
+        music_xml.send(null)
+      }
+
+      function SearchMusic_onCallback() {
+        if (music_xml.readyState == 4) {
+          if (music_xml.status == 200) {
+            var result = music_xml.responseText
+            result = JSON.parse(result)
+            var obj = objid('search_music_result_div')
+            // alert(result.length)
+            if (result.length == undefined || result.length == 0) {
+              var music_value = objid('search_musicname').value
+              music_value = trim(music_value)
+              obj.innerHTML =
+                '<div style="line-height:30px;margin:50px 10px 10px 10px;font-size:16px;"><p style="font-size:22px;line-height30px;">找不到与<b>"' +
+                music_value +
+                '"</b>相关音乐，请您检查您输入的歌曲名称是否有误<br></p></div>'
+              obj.style.display = 'block'
+            } else {
+              var htm_txt = ''
+              for (var i = 0; i < result.length; i++) {
+                htm_txt +=
+                  '<div class="e-mp3box-item"><div class="e-mp3box-item-img"><img src="https://tu.kagirl.cn/icon/yinfu.png"></div><div id="search_music_result_text" class="e-mp3box-item-title" onclick="search_music_title_click(' +
+                  "'" +
+                  result[i]['url'] +
+                  "'" +
+                  ',' +
+                  i +
+                  ')">' +
+                  result[i]['title'] +
+                  '</div><div id="search_music_btn' +
+                  i +
+                  '" class="search-mp3box-item-ok" id="search-music-ok-' +
+                  i +
+                  '" onclick="search_music_select(' +
+                  "'" +
+                  result[i]['musicname'] +
+                  "'" +
+                  ',' +
+                  i +
+                  ')">确定</div></div>'
+              }
+              obj.innerHTML = htm_txt
+              obj.style.display = 'block'
+              // htm_txt += '<div class="e-mp3box-item-img"  id="e-music-img-'+(i+oks_num)+'"><img src="https://tu.kagirl.cn/icon/yinfu.png"></div>';
+
+              // htm_txt += '<div class="e-mp3box-item-title" onclick="e_music_title_click(\''+url+'\','+(i+oks_num)+')">'+title+'</div>';
+
+              // htm_txt += '<div class="e-mp3box-item-ok" id="e-music-ok-'+(i+oks_num)+'" onclick="e_music_select(\''+musicname+'\')">确定</div>';
+
+              // 		var str = '<div class="e-mp3box-item-img"><img src="https://tu.kagirl.cn/icon/yinfu.png"></div><div id="search_music_result_text" class="e-mp3box-item-title" onclick="search_music_title_click('+"'"+result['url']+"'"+')">'+result['title']+'</div><div id="search_music_result_btn" class="e-mp3box-item-ok" id="e-music-ok-0" onclick="search_music_select('+"'"+result['musicname']+"'"+')">确定</div>';
+              // 		obj.innerHTML = str;
+              // 		obj.style.display = 'block';
+            }
+
+            // objid('search_music_result_text').innerHTML = result['title'];
+            // objid('search_music_result_text').onclick="e_music_title_click('"+result['url']+"',0)";
+            // objid('search_music_result_btn').onclick = "e_music_select('"+result['musicname']+"')";
+            // objid('search_music_result').innerHTML = result;
+          } else {
+            console.log('Error: ' + music_xml.status)
+          }
+        }
+
+        objid('search_music_result_div').style.display = 'block'
+        objid('search_music_notice').style.display = 'none'
+      }
+      function search_music_title_click(url, index) {
+        var oks = document.getElementsByClassName('search-mp3box-item-ok')
+        var e_player = objid('e-player')
+
+        for (var i = 0; i < oks.length; i++) {
+          oks[i].style.display = 'none'
+        }
+        if (objid('search_music_btn' + index) !== null) {
+          objid('search_music_btn' + index).style.display = 'block'
+        }
+        // objid('e-music-ok-' + index).style.display = 'block';
+        //objid('e-music-img-' + index).style.webkitAnimation = 'zhuan 2.5s linear infinite';
+        stop_music()
+        if (kugou_music_check(url)) {
+          e_player && e_player.pause && e_player.pause()
+        } else if (e_player == null) {
+          var player = document.createElement('audio')
+          player.id = 'e-player'
+          player.src = url
+          player.loop = 'loop'
+          player.play()
+          player.onerror = function() {
+            player.src = url.replace('.mp4', '.mp3')
+            player.play()
+            player.onerror = null
+          }
+          document.body.appendChild(player)
+        } else if (e_player.src == url) {
+          if (e_player.paused) {
+            e_player.play()
+          } else {
+            e_player.pause()
+            objid('e-music-img-' + index).style.webkitAnimation = ''
+          }
+        } else {
+          e_player.src = url
+          e_player.play()
+        }
+      }
+
+      function search_music_select(url) {
+        objid('search_music').style.display = 'none'
+        e_music_url = url
+
+        if (typeof reload_scene == 'undefined') {
+          var url = 'editbook.php?'
+          url = url + 'type=set_music'
+          url = url + '&openid=' + e_openid
+          url = url + '&bookid=' + e_bookid
+          url = url + '&music=' + encodeURIComponent(e_music_url)
+          url = url + '&wxid=' + wxid
+
+          XMLHttp.sendReq('GET', url, '', function() {
+            location.reload()
+          })
+        } else {
+          tool_close()
+
+          if (e_music_player) {
+            if (!objid('cardsound') && !objid('e-player')) {
+              create_music()
+              e_music_player.play()
+            }
+            //音乐转圈图标，初始化
+            sound_image_init()
+            e_music_player.src = objid('e-player').src
+            e_music_player.play()
+          } else {
+            create_music()
+          }
+
+          e_close_wind()
+          editBookSong(e_music_url)
+          kugou_music_empty() //清空酷狗音乐
+        }
+      }
+      function editBookSong(music_url, name) {
+        var url = 'editbook.php?'
+        url = url + 'type=set_music'
+        url = url + '&openid=' + e_openid
+        url = url + '&bookid=' + e_bookid
+        url = url + '&music=' + encodeURIComponent(music_url)
+        url = url + '&name=' + encodeURIComponent(name)
+        url = url + '&wxid=' + wxid
+
+        XMLHttp.sendReq('GET', url, '', function() {
+          //location.reload();
+        })
+      }
+      var bjubao_type = true
+      function showjubaoimg(num) {
+        var img = objid('jubaoimg-' + num)
+        if (img.style.display == 'none') {
+          var imgarr = document.getElementsByClassName('jubao-radio')
+          for (var i = 0; i < imgarr.length; i++) {
+            imgarr[i].style.display = 'none'
+          }
+          img.style.display = 'block'
+          if (objid('jubao-detail').value >= 5) {
+            objid('jubao-submit').style.display = 'block'
+          }
+          bjubao_type = true
+        } else {
+          img.style.display = 'none'
+          objid('jubao-submit').style.display = 'none'
+          bjubao_type = false
+        }
+      }
+      function showjubaoimg2() {
+        if (objid('jubao-detail').value.length >= 5 && bjubao_type) {
+          objid('jubao-submit').style.display = 'block'
+        } else {
+          objid('jubao-submit').style.display = 'none'
+        }
+      }
+      function showjubao() {
+        if (localStorage.getItem(e_bookid + wxid) == '1') {
+          alert('您已经反馈过这个相册了')
+          return
+        }
+        objid('jubao-content').style.display = 'block'
+      }
+      function hidejubao() {
+        objid('jubao-content').style.display = 'none'
+      }
+      function submitjubao() {
+        if (objid('jubao-detail').value.length < 5) {
+          alert('问题描述字数太少！')
+          return
+        }
+        var img_arr = document.getElementsByClassName('jubao-radio')
+        var jubao_type = 0
+        while (
+          img_arr[jubao_type] &&
+          img_arr[jubao_type].style.display == 'none'
+        ) {
+          jubao_type++
+        }
+        alert('反馈提交成功！')
+        id('jubao-content').style.display = 'none'
+        localStorage.setItem(e_bookid + wxid, 1)
+        var jubaourl =
+          location.protocol +
+          '//photo1.kagirl.cn/kphoto/jubao.php?bookid=' +
+          e_bookid +
+          '&wxid=' +
+          wxid +
+          '&type=' +
+          jubao_type +
+          '&detail=' +
+          encodeURIComponent(objid('jubao-detail').value)
+        XMLHttp.sendReq('get', jubaourl, '', function(objXMLHttp) {})
+      }
+      // function visit_guanggao()
+      // {
+      //     window.location.href = 'adpv.php?click=6';
+      // }
+      function visit_sousuo() {}
+      function write_localstorage() {
+        console.log('write')
+        objid('like_div').onclick = havesonghua
+
+        var url = 'submit_like.php?bookid=' + e_bookid + '&wxid=' + wxid
+        XMLHttp.sendReq('GET', url, '', function() {
+          // objid('like_heart').src='https://qnphoto.kagirl.cn/zan/like0.png';
+          // objid('like_heart').style.webkitAnimation = 'heart_beating 0.4s linear 4 alternate';
+          // objid('heart1').style.display = 'block';
+          // objid('heart2').style.display = 'block';
+          // objid('heart3').style.display = 'block';
+          // objid('heart1').style.webkitAnimation = 'heart1_moving 1.6s 0.2s linear both';
+          // objid('heart2').style.webkitAnimation = 'heart2_moving 1.6s 0.2s linear both';
+          // objid('heart3').style.webkitAnimation = 'heart3_moving 1.6s 0.2s linear both';
+          objid('songhua').style.display = 'block'
+          objid('songhua').style.webkitAnimation = 'songhua 2s linear both'
+          objid('like_num').innerHTML = zan_num + 1
+
+          // var day = new Date();
+          // var daystr = day.get
+          var sendstr = e_bookid + wxid + date
+
+          if (localStorage == undefined || localStorage.likestr == null) {
+            var like_arr = []
+          } else {
+            var like_arr = JSON.parse(localStorage.likestr)
+          }
+
+          if (like_arr.length == 50) {
+            like_arr.pop()
+          }
+          like_arr.unshift(sendstr)
+
+          likestr = JSON.stringify(like_arr)
+          // console.log(likestr);
+          localStorage.likestr = likestr
+        })
+      }
+
+      function nottofeedback() {
+        if (bjubao_type == false) alert('您已经反馈过这个相册了')
+        else alert('反馈必须不少于5个字')
+      }
+
+      function read_localstorage() {
+        // if(editmode == false )
+        // {
+        objid('like_div').style.display = 'block'
+        // }
+
+        if (localStorage == undefined || localStorage.likestr == null) {
+          objid('like_div').onclick = write_localstorage
+        } else {
+          var like_arr = JSON.parse(localStorage.likestr)
+          var sendstr = e_bookid + wxid + date
+          console.log(sendstr)
+          for (var i = 0; i < like_arr.length; i++) {
+            if (like_arr[i] == sendstr) {
+              objid('like_div').onclick = havesonghua
+              console.log('哈哈哈哈哈')
+              // objid('like_heart').src = 'https://qnphoto.kagirl.cn/zan/like0.png';
+              break
+            } else if (i == like_arr.length - 1) {
+              objid('like_div').onclick = write_localstorage
+              // console.log('canclick');
+            }
+          }
+        }
+        // console.log(objid("like_div").onclick);
+        objid('like_num').innerHTML = zan_num
+      }
+      function havesonghua() {
+        objid('finishnotice').innerHTML = '您已经送过花了哦~'
+        objid('finishnotice').style.webkitAnimation = ''
+        setTimeout(function() {
+          objid('finishnotice').style.webkitAnimation =
+            'finish-ani1 3s linear both'
+        }, 100)
+      }
+
+      function visit_guangchang() {
+        var randnum = 2
+        var locationurl = location.href
+        // if(randnum == 1)
+        // {
+        // 	location.href = 'https://j.youzan.com/e_UqBY';
+        // }
+        // else if(randnum == 2)
+        // {
+        // 	location.href = 'https://h5.youzan.com/v2/feature/b5mBd1Fe8y';
+        // }
+        // else if(randnum == 3)
+        // {
+        // 	location.href = 'https://h5.youzan.com/v2/feature/8xep33BU7W';
+        // }
+        // else if(randnum == 4)
+        // {
+        // 	location.href = 'https://h5.youzan.com/v2/feature/1W53uoikJK';
+        // }
+        // else
+        // {
+        if (videoUrl != '') {
+          location.href = videoUrl
+          return false
+        }
+
+        if (newyearUrl != '') {
+          location.href = newyearUrl
+          return false
+        }
+
+        //			if(e_openid !== null && e_openid !== undefined && e_openid !== '' && (wxid == 'shouji' || wxid == 'huansheng' || wxid == 'zizhi' || wxid == 'xqqy'))
+        //			{
+        //				location.href = "/kphoto/actives/photoact/activity.php?openid="+e_openid+"&wxid="+wxid;
+        //				return false;
+        //			}
+
+        if (shareid != '' && shareid != undefined) {
+          location.href =
+            '/kphoto/more' + randnum + '.php?sfrom=xiangce&wxid=' + shareid
+          // if(locationurl.indexOf('hidden') != -1)
+          // {
+          // 	if(locationurl.indexOf('menu') != -1)
+          // 		location.href = 'http://kphoto.kagirl.cn/kphoto/menu.php?wxid='+shareid;
+          // 	else
+          // 		location.href = 'http://kphoto.kagirl.cn/kphoto/more1.php?back=true&wxid='+shareid;
+          // }
+          // else
+          // 	location.href = 'http://kphoto.kagirl.cn/kphoto/more1.php?back=true&show=true&wxid='+shareid;
+        } else {
+          location.href =
+            '/kphoto/more' + randnum + '.php?sfrom=xiangce&wxid=' + wxid
+        }
+
+        // }
+      }
+      function loadingdiv_out() {
+        objid('loadingdiv').style.webkitAnimation = 'fadeout 0.3s linear both'
+        if (navigator.userAgent.indexOf('Windows Phone') != 1) {
+          objid('loadingdiv').style.display = 'none'
+        }
+
+        setTimeout(function() {
+          objid('loadingdiv').style.display = 'none'
+        }, 400)
+      }
+      function checkletterbtn() {
+        XMLHttp.sendReq('get', 'tongjiscene.php?type=baoguang', '', function(
+          objXMLHttp
+        ) {})
+      }
+      function clickbtn() {
+        XMLHttp.sendReq('get', 'tongjiscene.php?type=click', '', function(
+          objXMLHttp
+        ) {})
+      }
+
+      function openletter() {
+        objid('letterdiv').style.display = 'block'
+        objid('letter').src = 'https://qnphoto.kagirl.cn/guangchang/letter1.png'
+        objid('letter').style.height = '120px'
+        objid('letter').style.top = '-40px'
+        if ((objid('letternotice').style.display = 'block')) clickbtn()
+        objid('letternotice').style.display = 'none'
+        setletter()
+        // clickbtn();
+      }
+      function closeletter() {
+        objid('letterdiv').style.display = 'none'
+        objid('letterpicdiv').style.display = 'none'
+        objid('letter').src = 'https://qnphoto.kagirl.cn/guangchang/letter.jpg'
+        objid('letter').style.height = '80px'
+        objid('letter').style.top = '0px'
+      }
+      var newletter = '20160919'
+      function checkletter() {
+        return
+        var locationurl = window.location.href
+        if (
+          objid('guanzhu_container').style.display == 'none' &&
+          (locationurl.indexOf('more') == -1) &
+            (locationurl.indexOf('hidden') == -1)
+        ) {
+          if (
+            editmode == false &&
+            navigator.userAgent.match(/MicroMessenger/) != null
+          ) {
+            id('mengban').style.display = 'block'
+            var myid = wxid
+            if (shareid != '') myid = shareid
+            XMLHttp.sendReq('get', 'checkshow.php?wxid=' + myid, '', function(
+              objXMLHttp
+            ) {
+              var txt = objXMLHttp.responseText
+              if (txt == '1' || txt == 1) {
+                var lastletter = get_cookie('letterid')
+                if (lastletter != newletter) {
+                  objid('letternotice').style.display = 'block'
+                  checkletterbtn()
+                }
+                objid('letterpicdiv').style.display = 'block'
+
+                // objid('letterurl').href = 'http://'+myid+'0.kagirl.cn/kphoto/showbook.php?bookid=Fpx5HcVlzcrVub7Jl87_OYZwmGOha7Jd&wxid=ziji&more=redpoint&hidden&shareid='+myid;
+                XMLHttp.sendReq('get', 'getname.php?id=' + myid, '', function(
+                  objXMLHttp
+                ) {
+                  var txt = objXMLHttp.responseText
+                  objid('lettername').innerHTML =
+                    '来自：' + txt + '&nbsp;&nbsp;&nbsp;'
+                })
+              }
+            })
+          }
+        }
+      }
+
+      function setletter() {
+        var lastletter = get_cookie('letterid')
+
+        if (lastletter != newletter) {
+          document.cookie = 'letterid=' + newletter + ';domain=.kagirl.cn'
+        }
+      }
+      function saveoff() {
+        location.href =
+          'saveoffstat.php?type=guangchang&bookid=' +
+          e_bookid +
+          '&wxid=' +
+          wxid +
+          '&shareid=' +
+          shareid
+      }
+      function savepic() {
+        //统计
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'photoShareButton', 'savepic')
+          if (shareid) {
+            new lzyStatistics().call(wxid, 'moreBookSavePic', e_bookid)
+          }
+        }
+        var locationurl = location.href
+        location.href = locationurl.replace('gotoshow', 'psinfo1')
+      }
+      function backtomore() {
+        location.href = 'more2.php?wxid=' + shareid
+      }
+      function openma() {
+        objid('madiv').style.display = 'block'
+        objid('erweima').src =
+          'https://qnphoto.kagirl.cn/newma/' + wxid + '.png'
+      }
+      function closema() {
+        objid('madiv').style.display = 'none'
+      }
+      function hideguanzhu() {
+        hidejubao()
+        objid('guanzhu_container').style.display = 'none'
+        objid('notice').style.display = 'none'
+      }
+
+      //酷狗音乐选择 -- start
+      //加载JS
+      function kugou_loadScript(url, callback) {
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'lzyKugou', 'retry')
+        }
+        if (typeof onerror_tips != 'undefined') {
+          onerror_tips = 'kugou_loadScript'
+        }
+        var script = document.createElement('script')
+        script.type = 'text/javascript'
+        if (script.readyState) {
+          script.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              callback && callback()
+              script.onreadystatechange = script = callback = null
+            }
+          }
+        } else {
+          script.onload = function() {
+            callback && callback()
+            script.onload = script = callback = null
+          }
+        }
+        script.onerror = function() {
+          if (typeof lzyStatistics != 'undefined') {
+            new lzyStatistics().call(wxid, 'lzyKugou', 'retry_error')
+          }
+          script.onerror = null
+        }
+        script.src = url
+        document.getElementsByTagName('head')[0].appendChild(script)
+      }
+      //重试
+      function kugou_retry_play(fn) {
+        if (typeof window.playSong == 'undefined') {
+          kugou_loadScript(
+            'https://pc.service.kugou.com/apps/kawaweika/js/message.js',
+            function() {
+              fn()
+            }
+          )
+        } else {
+          fn()
+        }
+      }
+
+      //展示音乐图标
+      function showCardsound() {
+        var cardsound = objid('cardsound')
+        var sound_image = objid('sound_image')
+        var tips = document.querySelectorAll('.sound_tips')
+        console.log(tips)
+
+        sound_image.onload = function() {
+          sound_image.style.webkitAnimation = 'zhuan 3s linear infinite'
+          cardsound.style.display = 'block'
+        }
+
+        ;[].forEach.call(tips, function(tip) {
+          tip.style = ''
+        })
+
+        if (kugou_music.isActive) {
+          sound_image.src =
+            'https://qnphoto.kagirl.cn/images/kugou_icon_015.png?v=1'
+          if (typeof lzyStatistics != 'undefined') {
+            new lzyStatistics().once(wxid, 'lzyKugou', 'show')
+          }
+        } else {
+          sound_image.src = 'https://tu.kagirl.cn/pic/music_note_big.png?v=1'
+        }
+      }
+      //切歌
+      function setMusic(url) {
+        window.e_music_url = url
+
+        if (typeof url == 'object') {
+          //酷狗音乐
+          var music_url = kugou_music.tag + url.id + '_' + url.hash
+          kugou_play_music(music_url)
+        } else {
+          kugou_music_empty() //清空酷狗音乐
+
+          if (e_music_player) {
+            sound_image_init()
+            e_music_player.src = url
+            e_music_player.play()
+          } else {
+            create_music()
+          }
+        }
+
+        showCardsound()
+      }
+      //音乐转圈图标，初始化
+      function sound_image_init() {
+        // var bg_htm  = "<div id='sound_image_div'><img id='sound_image' src='https://tu.kagirl.cn/pic/music_note_big.png' style='-webkit-animation:zhuan 2s linear infinite' data-tag='normal'></div>";
+        // var txt_htm = "<div id='music_txt'></div>";
+        window.musicCanPlay = true
+        var cardsound = objid('cardsound')
+
+        if (window.innerWidth === 720) {
+          cardsound.className = 'cardsound_720'
+        }
+
+        showCardsound()
+
+        //修改图片
+        // objid('sound_image').style.webkitAnimation     = "zhuan 3s linear infinite";
+        // var tag = objid('sound_image').getAttribute('data-tag');
+        // var sound_div = objid('cardsound');
+        // if(tag == 'normal'){
+        //     return true;
+        // }
+        // sound_div.innerHTML = bg_htm  + txt_htm;
+      }
+
+      //酷狗试听音乐
+      function kugou_try_music(music) {
+        if (music.id.length < 1 || music.hash.length < 1) {
+          return false
+        }
+        kugou_music.try = music
+        stop_music()
+        //播放音乐，动态图
+        kugou_retry_play(function() {
+          window.playSong(kugou_music.try.hash)
+        })
+      }
+      //酷狗音乐播放
+      function kugou_play_music(music_url) {
+        // if(vid != '') return false; 	//视频播放
+        var kugou_url = kugou_music_check(music_url)
+        if (!kugou_url) {
+          return false
+        }
+        kugou_music.play_time = new Date().getTime()
+        //全局变量更新
+        kugou_music.id = kugou_url['id']
+        kugou_music.hash = kugou_url['hash']
+        kugou_music.isActive = 1
+        //歌词播放
+        kugou_loadLyric()
+        //播放音乐，动态图
+        kugou_retry_play(function() {
+          window.playSong(kugou_music.hash)
+        })
+        // kugou_play_icon();
+        showCardsound()
+
+        bplay = 1
+        return true
+      }
+      //酷狗音乐，旋转的图标
+      function kugou_play_icon() {
+        if (!objid('sound_image')) {
+          console.log('sound_image not found')
+          return
+        }
+        objid('sound_image').style.webkitAnimation = 'zhuan 3s linear infinite'
+
+        if (kugou_music.isActive) {
+          return false
+        }
+
+        objid('sound_image').setAttribute(
+          'src',
+          'https://qnphoto.kagirl.cn/images/kugou_icon_015.png?v=1'
+        )
+        objid('sound_image').setAttribute('data-tag', kugou_music.tag)
+
+        var div = document.createElement('div')
+        div.innerHTML =
+          '<img src="https://tu.kagirl.cn/pic/kugou_xz2.png" id="kugou_xz_img" />'
+
+        var cardsound = objid('cardsound')
+        div.setAttribute('id', 'kugou_xz')
+        div.setAttribute('onclick', 'kugou_download()')
+        cardsound.appendChild(div)
+        //酷狗统计
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().once(wxid, 'lzyKugou', 'show')
+        }
+      }
+      //检测是否酷狗音乐
+      function kugou_music_check(music_url) {
+        if (typeof music_url == 'undefined') {
+          return false
+        }
+
+        if (typeof music_url == 'object') {
+          if (music_url.id && music_url.hash) {
+            return music_url
+          }
+        } else {
+          var music_arr = music_url.split('_')
+          var tag = music_arr[0] + '_'
+          if (tag == kugou_music.tag) {
+            return {
+              id: music_arr[1],
+              hash: music_arr[2]
+            }
+          }
+        }
+
+        return false
+      }
+      //酷狗音乐，暂停/播放，切换
+      function kugou_music_toggle() {
+        //酷狗统计
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().once(wxid, 'lzyKugou', 'click')
+        }
+        var ai = objid('sound_image')
+        var aid = objid('sound_image_div')
+        window.playSong(kugou_music.hash, 'toggle')
+        bplay = bplay ? 0 : 1
+        if (bplay == 1) {
+          ai.style.webkitAnimation = 'zhuan 3s linear infinite'
+          objid('kugou_xz').setAttribute(
+            'style',
+            '-webkit-animation:kugou_xz_out 0.3s linear both'
+          )
+          objid('kugou_xz_img').setAttribute('style', '')
+        } else {
+          var ai_transform = getComputedStyle(ai).transform || ''
+          var aid_transform = getComputedStyle(aid).transform || ''
+          if (typeof ai_transform != 'undefined') {
+            aid.style.transform =
+              aid_transform === 'none'
+                ? ai_transform
+                : ai_transform.concat(' ', aid_transform)
+          }
+          ai.style.webkitAnimation = ''
+          objid('kugou_xz').setAttribute(
+            'style',
+            '-webkit-animation:kugou_xz 0.5s linear both'
+          )
+          objid('kugou_xz_img').setAttribute(
+            'style',
+            '-webkit-animation:kugou_xz_img 0.3s linear infinite alternate'
+          )
+        }
+        return true
+      }
+      //酷狗音乐，暂停
+      function kugou_stop_music() {
+        if (kugou_music.isActive) {
+          window.playSong(kugou_music.hash, 'pause')
+        }
+      }
+      //酷狗音乐-重置清空
+      function kugou_music_empty() {
+        kugou_stop_music()
+        kugou_music.hash = ''
+        kugou_music.id = ''
+        kugou_music.isActive = 0
+      }
+      //酷狗音乐-搜索关闭
+      function kugou_search_close() {
+        e_close_wind()
+        window.callCloseSearch()
+        if (kugou_music.isActive) {
+          music_url = kugou_music.tag + kugou_music.id + '_' + kugou_music.hash
+          kugou_play_music(music_url)
+        } else {
+          e_music_player.play()
+        }
+        if (objid('sound_image')) {
+          objid('sound_image').style.webkitAnimation =
+            'zhuan 3s linear infinite'
+        }
+      }
+      //音乐重新播放
+      function kugou_music_restart() {
+        if (typeof kugou_music.try != 'undefined') {
+          window.playSong(kugou_music.try.hash, 'pause')
+        }
+        if (kugou_music.isActive) {
+          music_url = kugou_music.tag + kugou_music.id + '_' + kugou_music.hash
+          kugou_play_music(music_url)
+        } else {
+          e_music_player.play()
+        }
+        if (objid('sound_image')) {
+          objid('sound_image').style.webkitAnimation =
+            'zhuan 3s linear infinite'
+        }
+      }
+      //酷狗音乐，去下载页
+      function kugou_download() {
+        if (kugou_music.isActive) {
+          //酷狗统计
+          if (typeof lzyStatistics != 'undefined') {
+            new lzyStatistics().once(wxid, 'lzyKugou', 'download')
+          }
+          window.toSongPage(kugou_music.id, kugou_music.hash)
+        }
+      }
+
+      //搜索页，选择音乐后触发的动作
+      window.choiceSongCallback = function(res) {
+        music_url = kugou_music.tag + res.id + '_' + res.hash
+        e_close_wind()
+        stop_music()
+        var kugou_name = res.name
+        if (kugou_name != undefined) {
+          kugou_name = kugou_name
+            .replace(/\(/g, '')
+            .replace(/\)/g, '')
+            .replace(/\'/g, '')
+            .replace(/amp;/g, '')
+            .replace(/!/g, '')
+            .replace(/\*/g, '')
+        } else {
+          kugou_name = ''
+        }
+        editBookSong(music_url, kugou_name)
+        //播放音乐
+        kugou_play_music(music_url)
+      }
+      //子页播放歌曲通知父页 playSongCallback
+      window.playSongCallback = function() {
+        //父页处理背景音乐暂停..
+        stop_music()
+        search_music_title_click(kugou_music.tag + 'click', 0)
+      }
+      window.startPlayCallback = function(that) {
+        currentTime = 0
+        if (that && that.currentTime) {
+          currentTime = that.currentTime
+        }
+
+        if (kugou_music && kugou_music.play_time) {
+          var start_play = new Date().getTime()
+          var play_time = start_play - kugou_music.play_time
+          var log = 'play spend:' + play_time
+          if (window.lzyStartTime) {
+            log =
+              log +
+              '\n window spend:' +
+              (kugou_music.play_time - window.lzyStartTime)
+          }
+          kugou_music.play_time = null
+          window.lzyStartTime = null
+          // console.log(log);
+          if (play_time > 0) {
+            var t = Math.floor((play_time / 1000) * 10) / 10
+            if (t == 0) {
+              t = '0.0'
+            }
+            //统计分享
+            if (typeof lzyStatistics != 'undefined') {
+              new lzyStatistics().call(wxid, 'lzyKugouTime', t)
+            }
+          }
+        }
+        if (kugou_music && kugou_music.lyric) {
+          var lyricText = ''
+          var lyricStep = 0
+          for (var i = 0; i < kugou_music.lyric.length; i++) {
+            if (currentTime > kugou_music.lyric[i][0] - 1) {
+              lyricStep = i
+              lyricText = kugou_music.lyric[i][1]
+            }
+          }
+          if (kugou_music.lyricStep != lyricStep) {
+            id('lyric' + (lyricStep - 1)).style.webkitAnimation =
+              'lyric_out 0.1s linear both'
+            id('lyric' + lyricStep).style.webkitAnimation =
+              'lyric_show 0.1s linear both'
+          }
+          kugou_music.lyricStep = lyricStep
+        }
+        // if(vid !=''){
+        // 	kugou_stop_music()
+        // }
+      }
+
+      function kugou_loadLyric() {
+        function parseLyric(lyric) {
+          var lines = lyric.split('\n'),
+            pattern = /\[\d{2}:\d{2}.\d{2}\]/g,
+            result = []
+          while (!pattern.test(lines[0])) {
+            lines = lines.slice(1)
+          }
+          lines[lines.length - 1].length === 0 && lines.pop()
+          for (step in lines) {
+            var data = lines[step]
+            var index = data.indexOf(']')
+            var time = data.substring(0, index + 1),
+              value = data.substring(index + 1)
+            var timeString = time.substring(1, time.length - 2)
+            var timeArr = timeString.split(':')
+            result.push([
+              parseInt(timeArr[0], 10) * 60 + parseFloat(timeArr[1]),
+              value
+            ])
+          }
+          result.sort(function(a, b) {
+            return a[0] - b[0]
+          })
+          return result
+        }
+
+        //去掉words
+        var hasWords = false
+        for (i in words) {
+          if (words[i].length > 0) {
+            hasWords = true
+            break
+          }
+        }
+        var lyricContent = id('kugou_music_lyric')
+        var defalutLyric =
+          '<div class="lyric" id="lyricDefault">背景音乐来自酷狗音乐</div>'
+        lyricContent.innerHTML = defalutLyric
+
+        if (
+          kugou_music.lyricShow &&
+          kugou_music.hash == '1FC25317391E29F29BA65D815A9CE6B4' &&
+          !hasWords
+        ) {
+          lyricContent.style.webkitAnimation = 'lyric_show 0.1s linear both'
+          var lyricUrl = 'https://s1.kagirl.cn/js/iwantyou.lrc'
+          XMLHttp.sendReq('GET', lyricUrl, '', function(res) {
+            kugou_music.lyric = parseLyric(res.responseText)
+            kugou_music.lyricStep = 0
+
+            var html = defalutLyric
+            for (i in kugou_music.lyric) {
+              html =
+                html +
+                '<div class="lyric" id="lyric' +
+                i +
+                '">' +
+                kugou_music.lyric[i][1] +
+                '</div>'
+            }
+            lyricContent.innerHTML = html
+            id('lyricDefault').style.webkitAnimation =
+              'lyric_out 0.1s 2s linear both'
+          })
+        } else {
+          lyricContent.innerHTML = ''
+          kugou_music.lyric = false
+          kugou_music.lyricStep = 0
+        }
+      }
+      //酷狗音乐选择 -- end
+      function add_same() {
+        //统计分享
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'photoShareButton', 'addSame')
+          if (e_bookid == 'Fpx5HcVlzcpGDR4_qc0g3_s5AL4redHF') {
+            new lzyStatistics().call(wxid, 'photoshowup', 'photosame')
+          }
+        }
+        location.href =
+          guanzhu_url + '&type=add_same&bookid=' + e_bookid + '&bookwx=' + wxid
+      }
+
+      //页面初始化
+      ;(function(window, document) {
+        document.addEventListener('DOMContentLoaded', init)
+        //修改图标大小
+        function init() {
+          resizeIcon()
+        }
+
+        function resizeIcon() {
+          if (window.innerWidth == '720') {
+            document.getElementById('like_div').className = 'like_div_720'
+            document.getElementById('footer').className = 'footer-720'
+          }
+        }
+      })(window, document)
+
+      function backtobooks() {
+        var locationurl = window.location.href
+        if (typeof lzyStatistics != 'undefined') {
+          new lzyStatistics().call(wxid, 'photouser', 'backtobooks')
+        }
+        if (videofm == 'videoplay') {
+          gomanage()
+          return false
+        }
+        window.history.back(-1)
+      }
+
+      function setCookie(name, value, days) {
+        var exp = new Date()
+        exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000)
+        document.cookie =
+          name +
+          '=' +
+          escape(value) +
+          ';domain=kagirl.cn;expires=' +
+          exp.toGMTString()
+      }
+      function getCookie(name) {
+        var arr,
+          reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+        if ((arr = document.cookie.match(reg))) return unescape(arr[2])
+        else return null
+      }
+
+      function closesharemask() {
+        id('share_mask').style.display = 'none'
+      }
+
+      function opensharemask() {
+        id('share_mask').style.display = 'block'
+      }
+
+      function gomanage() {
+        if (location.href.indexOf('onmake=true') != -1)
+          window.location = 'makebook.php?&wxid=' + wxid + '&olwxid=' + olwxid
+        //公号
+        else
+          window.location =
+            'mybooks.php?openid=' +
+            e_openid +
+            '&wxid=' +
+            wxid +
+            '&olwxid=' +
+            olwxid
+      }
+    </script>
+
+    <!-- 	<div id='licaitong' style='position:fixed;width:86px;bottom:0px;opacity:0.8;left:413px;height:103px;' onclick='window.location.href="https://qian.tenpay.com/weixin/action/shake150818/index.shtml?actid=50091&min_reward_money=200&stat_data=fm_162_llhb_5&stat_type=68&ADTAG=2015.ACT.LLHB.HB5"'  ontouchstart='window.location.href="https://qian.tenpay.com/weixin/action/shake150818/index.shtml?actid=50091&min_reward_money=200&stat_data=fm_162_llhb_5&stat_type=68&ADTAG=2015.ACT.LLHB.HB5"'>
+            <img src='image/guanggao/jiao2.png' style='width:86px;'>
+            <img src='image/guanggao/jinbi.png' style='position:absolute;left:57px;top:68px;-webkit-animation: jinbi 1.5s linear infinite alternate;width:25px;'>
+        </div> -->
+
+    <div
+      id="kawa-youli"
+      style="position:fixed;width:50px;height:50px;visibility:hidden;
+    background-color:#dd0000;color:yellow;text-align:center;
+    border-radius:25px;bottom:18px;
+    right:10px;padding:0px;margin:0px;
+    -webkit-box-sizing:border-box;
+    -webkit-box-shadow: #666 0px 0px 10px;
+    font-size:8pt;padding-top:11px;z-index:9999;"
+      ontouchstart="location.href=&#39;http://kphoto.kagirl.cn/kphoto/htm/toyouli.htm&#39;"
+    >
+      <b>卡娃<br />心意坊</b>
+    </div>
+
+    <div
+      id="jubao-content"
+      style="position:absolute;width:400px;background-color:#fff;margin:auto;height:540px;top:45%;left:0;right:0;-webkit-transform:translateY(-50%);display:none;z-index:15000"
+    >
+      <div
+        style="width:400px;height:45px;background-color:rgb(250,97,65);text-align:center;font-size:22px;color:#fff;line-height:45px;"
+      >
+        意见反馈或投诉
+        <div id="hidebtn" onclick="hideguanzhu()">关闭底部按钮</div>
+      </div>
+      <div id="jubao-1" class="jubao-item" onclick="showjubaoimg(0)">
+        色情低俗<img
+          id="jubaoimg-0"
+          class="jubao-radio"
+          style="display:none"
+          src="./2_files/jubao.png"
+        />
+      </div>
+      <div id="jubao-2" class="jubao-item" onclick="showjubaoimg(1)">
+        谣言<img
+          id="jubaoimg-1"
+          class="jubao-radio"
+          style="display:none"
+          src="./2_files/jubao.png"
+        />
+      </div>
+      <div id="jubao-3" class="jubao-item" onclick="showjubaoimg(2)">
+        诱导分享<img
+          id="jubaoimg-2"
+          class="jubao-radio"
+          style="display:none"
+          src="./2_files/jubao.png"
+        />
+      </div>
+      <div id="jubao-4" class="jubao-item" onclick="showjubaoimg(3)">
+        政治敏感<img
+          id="jubaoimg-3"
+          class="jubao-radio"
+          style="display:none"
+          src="./2_files/jubao.png"
+        />
+      </div>
+      <div id="jubao-5" class="jubao-item" onclick="showjubaoimg(4)">
+        冒用或诽谤他人<img
+          id="jubaoimg-4"
+          class="jubao-radio"
+          style="display:none"
+          src="./2_files/jubao.png"
+        />
+      </div>
+      <div id="jubao-6" class="jubao-item" onclick="showjubaoimg(5)">
+        相册播放有问题<img
+          id="jubaoimg-5"
+          class="jubao-radio"
+          style="display:none"
+          src="./2_files/jubao.png"
+        />
+      </div>
+      <div class="jubao-detail">
+        <textarea
+          id="jubao-detail"
+          placeholder="问题描述（必填，至少5个字）"
+          oninput="showjubaoimg2()"
+          maxlength="100"
+        ></textarea>
+      </div>
+      <div
+        onclick="hidejubao()"
+        id="jubao-cancel"
+        style="position:absolute;width:120px;height:40px;background-color:#ACABAB;left:47px;top:480px;color:white;border-radius:5px;font-size:20px;line-height:40px;text-align:center;"
+      >
+        取消
+      </div>
+      <div
+        onclick="nottofeedback()"
+        style="position:absolute;width:120px;height:40px;background-color:#ACABAB;left:229px;top:480px;color:white;border-radius:5px;font-size:20px;line-height:40px;text-align:center;display:none"
+      >
+        提交
+      </div>
+      <div
+        onclick="submitjubao()"
+        id="jubao-submit"
+        style="position:absolute;width:120px;height:40px;background-color:rgb(250,97,65);left:229px;top:480px;color:white;border-radius:5px;font-size:20px;line-height:40px;text-align:center;"
+      >
+        提交
+      </div>
+    </div>
+    <div id="musicinfo" ontouchstart="visit_sousuo()">
+      查看歌曲
+    </div>
+    <div id="morexiangce" onclick="visit_more()">
+      欣赏更多相册
+    </div>
+    <div id="saveoff" class="bottombtn" onclick="saveoff()">
+      离线保存
+    </div>
+    <div id="savepic" class="bottombtn" onclick="savepic()">
+      保存图片
+    </div>
+    <div id="backtomore" class="bottombtn" onclick="backtomore()">
+      返回
+    </div>
+    <!--  <div id='guanggaodiv' style='width:150px;height:100px;position:fixed;left:-10px;bottom:0px;-webkit-transform: scale(0.8);z-index:200;display:none' ontouchstart='visit_guanggao()'>
+         <img src='https://qnphoto.kagirl.cn/guanggao/muqin3.png' style='width:145px;'>
+        <div  style='position:absolute;left:-80px;-webkit-animation: che_ani 7s linear infinite;-webkit-transform-origin: 100% 100%;width:100px;height:47px;top:40px;'>
+            <img src='https://qnphoto.kagirl.cn/pic/ad/che1.png' style='width:100px;position:absolute'>
+            <img src='https://qnphoto.kagirl.cn/pic/ad/che.png' style='width:100px;position:absolute;-webkit-animation: che1_ani 7s linear infinite;'>
+        </div>
+        <img src='https://qnphoto.kagirl.cn/pic/ad/word1.png' style='position:absolute;left:10px;top:-22px;-webkit-transform: rotate(20deg) scale(0.75);-webkit-animation: shijia 7s linear infinite'>
+        <img src='https://qnphoto.kagirl.cn/pic/ad/word2.png' style='position:absolute;left:10px;top:0px;-webkit-animation: baoming 7s linear infinite'>
+        <img src='https://qnphoto.kagirl.cn/pic/ad/bm.png' style='position:absolute;left:93px;top:32px;width:25px;-webkit-animation: biaozhi_ani 7s infinite'>
+    </div> -->
+    <div id="kugou_music_lyric"></div>
+    <style type="text/css">
+      #like_div {
+        position: absolute;
+        /*width:100px;*/
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 0px 25px 25px 0px;
+        top: 60px;
+        display: none;
+        z-index: 10000;
+        white-space: nowrap;
+      }
+
+      #like_heart {
+        display: inline-block;
+        width: 50px;
+        height: 45px;
+        background-image: url('https://qnphoto.kagirl.cn/new/rose1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+      }
+
+      #like_num {
+        display: inline-block;
+        color: rgba(255, 255, 255, 0.7);
+        padding-left: 10px;
+        font-size: 20px;
+        line-height: 50px;
+        min-width: 40px;
+        text-align: center;
+      }
+
+      #like_div.like_div_720 {
+        top: 85px;
+        height: 72px;
+        border-radius: 0px 36px 36px 0px;
+      }
+
+      .like_div_720 #like_num {
+        padding-left: 15px;
+        font-size: 29px;
+        line-height: 72px;
+        min-width: 57px;
+      }
+
+      .like_div_720 #like_heart {
+        width: 72px;
+        height: 67px;
+      }
+
+      #cardsound {
+        font-size: 16px;
+        position: fixed;
+        right: 5px;
+        top: 25px;
+        z-index: 1000;
+        width: 110px;
+        /* height: 44px; */
+        text-align: center;
+        display: none;
+      }
+
+      #sound_image_div,
+      #sound_image {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        z-index: 1000;
+      }
+
+      .sound_tips_block {
+        position: relative;
+      }
+
+      .sound_tips {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #music_txt {
+        width: 100%;
+        color: white;
+        text-shadow: 1px 1px 1px black;
+        opacity: 0;
+      }
+
+      .cardsound_720 {
+        font-size: 23px;
+        right: 17px;
+        top: 36px;
+      }
+
+      .cardsound_720 #sound_image_div,
+      .cardsound_720 #sound_image {
+        width: 63px;
+        height: 63px;
+      }
+      #not_music_tips {
+        width: 100%;
+        color: white;
+        text-shadow: 1px 1px 1px black;
+        text-align: center;
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        -webkit-text-stroke: 1px black;
+        font-weight: bold;
+      }
+    </style>
+    <div class="bottombtn" id="gotomore" ontouchstart="gotomore()">
+      返回首页
+    </div>
+    <div id="like_div" style="display: block;">
+      <div id="like_num">0</div>
+      <div id="like_heart"></div>
+    </div>
+
+    <div id="enddiv">
+      <div id="title_div">
+        <div
+          id="title_text"
+          style="top:0px;left:0px;right:0px;bottom:0px;vertical-align:middle;display:table-cell;"
+        ></div>
+      </div>
+      <div id="title_line"></div>
+      <div id="reshowbtn" ontouchstart="reload_scene()">再看一遍</div>
+      <div id="guanzhubtn" ontouchstart="visit_guanzhu()">我要制作</div>
+    </div>
+
+    <div id="cardsound" style="display: block;">
+      <div id="sound_image_div" onclick="switchsound()">
+        <img
+          id="sound_image"
+          src="./2_files/kugou_icon_015.png"
+          style="animation: 3s linear 0s infinite normal none running zhuan;"
+        />
+      </div>
+      <div class="sound_tips_block">
+        <div class="sound_tips" id="music_txt" style="">打开</div>
+        <div
+          class="sound_tips"
+          id="kugou_xz"
+          onclick="kugou_download()"
+          style=""
+        >
+          <img src="./2_files/kugou_xz2.png" id="kugou_xz_img" />
+        </div>
+      </div>
+    </div>
+
+    <div id="loadingdiv">
+      <div class="loadingword">相册正在加载中<br />请稍等……</div>
+    </div>
+    <!-- <div id="notice" ontouchstart='gotoguanzhu()'>
+        <img src="https://qnphoto.kagirl.cn/new/xinxin1.gif" style="position: absolute;top: 0;width: 66px;left: 0px;border-radius: 33px;">
+        <div style="position: absolute;top: 54px;width: 66px;text-shadow: #fff 1px 0 0, #fff 0 1px 0, #fff -1px 0 0, #fff 0 -1px 0;">更多精彩</div>
+        <div style="position: absolute;top: 17px;width: 66px;color: #cccccc;font-weight: bold;"></div>
+    </div> -->
+    <!-- <a id="guanzhu_container" ontouchstart="visit_guanzhu()" class="large"></a> -->
+    <style>
+      #footer {
+        position: fixed;
+        left: 0;
+        bottom: 0px;
+        height: 3.8em;
+        width: 100%;
+        z-index: 1000;
+        font-size: 18px;
+      }
+
+      .footer-720 {
+        font-size: 26px !important;
+      }
+
+      .footer-btn {
+        position: absolute;
+        color: #fff;
+        border-radius: 0.4em;
+        text-align: center;
+        display: none;
+        border: 2px solid #fff;
+        padding: 0.5em 1em;
+      }
+
+      #mengban {
+        position: absolute;
+        width: 100%;
+        height: 180%;
+        left: 0;
+        bottom: 0;
+        pointer-events: none;
+        display: none;
+        z-index: -1;
+        background: -webkit-gradient(
+          linear,
+          0 0,
+          0 100%,
+          from(rgba(0, 0, 0, 0)),
+          to(rgba(0, 0, 0, 0.8))
+        );
+      }
+
+      #notice {
+        top: 0;
+        right: 1em;
+      }
+
+      #notice::after {
+        content: ' ';
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        position: absolute;
+        background-color: red;
+        right: 0;
+        top: 0;
+        transform: scale(0.9) translate(50%, -50%);
+      }
+
+      #gotomore {
+        width: 100px;
+        top: 8px;
+        left: 0px;
+        height: 45px;
+        line-height: 45px;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      #guanzhu_container {
+        top: 0;
+        right: 9em;
+      }
+
+      #add_same {
+        top: 0;
+        right: 1em;
+        padding: 0.5em 1.5em;
+      }
+
+      #jubao-click {
+        display: none;
+        font-size: 90%;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        color: white;
+        text-shadow: 1px 1px 1px #000;
+        opacity: 0.4;
+        z-index: 100;
+      }
+
+      #jubao-tips {
+        text-align: left;
+        text-decoration: none;
+        font-size: 67%;
+      }
+
+      #jubao-btn {
+        margin: 0 0 0.4em 1.1em;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 3em;
+        /*height: 3em;*/
+        border-radius: 50%;
+        line-height: 3em;
+        text-align: center;
+      }
+      #backtomake {
+        width: 80px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.3);
+        position: absolute;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        border-radius: 40px;
+        /* padding-top: 10px; */
+        font-size: 21px;
+        left: 10px;
+        top: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        display: none;
+        z-index: 10000;
+      }
+      #share_mask {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 30000;
+        text-align: center;
+        color: white;
+        display: none;
+      }
+      .share_row {
+        display: block;
+        margin-top: 20px;
+        margin-left: 350px;
+      }
+      .share_tips {
+        margin-left: 70px;
+        width: 9em;
+        font-size: 45px;
+        margin-top: 30px;
+        word-break: break-all;
+      }
+      #mina_share > img {
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+      }
+      #mina_share > div {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      #mina_share {
+        top: 0;
+        right: 0.3em;
+        padding: 0.35em 1em;
+      }
+    </style>
+    <div id="footer">
+      <div id="mengban" style="display: block;"></div>
+      <div
+        class="footer-btn"
+        id="notice"
+        ontouchstart="gotoguanzhu()"
+        style="display: none;"
+      >
+        ❤ 更多精彩
+      </div>
+      <div
+        class="footer-btn"
+        id="guanzhu_container"
+        ontouchstart="visit_guanzhu()"
+        style="display: none; visibility: visible;"
+      >
+        ＋ 免费制作相册
+      </div>
+      <div
+        class="footer-btn"
+        id="add_same"
+        ontouchstart="add_same()"
+        style="display: none;"
+      >
+        制作同款
+      </div>
+      <div class="footer-btn" id="mina_share" onclick="opensharemask()">
+        <img src="./2_files/wx-icon.png" />
+        <div>分享好友</div>
+      </div>
+      <div id="jubao-click" style="display: block;">
+        <div id="jubao-btn" onclick="showjubao()">反馈</div>
+        <div id="jubao-tips">该相册为用户个人作品，非公众号发布</div>
+      </div>
+    </div>
+
+    <div id="letterpicdiv">
+      <!-- <img id='letter' src='https://qnphoto.kagirl.cn/guangchang/letter.jpg' onclick='openletter()'> -->
+      <div id="letternotice">1</div>
+    </div>
+
+    <div id="letterdiv">
+      <div class="lettercon">
+        <div class="lettertitle">最新消息</div>
+        <div class="lettercontent">
+          <!-- <img class='letterimg' src='https://qnphoto.kagirl.cn/guangchang/qiangua.jpg'><br> -->
+          <div style="margin-top:10px;">
+            天冷了，降温了<br />朋友，出门记得多加衣裳<br />保重身体最重要
+          </div>
+        </div>
+        <div id="lettername"></div>
+        <a id="letterurl"><div class="newxiangce">点击送你暖暖的祝福</div></a>
+
+        <div class="letterclose" onclick="closeletter()">×</div>
+      </div>
+    </div>
+    <img id="maimg" src="./2_files/bbtn1.png" onclick="openma()" />
+    <div id="madiv">
+      <img id="erweima" />
+      <div class="closema" onclick="closema()"></div>
+    </div>
+    <img id="songhua" src="./2_files/rose.png" />
+    <div id="finishnotice">制作完成啦！</div>
+    <div id="backtomake" onclick="backtobooks()">返回</div>
+    <div id="share_mask" onclick="closesharemask()">
+      <img class="share_row" src="./2_files/share-row.png" />
+      <div class="share_tips">点击右上角“...”<br />分享给好友</div>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="./2_files/stats"
+      charset="UTF-8"
+      async="async"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./2_files/statistics.js"
+      charset="UTF-8"
+    ></script>
+    <script>
+      var _mtac = {}
+      ;(function() {
+        var mta = document.createElement('script')
+        mta.src = 'https://pingjs.qq.com/h5/stats.js?v2.0.2'
+        mta.setAttribute('name', 'MTAH5')
+        mta.setAttribute('sid', '500639727')
+        var s = document.getElementsByTagName('script')[0]
+        s.parentNode.insertBefore(mta, s)
+      })()
+      //避免模板没有写id
+      if (typeof id === 'undefined') {
+        function id(name) {
+          return document.getElementById(name)
+        }
+      }
+    </script>
+    <script
+      id="ouer-open-sdk"
+      data-bind-ids="container,like_div,kawa-youli,guanzhu_container,notice,jubao-click"
+      data-c="shenzhen"
+      src="./2_files/sdk-2.0.3.min.js"
+    ></script>
+    <script src="./2_files/jweixin-1.0.0.js"></script>
+    <script>
+      var onerror_debug = ''
+      var onerror_msg = ''
+      var onerror_tips = ''
+      window.onerror = function(msg, path, line, col, error) {
+        if (onerror_debug == '1') {
+          alert(msg)
+        }
+        if (onerror_msg == msg) {
+          return
+        }
+        onerror_msg = msg
+        var data = {
+          msg: msg,
+          path: path,
+          line: line,
+          col: col,
+          error: error && error.stack,
+          ua: navigator && navigator.userAgent,
+          wxid: 'kawa',
+          bookid: '31NJwuGLiKG2ARIZa_fnkD0QySsapnCGsLmvSzmMtmI',
+          scene: e_scene,
+          onerror_tips: onerror_tips
+        }
+        var post_data = 'data=' + encodeURIComponent(JSON.stringify(data))
+        var url =
+          'editbook.php?type=log&wxid=kawa&bookid=31NJwuGLiKG2ARIZa_fnkD0QySsapnCGsLmvSzmMtmI'
+        //alert(post_data);
+        if (typeof XMLHttp !== 'undefined') {
+          XMLHttp.sendReq('post', url, post_data, function(obj) {})
+        }
+      }
+    </script>
+    <script src="./2_files/z_stat.php"></script>
+    <audio
+      id="playSong"
+      loop=""
+      src=""
+    ></audio>
+  </body>
+</html>
