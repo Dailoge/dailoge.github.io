@@ -3,6 +3,8 @@ import path from 'path';
 const px2vw = require('postcss-px-to-viewport');
 
 export default defineConfig({
+  title: '情绪指标',
+  // links: [{ rel: 'icon', href: '/favicon.png' }],
   routes: [
     { path: '/', component: 'index' },
     { path: '/docs', component: 'docs' },

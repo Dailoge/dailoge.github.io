@@ -1,16 +1,16 @@
-import yayJpg from '../../assets/yay.jpg';
+import { useEffect } from 'react';
+import { getZDStocks } from '@/services/iwencai';
 import './index.less';
 
 export default function HomePage() {
+
+  useEffect(() => {
+    getZDStocks('2023.11.24').then(console.log);
+  }, []);
+
   return (
-    <div className="test">
-      <h2>Yay! Welcome to umi!</h2>
-      <p>
-        <img src={yayJpg} width="388" />
-      </p>
-      <p>
-        To get started, edit <code>pages/index.tsx</code> and save to reload.
-      </p>
+    <div className="index-container">
+      
     </div>
   );
 }
