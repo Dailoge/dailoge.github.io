@@ -19,6 +19,8 @@ on:
 # 4 设置权限（文件是可以被读写修改的）
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 # 工作1
 jobs:
