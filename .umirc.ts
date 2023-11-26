@@ -1,6 +1,6 @@
 import { defineConfig } from 'umi';
 import path from 'path';
-import px2vw from 'postcss-px-to-viewport';
+const px2vw = require('postcss-px-to-viewport');
 
 export default defineConfig({
   outputPath: 'docs',
