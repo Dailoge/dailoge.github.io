@@ -1,2 +1,2 @@
 export * from './iwencai';
-export * from './mairui';
+export * from './biying';

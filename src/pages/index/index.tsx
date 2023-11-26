@@ -1,33 +1,68 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { Line } from '@ant-design/charts';
+import { reverse } from 'lodash-es';
 import dayjs from 'dayjs';
-import { getZDStocksByMaiRui } from '@/services';
-import { sleep } from '@/utils';
+import { getZTStocksByBiYing, IStockInfo } from '@/services';
+import { getRecentWorkdays } from '@/utils';
 import './index.less';
 
-const preDays = 5; // 从当前时间截止到 10 天之前
-
 export default function HomePage() {
-  const [dateZDStocksMap, setDateZDStocksMap] = useState({});
+  const [dateZDStocks, setDateZDStocks] = useState<
+    Array<{
+      date: string;
+      list: IStockInfo[];
+    }>
+  >([]);
 
   const getData = useCallback(async () => {
-    const map: { [key: string]: any } = {};
-    for await (const index of [...new Array(preDays).keys()]) {
-      const date = dayjs().subtract(index, 'day').format('YYYY-MM-DD');
-      const stockList = await getZDStocksByMaiRui(date);
-      map[date] = stockList;
-    }
-    return map;
+    // 获取最近的10个工作日
+    const recentWorkdays = getRecentWorkdays(8);
+    return Promise.all(
+      recentWorkdays.map(async (date) => {
+        const list = await getZTStocksByBiYing(date);
+        return { date, list };
+      }),
+    );
   }, []);
 
   useEffect(() => {
-    getData().then(map => {
-      setDateZDStocksMap(map);
-    })
+    getData().then((allDateStocks) => {
+      setDateZDStocks(reverse(allDateStocks));
+    });
   }, []);
 
-  useEffect(() => {
-    console.log(dateZDStocksMap);
-  }, [dateZDStocksMap])
+  const config = useMemo(() => {
+    const data = dateZDStocks.map((item, index) => {
+      const value = item.list.length;
+      const preValue = dateZDStocks[index - 1]?.list.length;
+      return {
+        date: dayjs(item.date).format('MM-DD'),
+        value: value ? value : preValue,
+      }
+    });
+  
+    const config = {
+      data,
+      yField: 'value',
+      xField: 'date',
+      point: {
+        size: 5,
+        shape: 'diamond',
+        style: {
+          fill: 'white',
+          stroke: '#2593fc',
+          lineWidth: 2,
+        },
+      },
+    };
+    return config;
+  }, [dateZDStocks]);
 
-  return <div className="index-container">{JSON.stringify(dateZDStocksMap)}</div>;
+  
+
+  return (
+    <div className="index-container">
+      <Line {...config} />
+    </div>
+  );
 }

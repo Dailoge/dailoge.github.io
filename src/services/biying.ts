@@ -5,7 +5,7 @@ const request = axios.create({
   timeout: 5000,
 });
 
-interface IStockInfo {
+export interface IStockInfo {
   dm: string; //代码
   mc: string; //名称
   p: number; //价格（元）
@@ -28,12 +28,12 @@ interface IStockInfo {
  * @param {string} date, ex: 2023-11-24
  * @return {*}  {Promise<IStockInfo[]>}
  */
-export async function getZDStocksByMaiRui(date: string): Promise<IStockInfo[]> {
+export async function getZTStocksByBiYing(date: string): Promise<IStockInfo[]> {
   try {
     const res = await request(
       `/release/zt?date=${date}`,
     );
-    return res?.data;
+    return res?.data?.data;
   } catch (error) {
     console.error(error);
     return [];
