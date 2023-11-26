@@ -3,7 +3,6 @@ import path from 'path';
 const px2vw = require('postcss-px-to-viewport');
 
 export default defineConfig({
-  outputPath: 'docs',
   routes: [
     { path: '/', component: 'index' },
     { path: '/docs', component: 'docs' },
