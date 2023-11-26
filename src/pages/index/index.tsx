@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useGetState } from 'ahooks';
 import dayjs from 'dayjs';
 import { getZDStocksByMaiRui } from '@/services';
 import { sleep } from '@/utils';
 import './index.less';
 
-const preDays = 1; // 从当前时间截止到 10 天之前
+const preDays = 5; // 从当前时间截止到 10 天之前
 
 export default function HomePage() {
   const [dateZDStocksMap, setDateZDStocksMap] = useState({});
@@ -16,8 +15,6 @@ export default function HomePage() {
       const date = dayjs().subtract(index, 'day').format('YYYY-MM-DD');
       const stockList = await getZDStocksByMaiRui(date);
       map[date] = stockList;
-      // 来点延迟，避免被服务器拉黑
-      await sleep(100);
     }
     return map;
   }, []);

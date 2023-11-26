@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const request = axios.create({
-  baseURL: 'https://www.iwencai.com', // 麦蕊，https://www.mairui.club/Inquiry.aspx
+  baseURL: 'https://service-fxf0odwp-1252010818.sh.apigw.tencentcs.com', // 腾讯云 serverless，底层调用必盈 api，https://www.biyingapi.com/serve.html
   timeout: 5000,
 });
 
@@ -22,25 +22,6 @@ interface IStockInfo {
   zbc: number; //开板次数
 }
 
-// 每个种子有 50 次的免费调用次数限制，超过会报错
-const seeksId = `
-32dacd384d8974c05b
-0417e17909389f602
-d0579b3750d1622c7
-96b5b5976409b1c3b
-c09d316334a350c3a
-6c1f11f31572779359
-20c18fd550363838ca
-02e129502560a0f5dd
-26aba146ae31c5a4f3
-`;
-
-function getSeekId() {
-  const seekIdList = seeksId.trim().split('\n');
-  const random = Math.round(Math.random() * seekIdList.length);
-  return seekIdList[random] || '32dacd384d8974c05b';
-}
-
 /**
  *
  * @export
@@ -49,21 +30,12 @@ function getSeekId() {
  */
 export async function getZDStocksByMaiRui(date: string): Promise<IStockInfo[]> {
   try {
-    // @ts-ignore
-    const query = async () => {
-      const res: IStockInfo[] = await request.get(
-        `https://api.mairui.club/hslt/ztgc/${date}/${getSeekId()}`, {
-          withCredentials: false,
-        }
-      );
-      if (Array.isArray(res) || res === null) {
-        return res;
-      } else {
-        return query();
-      }
-    };
-    return await query();
+    const res = await request(
+      `/release/zt?date=${date}`,
+    );
+    return res?.data;
   } catch (error) {
+    console.error(error);
     return [];
   }
 }
