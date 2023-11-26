@@ -7,19 +7,19 @@ settings:
 dependencies:
   antd-mobile:
     specifier: ^5.33.0
-    version: 5.33.0(react-dom@16.14.0)(react@16.14.0)
+    version: 5.33.0(react-dom@18.2.0)(react@18.2.0)
   antd-mobile-icons:
     specifier: ^0.3.0
     version: 0.3.0
   react:
-    specifier: ^16.14
-    version: 16.14.0
+    specifier: ^18.2.0
+    version: 18.2.0
   react-dom:
-    specifier: ^16.14
-    version: 16.14.0(react@16.14.0)
+    specifier: ^18.2.0
+    version: 18.2.0(react@18.2.0)
   umi:
     specifier: ^4.0.88
-    version: 4.0.88(@babel/core@7.23.3)(@types/react@18.2.38)(eslint@8.54.0)(prettier@3.1.0)(react-dom@16.14.0)(react@16.14.0)(stylelint@14.16.1)(typescript@5.3.2)(webpack@5.89.0)
+    version: 4.0.88(@babel/core@7.23.3)(@types/react@18.2.38)(eslint@8.54.0)(prettier@3.1.0)(react-dom@18.2.0)(react@18.2.0)(stylelint@14.16.1)(typescript@5.3.2)(webpack@5.89.0)
 
 devDependencies:
   '@babel/core':
@@ -1200,18 +1200,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@loadable/component@5.15.2(react@16.14.0):
-    resolution: {integrity: sha512-ryFAZOX5P2vFkUdzaAtTG88IGnr9qxSdvLRvJySXcUA4B4xVWurUNADu3AnKPksxOZajljqTrDEDcYjeL4lvLw==, tarball: https://registry.npmmirror.com/@loadable/component/-/component-5.15.2.tgz}
-    engines: {node: '>=8'}
-    peerDependencies:
-      react: '>=16.3.0'
-    dependencies:
-      '@babel/runtime': 7.23.2
-      hoist-non-react-statics: 3.3.2
-      react: 16.14.0
-      react-is: 16.13.1
-    dev: false
-
   /@loadable/component@5.15.2(react@18.1.0):
     resolution: {integrity: sha512-ryFAZOX5P2vFkUdzaAtTG88IGnr9qxSdvLRvJySXcUA4B4xVWurUNADu3AnKPksxOZajljqTrDEDcYjeL4lvLw==, tarball: https://registry.npmmirror.com/@loadable/component/-/component-5.15.2.tgz}
     engines: {node: '>=8'}
@@ -1221,6 +1209,18 @@ packages:
       '@babel/runtime': 7.23.2
       hoist-non-react-statics: 3.3.2
       react: 18.1.0
+      react-is: 16.13.1
+    dev: false
+
+  /@loadable/component@5.15.2(react@18.2.0):
+    resolution: {integrity: sha512-ryFAZOX5P2vFkUdzaAtTG88IGnr9qxSdvLRvJySXcUA4B4xVWurUNADu3AnKPksxOZajljqTrDEDcYjeL4lvLw==, tarball: https://registry.npmmirror.com/@loadable/component/-/component-5.15.2.tgz}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      '@babel/runtime': 7.23.2
+      hoist-non-react-statics: 3.3.2
+      react: 18.2.0
       react-is: 16.13.1
     dev: false
 
@@ -1266,58 +1266,58 @@ packages:
       '@babel/runtime': 7.23.4
     dev: false
 
-  /@react-spring/animated@9.6.1(react@16.14.0):
+  /@react-spring/animated@9.6.1(react@18.2.0):
     resolution: {integrity: sha512-ls/rJBrAqiAYozjLo5EPPLLOb1LM0lNVQcXODTC1SMtS6DbuBCPaKco5svFUQFMP2dso3O+qcC4k9FsKc0KxMQ==, tarball: https://registry.npmmirror.com/@react-spring/animated/-/animated-9.6.1.tgz}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@react-spring/shared': 9.6.1(react@16.14.0)
+      '@react-spring/shared': 9.6.1(react@18.2.0)
       '@react-spring/types': 9.6.1
-      react: 16.14.0
+      react: 18.2.0
     dev: false
 
-  /@react-spring/core@9.6.1(react@16.14.0):
+  /@react-spring/core@9.6.1(react@18.2.0):
     resolution: {integrity: sha512-3HAAinAyCPessyQNNXe5W0OHzRfa8Yo5P748paPcmMowZ/4sMfaZ2ZB6e5x5khQI8NusOHj8nquoutd6FRY5WQ==, tarball: https://registry.npmmirror.com/@react-spring/core/-/core-9.6.1.tgz}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@react-spring/animated': 9.6.1(react@16.14.0)
+      '@react-spring/animated': 9.6.1(react@18.2.0)
       '@react-spring/rafz': 9.6.1
-      '@react-spring/shared': 9.6.1(react@16.14.0)
+      '@react-spring/shared': 9.6.1(react@18.2.0)
       '@react-spring/types': 9.6.1
-      react: 16.14.0
+      react: 18.2.0
     dev: false
 
   /@react-spring/rafz@9.6.1:
     resolution: {integrity: sha512-v6qbgNRpztJFFfSE3e2W1Uz+g8KnIBs6SmzCzcVVF61GdGfGOuBrbjIcp+nUz301awVmREKi4eMQb2Ab2gGgyQ==, tarball: https://registry.npmmirror.com/@react-spring/rafz/-/rafz-9.6.1.tgz}
     dev: false
 
-  /@react-spring/shared@9.6.1(react@16.14.0):
+  /@react-spring/shared@9.6.1(react@18.2.0):
     resolution: {integrity: sha512-PBFBXabxFEuF8enNLkVqMC9h5uLRBo6GQhRMQT/nRTnemVENimgRd+0ZT4yFnAQ0AxWNiJfX3qux+bW2LbG6Bw==, tarball: https://registry.npmmirror.com/@react-spring/shared/-/shared-9.6.1.tgz}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@react-spring/rafz': 9.6.1
       '@react-spring/types': 9.6.1
-      react: 16.14.0
+      react: 18.2.0
     dev: false
 
   /@react-spring/types@9.6.1:
     resolution: {integrity: sha512-POu8Mk0hIU3lRXB3bGIGe4VHIwwDsQyoD1F394OK7STTiX9w4dG3cTLljjYswkQN+hDSHRrj4O36kuVa7KPU8Q==, tarball: https://registry.npmmirror.com/@react-spring/types/-/types-9.6.1.tgz}
     dev: false
 
-  /@react-spring/web@9.6.1(react-dom@16.14.0)(react@16.14.0):
+  /@react-spring/web@9.6.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-X2zR6q2Z+FjsWfGAmAXlQaoUHbPmfuCaXpuM6TcwXPpLE1ZD4A1eys/wpXboFQmDkjnrlTmKvpVna1MjWpZ5Hw==, tarball: https://registry.npmmirror.com/@react-spring/web/-/web-9.6.1.tgz}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@react-spring/animated': 9.6.1(react@16.14.0)
-      '@react-spring/core': 9.6.1(react@16.14.0)
-      '@react-spring/shared': 9.6.1(react@16.14.0)
+      '@react-spring/animated': 9.6.1(react@18.2.0)
+      '@react-spring/core': 9.6.1(react@18.2.0)
+      '@react-spring/shared': 9.6.1(react@18.2.0)
       '@react-spring/types': 9.6.1
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -2118,21 +2118,6 @@ packages:
       webpack: 5.89.0
     dev: false
 
-  /@umijs/renderer-react@4.0.88(react-dom@16.14.0)(react@16.14.0):
-    resolution: {integrity: sha512-5zU4+PLO9+D8nl/WikGE6QjYvztKWSLGp+N33TPL0BrrJOSTI/ffH/iwsPxiFG/ABX4oz3SShUyIhyChSnP/WQ==, tarball: https://registry.npmmirror.com/@umijs/renderer-react/-/renderer-react-4.0.88.tgz}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-    dependencies:
-      '@babel/runtime': 7.23.2
-      '@loadable/component': 5.15.2(react@16.14.0)
-      history: 5.3.0
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
-      react-helmet-async: 1.3.0(react-dom@16.14.0)(react@16.14.0)
-      react-router-dom: 6.3.0(react-dom@16.14.0)(react@16.14.0)
-    dev: false
-
   /@umijs/renderer-react@4.0.88(react-dom@18.1.0)(react@18.1.0):
     resolution: {integrity: sha512-5zU4+PLO9+D8nl/WikGE6QjYvztKWSLGp+N33TPL0BrrJOSTI/ffH/iwsPxiFG/ABX4oz3SShUyIhyChSnP/WQ==, tarball: https://registry.npmmirror.com/@umijs/renderer-react/-/renderer-react-4.0.88.tgz}
     peerDependencies:
@@ -2146,6 +2131,21 @@ packages:
       react-dom: 18.1.0(react@18.1.0)
       react-helmet-async: 1.3.0(react-dom@18.1.0)(react@18.1.0)
       react-router-dom: 6.3.0(react-dom@18.1.0)(react@18.1.0)
+    dev: false
+
+  /@umijs/renderer-react@4.0.88(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-5zU4+PLO9+D8nl/WikGE6QjYvztKWSLGp+N33TPL0BrrJOSTI/ffH/iwsPxiFG/ABX4oz3SShUyIhyChSnP/WQ==, tarball: https://registry.npmmirror.com/@umijs/renderer-react/-/renderer-react-4.0.88.tgz}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@babel/runtime': 7.23.2
+      '@loadable/component': 5.15.2(react@18.2.0)
+      history: 5.3.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-helmet-async: 1.3.0(react-dom@18.2.0)(react@18.2.0)
+      react-router-dom: 6.3.0(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@umijs/server@4.0.88:
@@ -2198,13 +2198,13 @@ packages:
     resolution: {integrity: sha512-rh+6MND31zfHcy9VU3dOZCqGY511lvGcfyJenN4cWZe0u1BH6brBpBddLVXhF2r4BMqWbvxfsbL7D287thJU2A==, tarball: https://registry.npmmirror.com/@use-gesture/core/-/core-10.3.0.tgz}
     dev: false
 
-  /@use-gesture/react@10.3.0(react@16.14.0):
+  /@use-gesture/react@10.3.0(react@18.2.0):
     resolution: {integrity: sha512-3zc+Ve99z4usVP6l9knYVbVnZgfqhKah7sIG+PS2w+vpig2v2OLct05vs+ZXMzwxdNCMka8B+8WlOo0z6Pn6DA==, tarball: https://registry.npmmirror.com/@use-gesture/react/-/react-10.3.0.tgz}
     peerDependencies:
       react: '>= 16.8.0'
     dependencies:
       '@use-gesture/core': 10.3.0
-      react: 16.14.0
+      react: 18.2.0
     dev: false
 
   /@vitejs/plugin-react@4.0.0(vite@4.3.1):
@@ -2342,7 +2342,7 @@ packages:
     resolution: {integrity: sha512-V7uUvAwnimu6eh/PED4mCDjE7tokeZQLKlxg9lCTMPhN+NjsSbtdacByVlR1oluXQzD3MOw55wylDmQo4+S9ZQ==, tarball: https://registry.npmmirror.com/ahooks-v3-count/-/ahooks-v3-count-1.0.0.tgz}
     dev: false
 
-  /ahooks@3.7.8(react@16.14.0):
+  /ahooks@3.7.8(react@18.2.0):
     resolution: {integrity: sha512-e/NMlQWoCjaUtncNFIZk3FG1ImSkV/JhScQSkTqnftakRwdfZWSw6zzoWSG9OMYqPNs2MguDYBUFFC6THelWXA==, tarball: https://registry.npmmirror.com/ahooks/-/ahooks-3.7.8.tgz}
     engines: {node: '>=8.0.0'}
     peerDependencies:
@@ -2355,7 +2355,7 @@ packages:
       intersection-observer: 0.12.2
       js-cookie: 2.2.1
       lodash: 4.17.21
-      react: 16.14.0
+      react: 18.2.0
       resize-observer-polyfill: 1.5.1
       screenfull: 5.2.0
       tslib: 2.6.2
@@ -2414,29 +2414,29 @@ packages:
     resolution: {integrity: sha512-YGsiEDCPUDz3SzfXi6gLZn/HpeSMW+jgPc4qiYUr1fSopg3hkUie2TnooJdExgfiETHefH3Ggs58He0OVfegLA==, tarball: https://registry.npmmirror.com/antd-mobile-v5-count/-/antd-mobile-v5-count-1.0.1.tgz}
     dev: false
 
-  /antd-mobile@5.33.0(react-dom@16.14.0)(react@16.14.0):
+  /antd-mobile@5.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Q1t8It+8D8Sc2Y11KR+a75leTqsEJe3C2wzF154fJmzJHxYN5efSIrCOjrDVok4hvWWilpN9wb7+lxvDwmXF7g==, tarball: https://registry.npmmirror.com/antd-mobile/-/antd-mobile-5.33.0.tgz}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@floating-ui/dom': 1.5.3
       '@rc-component/mini-decimal': 1.1.0
-      '@react-spring/web': 9.6.1(react-dom@16.14.0)(react@16.14.0)
-      '@use-gesture/react': 10.3.0(react@16.14.0)
-      ahooks: 3.7.8(react@16.14.0)
+      '@react-spring/web': 9.6.1(react-dom@18.2.0)(react@18.2.0)
+      '@use-gesture/react': 10.3.0(react@18.2.0)
+      ahooks: 3.7.8(react@18.2.0)
       antd-mobile-icons: 0.3.0
       antd-mobile-v5-count: 1.0.1
       classnames: 2.3.2
       dayjs: 1.11.10
       lodash: 4.17.21
-      rc-field-form: 1.27.4(react-dom@16.14.0)(react@16.14.0)
-      rc-util: 5.38.1(react-dom@16.14.0)(react@16.14.0)
-      react: 16.14.0
+      rc-field-form: 1.27.4(react-dom@18.2.0)(react@18.2.0)
+      rc-util: 5.38.1(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
       react-is: 18.2.0
       runes2: 1.1.3
-      staged-components: 1.1.3(react@16.14.0)
+      staged-components: 1.1.3(react@18.2.0)
       tslib: 2.6.2
-      use-sync-external-store: 1.2.0(react@16.14.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
     transitivePeerDependencies:
       - react-dom
     dev: false
@@ -6299,7 +6299,7 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /rc-field-form@1.27.4(react-dom@16.14.0)(react@16.14.0):
+  /rc-field-form@1.27.4(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-PQColQnZimGKArnOh8V2907+VzDCXcqtFvHgevDLtqWc/P7YASb/FqntSmdS8q3VND5SHX3Y1vgMIzY22/f/0Q==, tarball: https://registry.npmmirror.com/rc-field-form/-/rc-field-form-1.27.4.tgz}
     engines: {node: '>=8.x'}
     peerDependencies:
@@ -6308,33 +6308,21 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       async-validator: 4.2.5
-      rc-util: 5.38.1(react-dom@16.14.0)(react@16.14.0)
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
+      rc-util: 5.38.1(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /rc-util@5.38.1(react-dom@16.14.0)(react@16.14.0):
+  /rc-util@5.38.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-e4ZMs7q9XqwTuhIK7zBIVFltUtMSjphuPPQXHoHlzRzNdOwUxDejo0Zls5HYaJfRKNURcsS/ceKVULlhjBrxng==, tarball: https://registry.npmmirror.com/rc-util/-/rc-util-5.38.1.tgz}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
       '@babel/runtime': 7.23.4
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
       react-is: 18.2.0
-    dev: false
-
-  /react-dom@16.14.0(react@16.14.0):
-    resolution: {integrity: sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==, tarball: https://registry.npmmirror.com/react-dom/-/react-dom-16.14.0.tgz}
-    peerDependencies:
-      react: ^16.14.0
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-      prop-types: 15.8.1
-      react: 16.14.0
-      scheduler: 0.19.1
     dev: false
 
   /react-dom@18.1.0(react@18.1.0):
@@ -6347,27 +6335,22 @@ packages:
       scheduler: 0.22.0
     dev: false
 
+  /react-dom@18.2.0(react@18.2.0):
+    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==, tarball: https://registry.npmmirror.com/react-dom/-/react-dom-18.2.0.tgz}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.2.0
+      scheduler: 0.23.0
+    dev: false
+
   /react-error-overlay@6.0.9:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==, tarball: https://registry.npmmirror.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz}
     dev: false
 
   /react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==, tarball: https://registry.npmmirror.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz}
-    dev: false
-
-  /react-helmet-async@1.3.0(react-dom@16.14.0)(react@16.14.0):
-    resolution: {integrity: sha512-9jZ57/dAn9t3q6hneQS0wukqC2ENOBgMNVEhb/ZG9ZSxUetzVIw4iAmEU38IaVg3QGYauQPhSeUTuIUtFglWpg==, tarball: https://registry.npmmirror.com/react-helmet-async/-/react-helmet-async-1.3.0.tgz}
-    peerDependencies:
-      react: ^16.6.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      '@babel/runtime': 7.23.2
-      invariant: 2.2.4
-      prop-types: 15.8.1
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
-      react-fast-compare: 3.2.2
-      shallowequal: 1.1.0
     dev: false
 
   /react-helmet-async@1.3.0(react-dom@18.1.0)(react@18.1.0):
@@ -6381,6 +6364,21 @@ packages:
       prop-types: 15.8.1
       react: 18.1.0
       react-dom: 18.1.0(react@18.1.0)
+      react-fast-compare: 3.2.2
+      shallowequal: 1.1.0
+    dev: false
+
+  /react-helmet-async@1.3.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-9jZ57/dAn9t3q6hneQS0wukqC2ENOBgMNVEhb/ZG9ZSxUetzVIw4iAmEU38IaVg3QGYauQPhSeUTuIUtFglWpg==, tarball: https://registry.npmmirror.com/react-helmet-async/-/react-helmet-async-1.3.0.tgz}
+    peerDependencies:
+      react: ^16.6.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.23.2
+      invariant: 2.2.4
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
     dev: false
@@ -6402,18 +6400,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /react-router-dom@6.3.0(react-dom@16.14.0)(react@16.14.0):
-    resolution: {integrity: sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw==, tarball: https://registry.npmmirror.com/react-router-dom/-/react-router-dom-6.3.0.tgz}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-    dependencies:
-      history: 5.3.0
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
-      react-router: 6.3.0(react@16.14.0)
-    dev: false
-
   /react-router-dom@6.3.0(react-dom@18.1.0)(react@18.1.0):
     resolution: {integrity: sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw==, tarball: https://registry.npmmirror.com/react-router-dom/-/react-router-dom-6.3.0.tgz}
     peerDependencies:
@@ -6426,13 +6412,16 @@ packages:
       react-router: 6.3.0(react@18.1.0)
     dev: false
 
-  /react-router@6.3.0(react@16.14.0):
-    resolution: {integrity: sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ==, tarball: https://registry.npmmirror.com/react-router/-/react-router-6.3.0.tgz}
+  /react-router-dom@6.3.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw==, tarball: https://registry.npmmirror.com/react-router-dom/-/react-router-dom-6.3.0.tgz}
     peerDependencies:
       react: '>=16.8'
+      react-dom: '>=16.8'
     dependencies:
       history: 5.3.0
-      react: 16.14.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-router: 6.3.0(react@18.2.0)
     dev: false
 
   /react-router@6.3.0(react@18.1.0):
@@ -6444,17 +6433,24 @@ packages:
       react: 18.1.0
     dev: false
 
-  /react@16.14.0:
-    resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==, tarball: https://registry.npmmirror.com/react/-/react-16.14.0.tgz}
-    engines: {node: '>=0.10.0'}
+  /react-router@6.3.0(react@18.2.0):
+    resolution: {integrity: sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ==, tarball: https://registry.npmmirror.com/react-router/-/react-router-6.3.0.tgz}
+    peerDependencies:
+      react: '>=16.8'
     dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-      prop-types: 15.8.1
+      history: 5.3.0
+      react: 18.2.0
     dev: false
 
   /react@18.1.0:
     resolution: {integrity: sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==, tarball: https://registry.npmmirror.com/react/-/react-18.1.0.tgz}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+
+  /react@18.2.0:
+    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==, tarball: https://registry.npmmirror.com/react/-/react-18.2.0.tgz}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -6710,15 +6706,14 @@ packages:
     dev: false
     optional: true
 
-  /scheduler@0.19.1:
-    resolution: {integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==, tarball: https://registry.npmmirror.com/scheduler/-/scheduler-0.19.1.tgz}
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-    dev: false
-
   /scheduler@0.22.0:
     resolution: {integrity: sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==, tarball: https://registry.npmmirror.com/scheduler/-/scheduler-0.22.0.tgz}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+
+  /scheduler@0.23.0:
+    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==, tarball: https://registry.npmmirror.com/scheduler/-/scheduler-0.23.0.tgz}
     dependencies:
       loose-envify: 1.4.0
     dev: false
@@ -6941,12 +6936,12 @@ packages:
     resolution: {integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==, tarball: https://registry.npmmirror.com/stackframe/-/stackframe-1.3.4.tgz}
     dev: false
 
-  /staged-components@1.1.3(react@16.14.0):
+  /staged-components@1.1.3(react@18.2.0):
     resolution: {integrity: sha512-9EIswzDqjwlEu+ymkV09TTlJfzSbKgEnNteUnZSTxkpMgr5Wx2CzzA9WcMFWBNCldqVPsHVnRGGrApduq2Se5A==, tarball: https://registry.npmmirror.com/staged-components/-/staged-components-1.1.3.tgz}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      react: 16.14.0
+      react: 18.2.0
     dev: false
 
   /stop-iteration-iterator@1.0.0:
@@ -7387,7 +7382,7 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /umi@4.0.88(@babel/core@7.23.3)(@types/react@18.2.38)(eslint@8.54.0)(prettier@3.1.0)(react-dom@16.14.0)(react@16.14.0)(stylelint@14.16.1)(typescript@5.3.2)(webpack@5.89.0):
+  /umi@4.0.88(@babel/core@7.23.3)(@types/react@18.2.38)(eslint@8.54.0)(prettier@3.1.0)(react-dom@18.2.0)(react@18.2.0)(stylelint@14.16.1)(typescript@5.3.2)(webpack@5.89.0):
     resolution: {integrity: sha512-gNgBMbLuZwj5c2uroFmtgT4tJO2JFKfIxJaad3oFa0cOzJMSx6CnaG3Z2/+pU2eAy9EMBvbtY/iAmkr3ZNEAWg==, tarball: https://registry.npmmirror.com/umi/-/umi-4.0.88.tgz}
     engines: {node: '>=14'}
     hasBin: true
@@ -7398,7 +7393,7 @@ packages:
       '@umijs/core': 4.0.88
       '@umijs/lint': 4.0.88(eslint@8.54.0)(stylelint@14.16.1)(typescript@5.3.2)
       '@umijs/preset-umi': 4.0.88(@types/react@18.2.38)(typescript@5.3.2)(webpack@5.89.0)
-      '@umijs/renderer-react': 4.0.88(react-dom@16.14.0)(react@16.14.0)
+      '@umijs/renderer-react': 4.0.88(react-dom@18.2.0)(react@18.2.0)
       '@umijs/server': 4.0.88
       '@umijs/test': 4.0.88(@babel/core@7.23.3)
       '@umijs/utils': 4.0.88
@@ -7497,12 +7492,12 @@ packages:
       react: 18.1.0
     dev: false
 
-  /use-sync-external-store@1.2.0(react@16.14.0):
+  /use-sync-external-store@1.2.0(react@18.2.0):
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==, tarball: https://registry.npmmirror.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      react: 16.14.0
+      react: 18.2.0
     dev: false
 
   /util-deprecate@1.0.2:
