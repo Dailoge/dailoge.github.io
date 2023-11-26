@@ -1,6 +1,6 @@
 {
   "private": true,
-  "author": "",
+  "author": "dailoge",
   "scripts": {
     "dev": "umi dev",
     "build": "umi build",
@@ -24,7 +24,10 @@
     "postcss-px-to-viewport": "^1.1.1",
     "typescript": "^5.3.2"
   },
-  "hooks": {  
-    "pre-push": "npm run build"  
-  }  
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run build"
+    }
+  }
 }
