@@ -1,4 +1,6 @@
 import { defineConfig } from 'umi';
+import path from 'path';
+import px2vw from 'postcss-px-to-viewport';
 
 export default defineConfig({
   outputPath: 'docs',
@@ -8,4 +10,18 @@ export default defineConfig({
   ],
   npmClient: 'pnpm',
   presets: [],
+  alias: {
+    '@': path.resolve(__dirname, 'src'),
+  },
+  extraPostCSSPlugins: [
+    px2vw({
+      viewportWidth: 375 * 2, // 设计稿宽度
+      viewportHeight: 667 * 2, // 设计稿高度
+      unitPrecision: 3, // 转换后的精度，保留3位小数
+      viewportUnit: 'vw', // 转换的单位，使用vw
+      selectorBlackList: ['.ignore'], // 不需要转换的类名
+      minPixelValue: 1, // 最小的转换数值
+      mediaQuery: false, // 是否允许在媒体查询中转换px
+    }),
+  ],
 });
