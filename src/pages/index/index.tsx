@@ -1,8 +1,9 @@
 import yayJpg from '../../assets/yay.jpg';
+import './index.less';
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="test">
       <h2>Yay! Welcome to umi!</h2>
       <p>
         <img src={yayJpg} width="388" />
