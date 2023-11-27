@@ -15,7 +15,7 @@ export interface IStockInfo {
   zsz: number; //总市值（元）
   pe: number; //动态市盈率
   hs: number; //换手率（%）
-  lbc: number; //连续跌停次数
+  lbc: number; //连续涨停/跌停次数
   lbt: string; //最后封板时间（HH:mm:ss）
   zj: number; //封单资金（元）
   fba: number; //板上成交额（元）
@@ -28,14 +28,20 @@ export interface IStockInfo {
  * @param {string} date, ex: 2023-11-24
  * @return {*}  {Promise<IStockInfo[]>}
  */
-export async function getZTStocksByBiYing(date: string): Promise<IStockInfo[]> {
+export async function getZTStocksByBiYing(date: string): Promise<{
+  ztList: IStockInfo[],
+  dtList: IStockInfo[]
+}> {
   try {
     const res = await request(
-      `/release/zt?date=${date}`,
+      `/release/zt-dt?date=${date}`,
     );
     return res?.data?.data;
   } catch (error) {
     console.error(error);
-    return [];
+    return {
+      ztList: [],
+      dtList: [],
+    };
   }
 }
