@@ -83,7 +83,55 @@ export default function HomePage() {
 
   // 连板 config
   const lbConfig = useMemo(() => {
-    const data: { date: string; value: number; name: string }[] = [];
+    const data: { date: string; value: number; category: string; }[] = [];
+    dateStocks.forEach((item, index) => {
+      const list = item.ztList.length
+        ? item.ztList
+        : dateStocks[index - 1]?.ztList;
+      const lb3b = list.filter(item => Number(item.lbc) === 3).length;
+      const lb5b = list.filter(item => Number(item.lbc) === 5).length;
+      const lb6bAndUp = list.filter(item => Number(item.lbc) >= 6).length;
+      data.push({
+        date: dayjs(item.date).format('MM-DD'),
+        value: lb3b,
+        category: '3板'
+      });
+      data.push({
+        date: dayjs(item.date).format('MM-DD'),
+        value: lb5b,
+        category: '5板'
+      });
+      data.push({
+        date: dayjs(item.date).format('MM-DD'),
+        value: lb6bAndUp,
+        category: '6板及以上'
+      });
+    });
+
+    const config = {
+      data,
+      yField: 'value',
+      xField: 'date',
+      seriesField: 'category',
+      point: {
+        size: 4,
+        style: {
+          lineWidth: 1,
+          fillOpacity: 1,
+        },
+        shape: 'circle',
+      },
+      // label
+      label: {
+        formatter: (item: { value: string; name: string }) => item.value,
+      },
+    };
+    return config;
+  }, [dateStocks]);
+
+  // 最高板 config
+  const zgbConfig = useMemo(() => {
+    const data: { date: string; value: number; name: string; lbName: string; }[] = [];
     dateStocks.forEach((item, index) => {
       const list = item.ztList.length
         ? item.ztList
@@ -98,6 +146,7 @@ export default function HomePage() {
         date: dayjs(item.date).format('MM-DD'),
         value: Number(list[0].lbc),
         name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
+        lbName,
       });
     });
 
@@ -105,6 +154,9 @@ export default function HomePage() {
       data,
       yField: 'value',
       xField: 'date',
+      tooltip: {
+        title: 'lbName'
+      },
       point: {
         size: 4,
         style: {
@@ -128,9 +180,13 @@ export default function HomePage() {
         <div className="title">涨跌停趋势</div>
         <Line {...zdtConfig} />
       </div>
-      <div className="max-lbc">
-        <div className="title">最高板趋势</div>
+      <div className="lb">
+        <div className="title">连板趋势</div>
         <Line {...lbConfig} />
+      </div>
+      <div className="zgb">
+        <div className="title">最高板趋势</div>
+        <Line {...zgbConfig} />
       </div>
     </div>
   );
