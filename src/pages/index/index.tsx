@@ -16,7 +16,7 @@ export default function HomePage() {
   >([]);
 
   const getData = useCallback(async () => {
-    // 获取最近的10个工作日
+    // 获取最近的8个工作日
     const recentWorkdays = getRecentWorkdays(8);
     return Promise.all(
       recentWorkdays.map(async (date) => {
@@ -35,19 +35,17 @@ export default function HomePage() {
   // 涨跌停 config
   const zdtConfig = useMemo(() => {
     const data: { date: string; value: number; category: string }[] = [];
-    dateStocks.forEach((item, index) => {
+    dateStocks.forEach((item) => {
       const ztValue = item.ztList.length;
       const dtValue = item.dtList.length;
-      const preZTValue = dateStocks[index - 1]?.ztList.length;
-      const preDTValue = dateStocks[index - 1]?.dtList.length;
       data.push({
         date: dayjs(item.date).format('MM-DD'),
-        value: ztValue ? ztValue : preZTValue,
+        value: ztValue,
         category: '涨停',
       });
       data.push({
         date: dayjs(item.date).format('MM-DD'),
-        value: dtValue ? dtValue : preDTValue,
+        value: dtValue,
         category: '跌停',
       });
     });
@@ -91,10 +89,15 @@ export default function HomePage() {
         ? item.ztList
         : dateStocks[index - 1]?.ztList;
       list.sort((a, b) => Number(b.lbc) - Number(a.lbc));
+      // 最高板同时可能有多个
+      const lbName = list
+        .filter((item) => item.lbc === list[0].lbc)
+        .map((item) => item.mc)
+        .join();
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: Number(list[0].lbc),
-        name: list[0].mc,
+        name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
       });
     });
 
@@ -122,7 +125,7 @@ export default function HomePage() {
   return (
     <div className="index-container">
       <div className="zt-dt">
-        <div className="title">涨停板趋势</div>
+        <div className="title">涨跌停趋势</div>
         <Line {...zdtConfig} />
       </div>
       <div className="max-lbc">
