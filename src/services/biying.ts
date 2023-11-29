@@ -33,9 +33,11 @@ export async function getZTStocksByBiYing(date: string): Promise<{
   dtList: IStockInfo[]
 }> {
   try {
-    const res = await request(
+    const requestAdapter = () => request(
       `/release/zt-dt?date=${date}`,
     );
+    // 因为是 serverless，服务重启要时间，这里支持二次重试
+    const res = await requestAdapter().catch(requestAdapter);
     return res?.data?.data;
   } catch (error) {
     console.error(error);

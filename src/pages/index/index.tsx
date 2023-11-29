@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Line } from '@ant-design/plots';
+import { Line, Column } from '@ant-design/plots';
 import { reverse } from 'lodash-es';
 import dayjs from 'dayjs';
 import { getZTStocksByBiYing, IStockInfo } from '@/services';
@@ -83,55 +83,63 @@ export default function HomePage() {
 
   // 连板 config
   const lbConfig = useMemo(() => {
-    const data: { date: string; value: number; category: string; }[] = [];
+    const data: { date: string; value: number; category: string }[] = [];
     dateStocks.forEach((item, index) => {
       const list = item.ztList.length
         ? item.ztList
         : dateStocks[index - 1]?.ztList;
-      const lb3b = list.filter(item => Number(item.lbc) === 3).length;
-      const lb5b = list.filter(item => Number(item.lbc) === 5).length;
-      const lb6bAndUp = list.filter(item => Number(item.lbc) >= 6).length;
+      const lb3b = list.filter((item) => Number(item.lbc) === 3).length;
+      const lb4b = list.filter((item) => Number(item.lbc) === 4).length;
+      const lb5b = list.filter((item) => Number(item.lbc) === 5).length;
+      const lb6bAndUp = list.filter((item) => Number(item.lbc) >= 6).length;
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: lb3b,
-        category: '3板'
+        category: '3板',
+      });
+      data.push({
+        date: dayjs(item.date).format('MM-DD'),
+        value: lb4b,
+        category: '4板',
       });
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: lb5b,
-        category: '5板'
+        category: '5板',
       });
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: lb6bAndUp,
-        category: '6板及以上'
+        category: '6板+',
       });
     });
 
     const config = {
       data,
+      isStack: true,
       yField: 'value',
       xField: 'date',
       seriesField: 'category',
-      point: {
-        size: 4,
-        style: {
-          lineWidth: 1,
-          fillOpacity: 1,
-        },
-        shape: 'circle',
-      },
       // label
       label: {
-        formatter: (item: { value: string; name: string }) => item.value,
+        formatter: (item: { value: string; name: string }) => Number(item.value) !== 0 ? item.value : '',
       },
+      legend: {
+        layout: 'vertical',
+        position: 'top'
+      }
     };
     return config;
   }, [dateStocks]);
 
   // 最高板 config
   const zgbConfig = useMemo(() => {
-    const data: { date: string; value: number; name: string; lbName: string; }[] = [];
+    const data: {
+      date: string;
+      value: number;
+      name: string;
+      lbName: string;
+    }[] = [];
     dateStocks.forEach((item, index) => {
       const list = item.ztList.length
         ? item.ztList
@@ -155,7 +163,7 @@ export default function HomePage() {
       yField: 'value',
       xField: 'date',
       tooltip: {
-        title: 'lbName'
+        title: 'lbName',
       },
       point: {
         size: 4,
@@ -180,13 +188,13 @@ export default function HomePage() {
         <div className="title">涨跌停趋势</div>
         <Line {...zdtConfig} />
       </div>
-      <div className="lb">
-        <div className="title">连板趋势</div>
-        <Line {...lbConfig} />
-      </div>
       <div className="zgb">
         <div className="title">最高板趋势</div>
         <Line {...zgbConfig} />
+      </div>
+      <div className="lb">
+        <div className="title">连板趋势</div>
+        <Column {...lbConfig} />
       </div>
     </div>
   );
