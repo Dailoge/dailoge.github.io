@@ -15,7 +15,7 @@ export function getRecentWorkdays(count: number) {
     if (isWeekday(currentDate)) {
       if (i === 0) {
         // 9点30 开市 
-        if (currentDate.hour() > 8 && currentDate.minute() > 29) {
+        if ((currentDate.hour() > 8 && currentDate.minute() > 29) || currentDate.hour() > 9) {
           workdays.push(currentDate.format('YYYY-MM-DD'));
         }
       } else {
