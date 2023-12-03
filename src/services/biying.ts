@@ -3,11 +3,11 @@ import dayjs from 'dayjs';
 import { getStorageDataByDate, setStorageDataByDate } from '../utils';
 
 const request = axios.create({
-  baseURL: 'https://service-fxf0odwp-1252010818.sh.apigw.tencentcs.com', // 腾讯云 serverless，底层调用必盈 api，https://www.biyingapi.com/apidoc.html
+  baseURL: 'https://service-fxf0odwp-1252010818.sh.apigw.tencentcs.com', // 腾讯云 serverless，底层调用必盈 api，https://ad.biyingapi.com/apidoc.html
   timeout: 5000,
 });
 
-export interface IStockInfo {
+export interface IZTDTStockInfo {
   dm: string; //代码
   mc: string; //名称
   p: number; //价格（元）
@@ -28,11 +28,11 @@ export interface IStockInfo {
  *
  * @export
  * @param {string} date, ex: 2023-11-24
- * @return {*}  {Promise<IStockInfo[]>}
+ * @return {*}  {Promise<IZTDTStockInfo[]>}
  */
-export async function getZTStocksByBiYing(date: string): Promise<{
-  ztList: IStockInfo[];
-  dtList: IStockInfo[];
+export async function getZTDTStocksByBiYing(date: string): Promise<{
+  ztList: IZTDTStockInfo[];
+  dtList: IZTDTStockInfo[];
 }> {
   try {
     const requestAdapter = () => request(`/release/zt-dt?date=${date}`);

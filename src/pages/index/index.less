@@ -4,10 +4,11 @@
   padding: 24px;
   .title {
     font-size: 24px;
+    font-weight: 600;
     padding: 5px 0 15px;
   }
   .lb {
-    margin-top: 24px;
+    // margin-top: 24px;
     padding-bottom: 24px;
   }
   .jj-fail {
@@ -15,5 +16,38 @@
   }
   .zgb {
     margin-top: 24px;
+    .zgb-jj-fails-warp {
+      margin-top: 24px;
+      .zgb-jj-fail-title {
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .zgb-jj-fails-container {
+        margin-top: 12px;
+        .zgb-jj-fail-item {
+          display: flex;
+          height: 38px;
+          &.header {
+            .column {
+              font-size: 20px;
+              font-weight: 600;
+              line-height: 38px;
+            }
+          }
+          .column {
+            font-size: 18px;
+            flex: 1 1;
+            .zf {
+              color: red;
+              font-family: 600;
+            }
+            .df {
+              color: green;
+              font-family: 600;
+            }
+          }
+        }
+      }
+    }
   }
 }

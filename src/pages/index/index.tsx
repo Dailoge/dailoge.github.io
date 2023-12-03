@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Line, Column } from '@ant-design/plots';
 import { reverse } from 'lodash-es';
 import dayjs from 'dayjs';
-import { getZTStocksByBiYing, IStockInfo } from '@/services';
+import {
+  getZTDTStocksByBiYing,
+  getStockInfo,
+  IZTDTStockInfo,
+} from '@/services';
 import { getRecentWorkdays } from '@/utils';
 import './index.less';
 
@@ -10,9 +14,12 @@ export default function HomePage() {
   const [dateStocks, setDateStocks] = useState<
     Array<{
       date: string;
-      ztList: IStockInfo[];
-      dtList: IStockInfo[];
+      ztList: IZTDTStockInfo[];
+      dtList: IZTDTStockInfo[];
     }>
+  >([]);
+  const [zgbJJFails, setZgbJJFails] = useState<
+    Array<{ date: string; name: string; percent?: number; amplitude?: number }>
   >([]);
 
   const getData = useCallback(async () => {
@@ -20,7 +27,7 @@ export default function HomePage() {
     const recentWorkdays = getRecentWorkdays(33);
     return Promise.all(
       recentWorkdays.map(async (date) => {
-        const data = await getZTStocksByBiYing(date);
+        const data = await getZTDTStocksByBiYing(date);
         return { date, ztList: data.ztList, dtList: data.dtList };
       }),
     );
@@ -51,9 +58,11 @@ export default function HomePage() {
     });
 
     const ztAvg =
-      dateStocks.reduce((pre, item) => pre + item.ztList.length, 0) / dateStocks.length;
+      dateStocks.reduce((pre, item) => pre + item.ztList.length, 0) /
+      dateStocks.length;
     const dtAvg =
-      dateStocks.reduce((pre, item) => pre + item.dtList.length, 0) / dateStocks.length;
+      dateStocks.reduce((pre, item) => pre + item.dtList.length, 0) /
+      dateStocks.length;
 
     const config = {
       data,
@@ -118,7 +127,9 @@ export default function HomePage() {
     dateStocks.forEach((item, index) => {
       const dtList = item.dtList;
       const preZtList = index === 0 ? [] : dateStocks[index - 1].ztList;
-      const jjFailList = dtList.filter(i => preZtList.find(j => i.dm === j.dm));
+      const jjFailList = dtList.filter((i) =>
+        preZtList.find((j) => i.dm === j.dm),
+      );
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: jjFailList.length,
@@ -143,7 +154,7 @@ export default function HomePage() {
       },
       // label
       label: {
-        formatter: (item: { value: string; name: string }) => item.value
+        formatter: (item: { value: string; name: string }) => item.value,
       },
       // 辅助线
       annotations: [
@@ -165,8 +176,10 @@ export default function HomePage() {
   // 最高板 config
   const zgbConfig = useMemo(() => {
     const data: {
-      date: string;
+      date: string; // 12-01
+      originDate: string; // 2023-12-01
       value: number;
+      code: string;
       name: string;
       lbName: string;
     }[] = [];
@@ -184,6 +197,8 @@ export default function HomePage() {
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: Number(list[0].lbc),
+        code: list[0].dm,
+        originDate: item.date,
         name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
         lbName,
       });
@@ -286,6 +301,36 @@ export default function HomePage() {
     return config;
   }, [dateStocks]);
 
+  useEffect(() => {
+    const data = zgbConfig.data;
+    const zbgJJFail: { date: string; name: string; code: string }[] = [];
+    data.forEach((item, index) => {
+      const curZgb = item.value;
+      const preZgb = index === 0 ? 0 : data[index - 1].value;
+      if (curZgb <= preZgb) {
+        zbgJJFail.push({
+          date: item.originDate,
+          name: data[index - 1].name,
+          code: data[index - 1].code,
+        });
+      }
+    });
+
+    const zgbJJFailList = Promise.all(
+      zbgJJFail.map(async (item) => {
+        const { date, name, code } = item;
+        const res = await getStockInfo(code, date);
+        return {
+          ...res,
+          name,
+          date,
+        };
+      }),
+    );
+
+    zgbJJFailList.then((list) => setZgbJJFails(reverse(list)));
+  }, [zgbConfig]);
+
   return (
     <div className="index-container">
       <div className="zt-dt">
@@ -299,6 +344,32 @@ export default function HomePage() {
       <div className="zgb">
         <div className="title">最高板趋势</div>
         <Line {...zgbConfig} />
+        <div className="zgb-jj-fails-warp">
+          <div className="zgb-jj-fail-title">最高板晋级失败后表现</div>
+          <div className="zgb-jj-fails-container">
+            <div className="zgb-jj-fail-item header" key={123456}>
+              <div className="column">日期</div>
+              <div className="column">名称</div>
+              <div className="column">涨跌幅</div>
+              <div className="column">振幅</div>
+            </div>
+            {zgbJJFails.map((item) => {
+              const { date, name, percent, amplitude } = item;
+              return (
+                <div className="zgb-jj-fail-item" key={date}>
+                  <div className="column">{date}</div>
+                  <div className="column">{name}</div>
+                  <div className="column">
+                    <span className={`${Number(percent) > 0 ? 'zf' : 'df'}`}>
+                      {percent}%
+                    </span>
+                  </div>
+                  <div className="column">{amplitude}%</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
       <div className="lb">
         <div className="title">连板趋势</div>
