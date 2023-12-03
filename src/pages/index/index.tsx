@@ -109,6 +109,59 @@ export default function HomePage() {
     return config;
   }, [dateStocks]);
 
+  // 晋级失败跌停 config
+  const jjFailConfig = useMemo(() => {
+    const data: {
+      date: string;
+      value: number;
+    }[] = [];
+    dateStocks.forEach((item, index) => {
+      const dtList = item.dtList;
+      const preZtList = index === 0 ? [] : dateStocks[index - 1].ztList;
+      const jjFailList = dtList.filter(i => preZtList.find(j => i.dm === j.dm));
+      data.push({
+        date: dayjs(item.date).format('MM-DD'),
+        value: jjFailList.length,
+      });
+    });
+
+    const jjFailAvg =
+      data.reduce((pre, item) => pre + item.value, 0) / data.length;
+
+    const config = {
+      data,
+      yField: 'value',
+      xField: 'date',
+      color: ['#5AD8A6'],
+      point: {
+        size: 4,
+        style: {
+          lineWidth: 1,
+          fillOpacity: 1,
+        },
+        shape: 'circle',
+      },
+      // label
+      label: {
+        formatter: (item: { value: string; name: string }) => item.value
+      },
+      // 辅助线
+      annotations: [
+        {
+          type: 'line',
+          start: ['min', jjFailAvg],
+          end: ['max', jjFailAvg],
+          style: {
+            stroke: '#5AD8A6',
+            lineDash: [4, 2],
+            lineWidth: 2,
+          },
+        },
+      ],
+    };
+    return config;
+  }, [dateStocks]);
+
   // 最高板 config
   const zgbConfig = useMemo(() => {
     const data: {
@@ -238,6 +291,10 @@ export default function HomePage() {
       <div className="zt-dt">
         <div className="title">涨跌停趋势</div>
         <Line {...zdtConfig} />
+      </div>
+      <div className="jj-fail">
+        <div className="title">晋级失败跌停趋势</div>
+        <Line {...jjFailConfig} />
       </div>
       <div className="zgb">
         <div className="title">最高板趋势</div>
