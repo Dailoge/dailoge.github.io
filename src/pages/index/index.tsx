@@ -50,6 +50,11 @@ export default function HomePage() {
       });
     });
 
+    const ztAvg =
+      dateStocks.reduce((pre, item) => pre + item.ztList.length, 0) / dateStocks.length;
+    const dtAvg =
+      dateStocks.reduce((pre, item) => pre + item.dtList.length, 0) / dateStocks.length;
+
     const config = {
       data,
       yField: 'value',
@@ -77,6 +82,29 @@ export default function HomePage() {
         },
         formatter: (item: { value: any }) => item.value,
       },
+      // 辅助线
+      annotations: [
+        {
+          type: 'line',
+          start: ['min', ztAvg],
+          end: ['max', ztAvg],
+          style: {
+            stroke: '#F4664A',
+            lineDash: [4, 2],
+            lineWidth: 2,
+          },
+        },
+        {
+          type: 'line',
+          start: ['min', dtAvg],
+          end: ['max', dtAvg],
+          style: {
+            stroke: '#5AD8A6',
+            lineDash: [4, 2],
+            lineWidth: 2,
+          },
+        },
+      ],
     };
     return config;
   }, [dateStocks]);
@@ -89,7 +117,8 @@ export default function HomePage() {
       name: string;
       lbName: string;
     }[] = [];
-    dateStocks.slice(-22).forEach((item, index) => {
+    const renderStocks = dateStocks.slice(-22);
+    renderStocks.forEach((item, index) => {
       const list = item.ztList.length
         ? item.ztList
         : dateStocks[index - 1]?.ztList;
@@ -106,6 +135,8 @@ export default function HomePage() {
         lbName,
       });
     });
+    const zgbAvg =
+      data.reduce((pre, item) => pre + item.value, 0) / data.length;
 
     const config = {
       data,
@@ -127,6 +158,19 @@ export default function HomePage() {
         formatter: (item: { value: string; name: string }) =>
           `${item.name}(${item.value})`,
       },
+      // 辅助线
+      annotations: [
+        {
+          type: 'line',
+          start: ['min', zgbAvg],
+          end: ['max', zgbAvg],
+          style: {
+            stroke: '#1890ff',
+            lineDash: [4, 2],
+            lineWidth: 2,
+          },
+        },
+      ],
     };
     return config;
   }, [dateStocks]);
@@ -178,7 +222,8 @@ export default function HomePage() {
       seriesField: 'category',
       // label
       label: {
-        formatter: (item: { value: string; name: string }) => Number(item.value) !== 0 ? item.value : '',
+        formatter: (item: { value: string; name: string }) =>
+          Number(item.value) !== 0 ? item.value : '',
       },
       // legend: {
       //   layout: 'vertical',
@@ -187,7 +232,6 @@ export default function HomePage() {
     };
     return config;
   }, [dateStocks]);
-
 
   return (
     <div className="index-container">
