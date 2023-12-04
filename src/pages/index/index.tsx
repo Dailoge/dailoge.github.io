@@ -19,7 +19,7 @@ export default function HomePage() {
     }>
   >([]);
   const [zgbJJFails, setZgbJJFails] = useState<
-    Array<{ date: string; name: string; percent?: number; amplitude?: number }>
+    Array<{ date: string; name: string; zgb: number; percent?: number; amplitude?: string; openRadio?: string }>
   >([]);
 
   const getData = useCallback(async () => {
@@ -303,7 +303,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const data = zgbConfig.data;
-    const zbgJJFail: { date: string; name: string; code: string }[] = [];
+    const zbgJJFail: { date: string; name: string; zgb: number; code: string }[] = [];
     data.forEach((item, index) => {
       const curZgb = item.value;
       const preZgb = index === 0 ? 0 : data[index - 1].value;
@@ -311,6 +311,7 @@ export default function HomePage() {
         zbgJJFail.push({
           date: item.originDate,
           name: data[index - 1].name,
+          zgb: data[index - 1].value,
           code: data[index - 1].code,
         });
       }
@@ -318,10 +319,11 @@ export default function HomePage() {
 
     const zgbJJFailList = Promise.all(
       zbgJJFail.map(async (item) => {
-        const { date, name, code } = item;
+        const { date, zgb, name, code } = item;
         const res = await getStockInfo(code, date);
         return {
           ...res,
+          zgb,
           name,
           date,
         };
@@ -349,21 +351,23 @@ export default function HomePage() {
           <div className="zgb-jj-fails-container">
             <div className="zgb-jj-fail-item header" key={123456}>
               <div className="column">日期</div>
-              <div className="column">名称</div>
+              <div className="column name">名称</div>
               <div className="column">涨跌幅</div>
+              <div className="column">开盘</div>
               <div className="column">振幅</div>
             </div>
             {zgbJJFails.map((item) => {
-              const { date, name, percent, amplitude } = item;
+              const { date, name, zgb, percent, openRadio, amplitude } = item;
               return (
                 <div className="zgb-jj-fail-item" key={date}>
                   <div className="column">{date}</div>
-                  <div className="column">{name}</div>
+                  <div className="column name">{name}({`${zgb}进${zgb+1}失败`})</div>
                   <div className="column">
                     <span className={`${Number(percent) > 0 ? 'zf' : 'df'}`}>
                       {percent}%
                     </span>
                   </div>
+                  <div className="column">{openRadio}%</div>
                   <div className="column">{amplitude}%</div>
                 </div>
               );
