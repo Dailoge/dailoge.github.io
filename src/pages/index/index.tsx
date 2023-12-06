@@ -19,7 +19,14 @@ export default function HomePage() {
     }>
   >([]);
   const [zgbJJFails, setZgbJJFails] = useState<
-    Array<{ date: string; name: string; zgb: number; percent?: number; amplitude?: string; openRadio?: string }>
+    Array<{
+      date: string;
+      name: string;
+      zgb: number;
+      percent?: number;
+      amplitude?: string;
+      openRadio?: string;
+    }>
   >([]);
 
   const getData = useCallback(async () => {
@@ -66,6 +73,7 @@ export default function HomePage() {
 
     const config = {
       data,
+      height: 350,
       yField: 'value',
       xField: 'date',
       seriesField: 'category',
@@ -123,6 +131,7 @@ export default function HomePage() {
     const data: {
       date: string;
       value: number;
+      dtName: string;
     }[] = [];
     dateStocks.forEach((item, index) => {
       const dtList = item.dtList;
@@ -133,6 +142,19 @@ export default function HomePage() {
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: jjFailList.length,
+        dtName: jjFailList
+          .map((i) => {
+            const preZt = preZtList.find(
+              (j) => i.dm === j.dm,
+            ) as IZTDTStockInfo;
+            return {
+              mc: i.mc,
+              lbc: preZt.lbc,
+            };
+          })
+          .sort((a, b) => b.lbc - a.lbc)
+          .map((item) => `${item.mc}(${item.lbc}板)`)
+          .join(),
       });
     });
 
@@ -141,6 +163,7 @@ export default function HomePage() {
 
     const config = {
       data,
+      height: 230,
       yField: 'value',
       xField: 'date',
       color: ['#5AD8A6'],
@@ -152,9 +175,17 @@ export default function HomePage() {
         },
         shape: 'circle',
       },
+      // 悬浮展示内容
+      tooltip: {
+        title: 'dtName',
+        formatter: (datum: { value: number; date: string; }) => {
+          return { name: datum.value, value: datum.date };
+        },
+      },
       // label
       label: {
-        formatter: (item: { value: string; name: string }) => item.value,
+        formatter: (item: { value: number; date: string; }) =>
+          item.value,
       },
       // 辅助线
       annotations: [
@@ -179,12 +210,12 @@ export default function HomePage() {
       date: string; // 12-01
       originDate: string; // 2023-12-01
       value: number;
+      isZgb: boolean;
       code: string;
       name: string;
       lbName: string;
     }[] = [];
-    const renderStocks = dateStocks.slice(-22);
-    renderStocks.forEach((item, index) => {
+    dateStocks.forEach((item, index) => {
       const list = item.ztList.length
         ? item.ztList
         : dateStocks[index - 1]?.ztList;
@@ -197,22 +228,37 @@ export default function HomePage() {
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: Number(list[0].lbc),
+        isZgb: false,
         code: list[0].dm,
         originDate: item.date,
         name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
         lbName,
       });
     });
+    data.forEach((item, index) => {
+      const nextValue = index === data.length - 1 ? 0 : data[index + 1].value;
+      // 算出波峰，即是最高板
+      if (item.value >= nextValue) {
+        item.isZgb = true;
+      }
+    });
     const zgbAvg =
       data.reduce((pre, item) => pre + item.value, 0) / data.length;
 
     const config = {
       data,
+      slider: {
+        end: 1,
+        start: 0,
+      },
       yField: 'value',
       xField: 'date',
-      // tooltip: {
-      //   title: 'lbName',
-      // },
+      tooltip: {
+        title: 'lbName',
+        formatter: (datum: { value: number; date: string; }) => {
+          return { name: datum.value, value: datum.date };
+        },
+      },
       point: {
         size: 4,
         style: {
@@ -223,8 +269,12 @@ export default function HomePage() {
       },
       // label
       label: {
-        formatter: (item: { value: string; name: string }) =>
-          `${item.name}(${item.value})`,
+        formatter: (item: { value: string; name: string; isZgb: boolean }) => {
+          if (item.isZgb) {
+            return `${item.name}(${item.value})`;
+          }
+          return item.value;
+        },
       },
       // 辅助线
       annotations: [
@@ -303,7 +353,12 @@ export default function HomePage() {
 
   useEffect(() => {
     const data = zgbConfig.data;
-    const zbgJJFail: { date: string; name: string; zgb: number; code: string }[] = [];
+    const zbgJJFail: {
+      date: string;
+      name: string;
+      zgb: number;
+      code: string;
+    }[] = [];
     data.forEach((item, index) => {
       const curZgb = item.value;
       const preZgb = index === 0 ? 0 : data[index - 1].value;
@@ -361,7 +416,9 @@ export default function HomePage() {
               return (
                 <div className="zgb-jj-fail-item" key={date}>
                   <div className="column">{date}</div>
-                  <div className="column name">{name}({`${zgb}进${zgb+1}失败`})</div>
+                  <div className="column name">
+                    {name}({`${zgb}进${zgb + 1}失败`})
+                  </div>
                   <div className="column">
                     <span className={`${Number(percent) > 0 ? 'zf' : 'df'}`}>
                       {percent}%
