@@ -99,11 +99,14 @@ export default function HomePage() {
       tooltip: {
         showTitle: true,
         customContent: (date, data: any) => {
+          const content = data?.[1]?.data.dtTitle;
+          if (!content) return;
           return (
             <div
               style={{
                 padding: '2px',
-                lineHeight: '20px'
+                lineHeight: '20px',
+                minWidth: '50px',
               }}
             >
               {data?.[1]?.data.dtTitle}
