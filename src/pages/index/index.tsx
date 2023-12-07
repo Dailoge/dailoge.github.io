@@ -48,7 +48,12 @@ export default function HomePage() {
 
   // 涨跌停 config
   const zdtConfig = useMemo(() => {
-    const data: { date: string; value: number; category: string }[] = [];
+    const data: {
+      date: string;
+      value: number;
+      dtTitle?: string;
+      category: string;
+    }[] = [];
     dateStocks.forEach((item) => {
       const ztValue = item.ztList.length;
       const dtValue = item.dtList.length;
@@ -61,6 +66,10 @@ export default function HomePage() {
         date: dayjs(item.date).format('MM-DD'),
         value: dtValue,
         category: '跌停',
+        dtTitle: item.dtList
+          .sort((a, b) => b.zbc - a.zbc)
+          .map((dt) => dt.mc)
+          .join(', '),
       });
     });
 
@@ -86,17 +95,24 @@ export default function HomePage() {
         },
         shape: 'circle',
       },
+      // 悬浮展示内容
+      tooltip: {
+        showTitle: true,
+        customContent: (date, data: any) => {
+          return (
+            <div
+              style={{
+                padding: '2px',
+                lineHeight: '20px'
+              }}
+            >
+              {data?.[1]?.data.dtTitle}
+            </div>
+          );
+        },
+      },
       // label
       label: {
-        layout: [
-          {
-            type: 'hide-overlap',
-          },
-        ],
-        // 隐藏重叠label
-        style: {
-          textAlign: 'top',
-        },
         formatter: (item: { value: any }) => item.value,
       },
       // 辅助线
@@ -178,14 +194,13 @@ export default function HomePage() {
       // 悬浮展示内容
       tooltip: {
         title: 'dtName',
-        formatter: (datum: { value: number; date: string; }) => {
+        formatter: (datum: { value: number; date: string }) => {
           return { name: datum.value, value: datum.date };
         },
       },
       // label
       label: {
-        formatter: (item: { value: number; date: string; }) =>
-          item.value,
+        formatter: (item: { value: number; date: string }) => item.value,
       },
       // 辅助线
       annotations: [
@@ -255,7 +270,7 @@ export default function HomePage() {
       xField: 'date',
       tooltip: {
         title: 'lbName',
-        formatter: (datum: { value: number; date: string; }) => {
+        formatter: (datum: { value: number; date: string }) => {
           return { name: datum.value, value: datum.date };
         },
       },
