@@ -67,8 +67,8 @@ export default function HomePage() {
         value: dtValue,
         category: '跌停',
         dtTitle: item.dtList
-          .sort((a, b) => b.zbc - a.zbc)
-          .map((dt) => dt.mc)
+          .sort((a, b) => b.lbc - a.lbc)
+          .map((dt) => `${dt.mc}(${dt.lbc}板)`)
           .join(', '),
       });
     });
@@ -98,7 +98,8 @@ export default function HomePage() {
       // 悬浮展示内容
       tooltip: {
         showTitle: true,
-        customContent: (date, data: any) => {
+        position: 'top',
+        customContent: (date: string, data: any) => {
           const content = data?.[1]?.data.dtTitle;
           if (!content) return;
           return (
@@ -106,10 +107,10 @@ export default function HomePage() {
               style={{
                 padding: '2px',
                 lineHeight: '20px',
-                minWidth: '50px',
               }}
             >
-              {data?.[1]?.data.dtTitle}
+              跌停: {content}
+              <p style={{ textAlign: 'right' }}>{date}</p>
             </div>
           );
         },
