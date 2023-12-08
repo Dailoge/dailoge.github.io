@@ -186,7 +186,6 @@ export default function HomePage() {
       height: 230,
       yField: 'value',
       xField: 'date',
-      color: ['#5AD8A6'],
       point: {
         size: 4,
         style: {
@@ -213,7 +212,7 @@ export default function HomePage() {
           start: ['min', jjFailAvg],
           end: ['max', jjFailAvg],
           style: {
-            stroke: '#5AD8A6',
+            stroke: '#1890ff',
             lineDash: [4, 2],
             lineWidth: 2,
           },
