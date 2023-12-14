@@ -442,7 +442,11 @@ export default function HomePage() {
                       {percent}%
                     </span>
                   </div>
-                  <div className="column">{openRadio}%</div>
+                  <div className="column">
+                    <span className={`${Number(openRadio) > 0 ? 'zf' : 'df'}`}>
+                      {openRadio}%
+                    </span>
+                  </div>
                   <div className="column">{amplitude}%</div>
                 </div>
               );
