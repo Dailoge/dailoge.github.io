@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Line, Column } from '@ant-design/plots';
-import { reverse } from 'lodash-es';
+import { reverse, cloneDeep } from 'lodash-es';
 import dayjs from 'dayjs';
 import {
   getZTDTStocksByBiYing,
@@ -314,7 +314,7 @@ export default function HomePage() {
   // 连板 config
   const lbConfig = useMemo(() => {
     const data: { date: string; value: number; category: string }[] = [];
-    dateStocks.slice(-11).forEach((item, index) => {
+    dateStocks.slice(-16).forEach((item, index) => {
       const list = item.ztList.length
         ? item.ztList
         : dateStocks[index - 1]?.ztList;
@@ -369,6 +369,14 @@ export default function HomePage() {
     return config;
   }, [dateStocks]);
 
+  // 最高板前五
+  const limitTopStocks = useMemo(() => {
+    if (!dateStocks.length) return [];
+    const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
+    latestDayStocks.ztList.sort((a, b) => b.lbc - a.lbc);
+    return latestDayStocks.ztList.filter(item => item.lbc >= 3);
+  }, [dateStocks]);
+
   useEffect(() => {
     const data = zgbConfig.data;
     const zbgJJFail: {
@@ -419,6 +427,26 @@ export default function HomePage() {
       <div className="zgb">
         <div className="title">最高板趋势</div>
         <Line {...zgbConfig} />
+        <div className="limit-top-stocks">
+          {limitTopStocks.map((item) => {
+            return (
+              <div
+                key={item.dm}
+                className="limit-top-stocks-item"
+                onClick={() => {
+                  const handleDm = item.dm.replace(/[a-z]/ig, '');
+                  if(handleDm.startsWith('0')) {
+                    window.open(`https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`);
+                  } else {
+                    window.open(`https://wap.eastmoney.com/quote/stock/1.${handleDm}.html`);
+                  }
+                }}
+              >
+                {`${item.mc}(${item.lbc}板)`}
+              </div>
+            );
+          })}
+        </div>
         <div className="zgb-jj-fails-warp">
           <div className="zgb-jj-fail-title">最高板晋级失败后表现</div>
           <div className="zgb-jj-fails-container">
