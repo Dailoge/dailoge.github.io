@@ -442,7 +442,7 @@ export default function HomePage() {
                   }
                 }}
               >
-                {`${item.mc}(${item.lbc}板)`}
+                {`${item.mc}(${item.lbc}板,开板${item.zbc}次)`}
               </div>
             );
           })}
