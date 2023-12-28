@@ -253,7 +253,6 @@ export default function HomePage() {
 
   // 市场总成交额趋势
   const marketAmoutConfig = useMemo(() => {
-    console.log(marketAmountList);
     const marketAmoutAvg =
       marketAmountList.reduce((pre, item) => pre + item.amount, 0) /
       marketAmountList.length;
@@ -274,13 +273,6 @@ export default function HomePage() {
         },
         shape: 'circle',
       },
-      // 悬浮展示内容
-      // tooltip: {
-      //   title: 'dtName',
-      //   formatter: (datum: { value: number; date: string }) => {
-      //     return { name: datum.value, value: datum.date };
-      //   },
-      // },
       // label
       label: {
         formatter: (item: { amount: number; date: string }) => item.amount,
