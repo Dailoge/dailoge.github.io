@@ -50,14 +50,18 @@ export default function HomePage() {
   const getMarketAmountData = useCallback(async () => {
     return Promise.all(
       recentWorkdays.map(async (date) => {
-        const [shData, szData] = await Promise.all([getStockInfo('SH000001', date), getStockInfo('SZ399001', date)]);
-        const amount = ((shData?.amount || 0) + (szData?.amount || 0)) / 100000000;
+        const [shData, szData] = await Promise.all([
+          getStockInfo('SH000001', date),
+          getStockInfo('SZ399001', date),
+        ]);
+        const amount =
+          ((shData?.amount || 0) + (szData?.amount || 0)) / 100000000;
         return {
           date,
           amount: Math.round(amount),
           shData,
           szData,
-        }
+        };
       }),
     );
   }, []);
@@ -66,7 +70,7 @@ export default function HomePage() {
     getZTDTData().then((allDateStocks) => {
       setDateStocks(reverse(allDateStocks));
     });
-    getMarketAmountData().then(marketAmountList => {
+    getMarketAmountData().then((marketAmountList) => {
       setMarketAmountList(reverse(marketAmountList));
     });
   }, []);
@@ -251,7 +255,8 @@ export default function HomePage() {
   const marketAmoutConfig = useMemo(() => {
     console.log(marketAmountList);
     const marketAmoutAvg =
-      marketAmountList.reduce((pre, item) => pre + item.amount, 0) / marketAmountList.length;
+      marketAmountList.reduce((pre, item) => pre + item.amount, 0) /
+      marketAmountList.length;
 
     const config = {
       data: marketAmountList,
@@ -453,7 +458,7 @@ export default function HomePage() {
     if (!dateStocks.length) return [];
     const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
     latestDayStocks.ztList.sort((a, b) => b.lbc - a.lbc);
-    return latestDayStocks.ztList.filter(item => item.lbc >= 3);
+    return latestDayStocks.ztList.filter((item) => item.lbc >= 3);
   }, [dateStocks]);
 
   useEffect(() => {
@@ -499,14 +504,6 @@ export default function HomePage() {
         <div className="title">涨跌停趋势</div>
         <Line {...zdtConfig} />
       </div>
-      <div className="jj-fail">
-        <div className="title">晋级失败跌停趋势</div>
-        <Line {...jjFailConfig} />
-      </div>
-      <div className="market-amount">
-        <div className="title">市场总成交额趋势</div>
-        <Line {...marketAmoutConfig} />
-      </div>
       <div className="zgb">
         <div className="title">最高板趋势</div>
         <Line {...zgbConfig} />
@@ -517,11 +514,15 @@ export default function HomePage() {
                 key={item.dm}
                 className="limit-top-stocks-item"
                 onClick={() => {
-                  const handleDm = item.dm.replace(/[a-z]/ig, '');
-                  if(handleDm.startsWith('0')) {
-                    window.open(`https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`);
+                  const handleDm = item.dm.replace(/[a-z]/gi, '');
+                  if (handleDm.startsWith('0')) {
+                    window.open(
+                      `https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`,
+                    );
                   } else {
-                    window.open(`https://wap.eastmoney.com/quote/stock/1.${handleDm}.html`);
+                    window.open(
+                      `https://wap.eastmoney.com/quote/stock/1.${handleDm}.html`,
+                    );
                   }
                 }}
               >
@@ -530,39 +531,48 @@ export default function HomePage() {
             );
           })}
         </div>
-        <div className="zgb-jj-fails-warp">
-          <div className="zgb-jj-fail-title">最高板晋级失败后表现</div>
-          <div className="zgb-jj-fails-container">
-            <div className="zgb-jj-fail-item header" key={123456}>
-              <div className="column">日期</div>
-              <div className="column name">名称</div>
-              <div className="column">涨跌幅</div>
-              <div className="column">开盘</div>
-              <div className="column">振幅</div>
-            </div>
-            {zgbJJFails.map((item) => {
-              const { date, name, zgb, percent, openRadio, amplitude } = item;
-              return (
-                <div className="zgb-jj-fail-item" key={date}>
-                  <div className="column">{date}</div>
-                  <div className="column name">
-                    {name}({`${zgb}进${zgb + 1}失败`})
-                  </div>
-                  <div className="column">
-                    <span className={`${Number(percent) > 0 ? 'zf' : 'df'}`}>
-                      {percent}%
-                    </span>
-                  </div>
-                  <div className="column">
-                    <span className={`${Number(openRadio) > 0 ? 'zf' : 'df'}`}>
-                      {openRadio}%
-                    </span>
-                  </div>
-                  <div className="column">{amplitude}%</div>
-                </div>
-              );
-            })}
+      </div>
+      <div className="market-amount">
+        <div className="title">市场总成交额趋势</div>
+        <Line {...marketAmoutConfig} />
+      </div>
+
+      <div className="jj-fail">
+        <div className="title">晋级失败跌停趋势</div>
+        <Line {...jjFailConfig} />
+      </div>
+      <div className="zgb-jj-fails-warp">
+        <div className="zgb-jj-fail-title">最高板晋级失败后表现</div>
+        <div className="zgb-jj-fails-container">
+          <div className="zgb-jj-fail-item header" key={123456}>
+            <div className="column">日期</div>
+            <div className="column name">名称</div>
+            <div className="column">涨跌幅</div>
+            <div className="column">开盘</div>
+            <div className="column">振幅</div>
           </div>
+          {zgbJJFails.map((item) => {
+            const { date, name, zgb, percent, openRadio, amplitude } = item;
+            return (
+              <div className="zgb-jj-fail-item" key={date}>
+                <div className="column">{date}</div>
+                <div className="column name">
+                  {name}({`${zgb}进${zgb + 1}失败`})
+                </div>
+                <div className="column">
+                  <span className={`${Number(percent) > 0 ? 'zf' : 'df'}`}>
+                    {percent}%
+                  </span>
+                </div>
+                <div className="column">
+                  <span className={`${Number(openRadio) > 0 ? 'zf' : 'df'}`}>
+                    {openRadio}%
+                  </span>
+                </div>
+                <div className="column">{amplitude}%</div>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="lb">
