@@ -10,6 +10,9 @@ import {
 import { getRecentWorkdays } from '@/utils';
 import './index.less';
 
+// 获取最近的n个工作日
+const recentWorkdays = getRecentWorkdays(35);
+
 export default function HomePage() {
   const [dateStocks, setDateStocks] = useState<
     Array<{
@@ -28,10 +31,14 @@ export default function HomePage() {
       openRadio?: string;
     }>
   >([]);
+  const [marketAmountList, setMarketAmountList] = useState<
+    Array<{
+      date: string;
+      amount: number;
+    }>
+  >([]);
 
-  const getData = useCallback(async () => {
-    // 获取最近的n个工作日
-    const recentWorkdays = getRecentWorkdays(33);
+  const getZTDTData = useCallback(async () => {
     return Promise.all(
       recentWorkdays.map(async (date) => {
         const data = await getZTDTStocksByBiYing(date);
@@ -40,9 +47,27 @@ export default function HomePage() {
     );
   }, []);
 
+  const getMarketAmountData = useCallback(async () => {
+    return Promise.all(
+      recentWorkdays.map(async (date) => {
+        const [shData, szData] = await Promise.all([getStockInfo('SH000001', date), getStockInfo('SZ399001', date)]);
+        const amount = ((shData?.amount || 0) + (szData?.amount || 0)) / 100000000;
+        return {
+          date,
+          amount: Math.round(amount),
+          shData,
+          szData,
+        }
+      }),
+    );
+  }, []);
+
   useEffect(() => {
-    getData().then((allDateStocks) => {
+    getZTDTData().then((allDateStocks) => {
       setDateStocks(reverse(allDateStocks));
+    });
+    getMarketAmountData().then(marketAmountList => {
+      setMarketAmountList(reverse(marketAmountList));
     });
   }, []);
 
@@ -222,6 +247,56 @@ export default function HomePage() {
     return config;
   }, [dateStocks]);
 
+  // 市场总成交额趋势
+  const marketAmoutConfig = useMemo(() => {
+    console.log(marketAmountList);
+    const marketAmoutAvg =
+      marketAmountList.reduce((pre, item) => pre + item.amount, 0) / marketAmountList.length;
+
+    const config = {
+      data: marketAmountList,
+      height: 230,
+      yField: 'amount',
+      xField: 'date',
+      yAxis: {
+        min: 5000, // 设置Y轴的最小值
+      },
+      point: {
+        size: 4,
+        style: {
+          lineWidth: 1,
+          fillOpacity: 1,
+        },
+        shape: 'circle',
+      },
+      // 悬浮展示内容
+      // tooltip: {
+      //   title: 'dtName',
+      //   formatter: (datum: { value: number; date: string }) => {
+      //     return { name: datum.value, value: datum.date };
+      //   },
+      // },
+      // label
+      label: {
+        formatter: (item: { amount: number; date: string }) => item.amount,
+      },
+      // 辅助线
+      annotations: [
+        {
+          type: 'line',
+          start: ['min', marketAmoutAvg],
+          end: ['max', marketAmoutAvg],
+          style: {
+            stroke: '#1890ff',
+            lineDash: [4, 2],
+            lineWidth: 2,
+          },
+        },
+      ],
+    };
+    return config;
+  }, [marketAmountList]);
+
   // 最高板 config
   const zgbConfig = useMemo(() => {
     const data: {
@@ -269,8 +344,12 @@ export default function HomePage() {
         end: 1,
         start: 0,
       },
+      height: 230,
       yField: 'value',
       xField: 'date',
+      yAxis: {
+        min: 2, // 设置Y轴的最小值
+      },
       tooltip: {
         title: 'lbName',
         formatter: (datum: { value: number; date: string }) => {
@@ -415,6 +494,10 @@ export default function HomePage() {
       <div className="jj-fail">
         <div className="title">晋级失败跌停趋势</div>
         <Line {...jjFailConfig} />
+      </div>
+      <div className="market-amount">
+        <div className="title">市场总成交额趋势</div>
+        <Line {...marketAmoutConfig} />
       </div>
       <div className="zgb">
         <div className="title">最高板趋势</div>
