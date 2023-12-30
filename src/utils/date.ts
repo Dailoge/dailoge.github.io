@@ -7,7 +7,7 @@ export function isWeekday(date: dayjs.Dayjs) {
 
 export function getRecentWorkdays(count: number) {
   const today = dayjs();
-  const workdays = [];
+  const workdays: string[] = [];
   let i = 0;
 
   while (true) {
@@ -23,7 +23,7 @@ export function getRecentWorkdays(count: number) {
         workdays.push(currentDate.format('YYYY-MM-DD'));
       }
     }
-    if (workdays.length === count) {
+    if (i === count) {
       break;
     }
     i++;
