@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
+import { Collapse } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
 import { getStockInfo } from '@/services';
 import { IDateStock } from '@/types';
@@ -190,40 +191,45 @@ export default (props: IProps) => {
           );
         })}
       </div>
-      <div className="zgb-jj-fails-warp">
-        <div className="zgb-jj-fail-title">最高板晋级失败后表现</div>
-        <div className="zgb-jj-fails-container">
-          <div className="zgb-jj-fail-item header" key={123456}>
-            <div className="column">日期</div>
-            <div className="column name">名称</div>
-            <div className="column">涨跌幅</div>
-            <div className="column">开盘</div>
-            <div className="column">振幅</div>
-          </div>
-          {zgbJJFails.map((item) => {
-            const { date, name, zgb, percent, openRadio, amplitude } = item;
-            return (
-              <div className="zgb-jj-fail-item" key={date}>
-                <div className="column">{date}</div>
-                <div className="column name">
-                  {name}({`${zgb}进${zgb + 1}失败`})
-                </div>
-                <div className="column">
-                  <span className={`${Number(percent) > 0 ? 'zf' : 'df'}`}>
-                    {percent}%
-                  </span>
-                </div>
-                <div className="column">
-                  <span className={`${Number(openRadio) > 0 ? 'zf' : 'df'}`}>
-                    {openRadio}%
-                  </span>
-                </div>
-                <div className="column">{amplitude}%</div>
+      <Collapse accordion>
+        <Collapse.Panel key="1" title="最高板晋级失败后表现">
+          <div className="zgb-jj-fails-warp">
+            <div className="zgb-jj-fails-container">
+              <div className="zgb-jj-fail-item header" key={123456}>
+                <div className="column">日期</div>
+                <div className="column name">名称</div>
+                <div className="column">涨跌幅</div>
+                <div className="column">开盘</div>
+                <div className="column">振幅</div>
               </div>
-            );
-          })}
-        </div>
-      </div>
+              {zgbJJFails.map((item) => {
+                const { date, name, zgb, percent, openRadio, amplitude } = item;
+                return (
+                  <div className="zgb-jj-fail-item" key={date}>
+                    <div className="column">{date}</div>
+                    <div className="column name">
+                      {name}({`${zgb}进${zgb + 1}失败`})
+                    </div>
+                    <div className="column">
+                      <span className={`${Number(percent) > 0 ? 'zf' : 'df'}`}>
+                        {percent}%
+                      </span>
+                    </div>
+                    <div className="column">
+                      <span
+                        className={`${Number(openRadio) > 0 ? 'zf' : 'df'}`}
+                      >
+                        {openRadio}%
+                      </span>
+                    </div>
+                    <div className="column">{amplitude}%</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </Collapse.Panel>
+      </Collapse>
     </div>
   );
 };
