@@ -71,7 +71,7 @@ export default (props: IProps) => {
   }, [dateStocks]);
 
   return (
-    <div className="lb">
+    <div className="lb-num">
       <div className="title">连板趋势</div>
       <Column {...lbConfig} />
     </div>

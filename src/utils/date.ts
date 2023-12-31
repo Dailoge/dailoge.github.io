@@ -23,7 +23,7 @@ export function getRecentWorkdays(count: number) {
         workdays.push(currentDate.format('YYYY-MM-DD'));
       }
     }
-    if (i === count) {
+    if (workdays.length === count) {
       break;
     }
     i++;
