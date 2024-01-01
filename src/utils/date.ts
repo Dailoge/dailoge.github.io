@@ -17,12 +17,11 @@ export function isWeekday(date: dayjs.Dayjs) {
 
 export function isLegalHoliday(date: dayjs.Dayjs) {
   const findRes = legalHolidays.find(([startDay, endDay]) => {
-    const startDayIns = dayjs();
-    startDayIns.set('M', Number(startDay.split('.')[0]) - 1);
-    startDayIns.set('D', Number(startDay.split('.')[1]) - 1);
-    const endDayIns = dayjs();
-    endDayIns.set('M', Number(endDay.split('.')[0]) - 1);
-    endDayIns.set('D', Number(endDay.split('.')[1]) - 1);
+    const startDayIns = dayjs(`${date.format('YYYY')}.${startDay}`);
+    const endDayIns = dayjs(`${date.format('YYYY')}.${endDay}`)
+      .set('hour', 23)
+      .set('minute', 59)
+      .set('millisecond', 59)
     return (
       (date.isAfter(startDayIns) && date.isBefore(endDayIns)) ||
       date.isSame(startDayIns) ||
