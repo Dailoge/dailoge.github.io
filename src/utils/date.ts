@@ -22,11 +22,7 @@ export function isLegalHoliday(date: dayjs.Dayjs) {
       .set('hour', 23)
       .set('minute', 59)
       .set('millisecond', 59);
-    return (
-      (date.isAfter(startDayIns) && date.isBefore(endDayIns)) ||
-      date.isSame(startDayIns) ||
-      date.isSame(endDayIns)
-    );
+    return date.isAfter(startDayIns) && date.isBefore(endDayIns);
   });
   return !!findRes;
 }
