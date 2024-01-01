@@ -21,7 +21,7 @@ export function isLegalHoliday(date: dayjs.Dayjs) {
     const endDayIns = dayjs(`${date.format('YYYY')}.${endDay}`)
       .set('hour', 23)
       .set('minute', 59)
-      .set('millisecond', 59)
+      .set('millisecond', 59);
     return (
       (date.isAfter(startDayIns) && date.isBefore(endDayIns)) ||
       date.isSame(startDayIns) ||
