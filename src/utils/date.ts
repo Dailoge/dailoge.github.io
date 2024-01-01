@@ -1,8 +1,35 @@
 import dayjs from 'dayjs';
+// 2024 年
+const legalHolidays = [
+  ['01.01', '01.01'], // 元旦节
+  ['02.10', '02.17'], // 春节
+  ['04.04', '04.06'], // 清明节
+  ['05.01', '05.05'], // 劳动节
+  ['06.08', '06.10'], // 端午节
+  ['09.15', '09.17'], // 中秋节
+  ['10.01', '10.07'], // 国庆节
+];
 
 export function isWeekday(date: dayjs.Dayjs) {
   const dayOfWeek = date.day();
   return dayOfWeek >= 1 && dayOfWeek <= 5; // 周一到周五是工作日
+}
+
+export function isLegalHoliday(date: dayjs.Dayjs) {
+  const findRes = legalHolidays.find(([startDay, endDay]) => {
+    const startDayIns = dayjs();
+    startDayIns.set('M', Number(startDay.split('.')[0]) - 1);
+    startDayIns.set('D', Number(startDay.split('.')[1]) - 1);
+    const endDayIns = dayjs();
+    endDayIns.set('M', Number(endDay.split('.')[0]) - 1);
+    endDayIns.set('D', Number(endDay.split('.')[1]) - 1);
+    return (
+      (date.isAfter(startDayIns) && date.isBefore(endDayIns)) ||
+      date.isSame(startDayIns) ||
+      date.isSame(endDayIns)
+    );
+  });
+  return !!findRes;
 }
 
 export function getRecentWorkdays(count: number) {
@@ -12,10 +39,13 @@ export function getRecentWorkdays(count: number) {
 
   while (true) {
     let currentDate = today.subtract(i, 'day');
-    if (isWeekday(currentDate)) {
+    if (isWeekday(currentDate) && !isLegalHoliday(currentDate)) {
       if (i === 0) {
-        // 9点30 开市 
-        const currentStockBeginTime = today.clone().set('hour', 8).set('minute', 29);
+        // 9点30 开市
+        const currentStockBeginTime = today
+          .clone()
+          .set('hour', 8)
+          .set('minute', 29);
         if (currentDate.isAfter(currentStockBeginTime)) {
           workdays.push(currentDate.format('YYYY-MM-DD'));
         }
