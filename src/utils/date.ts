@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 // 2024 年
 const legalHolidays = [
-  ['01.01', '01.01'], // 元旦节
-  ['02.10', '02.17'], // 春节
-  ['04.04', '04.06'], // 清明节
-  ['05.01', '05.05'], // 劳动节
-  ['06.08', '06.10'], // 端午节
-  ['09.15', '09.17'], // 中秋节
-  ['10.01', '10.07'], // 国庆节
+  ['01-01', '01-01'], // 元旦节
+  ['02-10', '02-17'], // 春节
+  ['04-04', '04-06'], // 清明节
+  ['05-01', '05-05'], // 劳动节
+  ['06-08', '06-10'], // 端午节
+  ['09-15', '09-17'], // 中秋节
+  ['10-01', '10-07'], // 国庆节
 ];
 
 export function isWeekday(date: dayjs.Dayjs) {
@@ -17,8 +17,8 @@ export function isWeekday(date: dayjs.Dayjs) {
 
 export function isLegalHoliday(date: dayjs.Dayjs) {
   const findRes = legalHolidays.find(([startDay, endDay]) => {
-    const startDayIns = dayjs(`${date.format('YYYY')}.${startDay}`);
-    const endDayIns = dayjs(`${date.format('YYYY')}.${endDay}`)
+    const startDayIns = dayjs(`${date.format('YYYY')}-${startDay}`);
+    const endDayIns = dayjs(`${date.format('YYYY')}-${endDay}`)
       .set('hour', 23)
       .set('minute', 59)
       .set('millisecond', 59);
