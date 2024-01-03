@@ -14,9 +14,10 @@ const request = axios.create({
  */
 export async function getStockLineInfoByThs(code: string, lineDays = 45) {
   try {
-    const res = await request(
+    const requestAdapter = () => request(
       `/getStockLineInfoByThs?code=${code}&lineDays=${lineDays}`,
     );
+    const res = await requestAdapter().catch(requestAdapter);
     const list = res.data.data.data.split(';');
     const handleList = list.map((item: string, index: number) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
