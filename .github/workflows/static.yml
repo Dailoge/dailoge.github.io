@@ -1,6 +1,9 @@
 # 1 工作流名称
 name: CI
 
+environment:
+  name: github-pages
+
 # 2 工作流执行名称
 run-name: ${{ github.actor }} is update repo, start building...
 
