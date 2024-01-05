@@ -28,6 +28,8 @@ jobs:
   build:
     # 执行平台
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
 
     # 任务步骤
     steps:
