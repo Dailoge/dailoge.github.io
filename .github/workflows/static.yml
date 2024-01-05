@@ -69,8 +69,6 @@ jobs:
       # 9 部署 GitHub Pages
       - name: Deploy to GitHub Pages(部署到 GitHub Pages)
         uses: actions/deploy-pages@v2
-        environment:
-          name: github-pages
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
