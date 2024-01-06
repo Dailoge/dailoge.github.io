@@ -13,7 +13,8 @@ html {
 
 /* Set default font family */  
 body {  
-  font-family: Arial, sans-serif;  
+  // 增加 important 避免被 antd 的样式文件覆盖，可能导致构建和本地的字体优先级不一样。。。
+  font-family: Arial, sans-serif !important;  
 }  
 
 /* Add some base styling */  
