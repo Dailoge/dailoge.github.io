@@ -186,7 +186,7 @@ export default (props: IProps) => {
                 }
               }}
             >
-              {`${item.mc}(${item.lbc}板,开板${item.zbc}次)`}
+              {`${item.mc}(${item.p}元,${item.lbc}板,开板${item.zbc}次)`}
             </div>
           );
         })}
