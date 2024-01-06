@@ -175,10 +175,17 @@ export default (props: IProps) => {
       .sort((a, b) => Number(b) - Number(a))
       .map((lbs) => {
         const limitTopStocksLine = lbMap[lbs].map((item) => {
+          const beginLbMinPrice = 6;
+          const beginLbMaxPrice = 16;
+          const isLikePrice =
+            item.p >= beginLbMinPrice * Math.pow(1.1, Number(lbs)) &&
+            item.p <= beginLbMaxPrice * Math.pow(1.1, Number(lbs));
           return (
             <div
               key={item.dm}
-              className="limit-top-stocks-item"
+              className={`limit-top-stocks-item ${
+                isLikePrice ? 'is-like-price' : ''
+              }`}
               onClick={() => {
                 const handleDm = item.dm.replace(/[a-z]/gi, '');
                 if (handleDm.startsWith('0')) {
