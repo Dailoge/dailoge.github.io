@@ -163,12 +163,18 @@ export default (props: IProps) => {
     return latestDayStocks.ztList.filter((item) => item.lbc >= 3);
   }, [dateStocks]);
 
-  return (
-    <div className="zgb">
-      <div className="title">最高板趋势</div>
-      <Line {...zgbConfig} />
-      <div className="limit-top-stocks">
-        {limitTopStocks.map((item) => {
+  const renderLbContent = useMemo(() => {
+    const lbMap: { [key: number | string]: IDateStock['ztList'] } = {};
+    limitTopStocks.forEach((item) => {
+      if (!lbMap[item.lbc]) {
+        lbMap[item.lbc] = [];
+      }
+      lbMap[item.lbc].push(item);
+    });
+    const content = Object.keys(lbMap)
+      .sort((a, b) => Number(b) - Number(a))
+      .map((lbs) => {
+        const limitTopStocksLine = lbMap[lbs].map((item) => {
           return (
             <div
               key={item.dm}
@@ -186,11 +192,27 @@ export default (props: IProps) => {
                 }
               }}
             >
-              {`${item.mc}(${item.p}元,${item.lbc}板,开板${item.zbc}次)`}
+              {`${item.mc}(${item.p.toString().split('.')[0]}元)`}
             </div>
           );
-        })}
-      </div>
+        });
+        return (
+          <div className="limit-top-stocks-line" key={lbs}>
+            <div className="limit-top-stocks-lbs">{lbs}板</div>
+            <div className="limit-top-stocks-container">
+              {limitTopStocksLine}
+            </div>
+          </div>
+        );
+      });
+    return content;
+  }, [limitTopStocks]);
+
+  return (
+    <div className="zgb">
+      <div className="title">最高板趋势</div>
+      <Line {...zgbConfig} />
+      <div className="limit-top-stocks">{renderLbContent}</div>
       <Collapse accordion>
         <Collapse.Panel key="1" title="最高板晋级失败后表现">
           <div className="zgb-jj-fails-warp">
