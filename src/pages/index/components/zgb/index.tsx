@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
-import { Collapse, Toast } from 'antd-mobile';
+import { Collapse, Toast, Tag } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
 import { getStockInfo, getJianGuanStock } from '@/services';
 import { IDateStock, IJianGuanStock } from '@/types';
@@ -222,7 +222,7 @@ export default (props: IProps) => {
                     e.stopPropagation();
                   }}
                 >
-                  监管
+                  <Tag color='danger'>监管</Tag>
                 </span>
               )}
             </div>
