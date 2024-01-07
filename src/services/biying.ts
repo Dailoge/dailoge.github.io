@@ -1,13 +1,9 @@
-import axios from 'axios';
 import dayjs from 'dayjs';
+import request from './request';
 import { getStorageDataByDate, setStorageDataByDate } from '../utils';
 import { IZTDTStockInfo } from '@/types';
 
-const request = axios.create({
-  baseURL: 'https://service-fxf0odwp-1252010818.sh.apigw.tencentcs.com', // 腾讯云 serverless，底层调用必盈 api，https://ad.biyingapi.com/apidoc.html
-  timeout: 5000,
-});
-
+// 底层调用必盈 api，https://ad.biyingapi.com/apidoc.html
 /**
  *
  * @export

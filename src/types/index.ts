@@ -20,3 +20,10 @@ export interface IDateStock {
   ztList: IZTDTStockInfo[];
   dtList: IZTDTStockInfo[];
 }
+
+export interface IJianGuanStock {
+  name: string;
+  code: string;
+  date: string;
+  link: string;
+}
