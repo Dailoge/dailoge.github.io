@@ -22,13 +22,14 @@
         margin-left: 8px;
         flex-grow: 1;
         .limit-top-stocks-item {
+          position: relative;
           flex-basis: 196px;
           flex-shrink: 0;
           margin: 0 8px 8px 0;
           background-color: #f4f4f4;
           font-size: 24px;
           cursor: pointer;
-          padding: 13px 15px;
+          padding: 15px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -37,6 +38,13 @@
           }
           &.is-like-price {
             color: red;
+          }
+          .jian-guan {
+            position: absolute;
+            z-index: 999;
+            top: 0;
+            right: 0;
+            font-size: 12px;
           }
         }
       }

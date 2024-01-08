@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
-import { Collapse } from 'antd-mobile';
+import { Collapse, Toast, Tag } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
-import { getStockInfo } from '@/services';
-import { IDateStock } from '@/types';
+import { getStockInfo, getJianGuanStock } from '@/services';
+import { IDateStock, IJianGuanStock } from '@/types';
 
 import './index.less';
 
@@ -14,6 +14,7 @@ interface IProps {
 
 export default (props: IProps) => {
   const { dateStocks } = props;
+  const [jianGuanStocks, setJianGuanStocks] = useState<IJianGuanStock[]>([]);
   const [zgbJJFails, setZgbJJFails] = useState<
     Array<{
       date: string;
@@ -155,6 +156,10 @@ export default (props: IProps) => {
     zgbJJFailList.then((list) => setZgbJJFails(reverse(list)));
   }, [zgbConfig]);
 
+  useEffect(() => {
+    getJianGuanStock().then(setJianGuanStocks);
+  }, []);
+
   // 大于 3 板的个股
   const limitTopStocks = useMemo(() => {
     if (!dateStocks.length) return [];
@@ -175,11 +180,15 @@ export default (props: IProps) => {
       .sort((a, b) => Number(b) - Number(a))
       .map((lbs) => {
         const limitTopStocksLine = lbMap[lbs].map((item) => {
+          const handleDm = item.dm.replace(/[a-z]/gi, '');
           const beginLbMinPrice = 6;
           const beginLbMaxPrice = 16;
           const isLikePrice =
             item.p >= beginLbMinPrice * Math.pow(1.1, Number(lbs)) &&
             item.p <= beginLbMaxPrice * Math.pow(1.1, Number(lbs));
+          const jianGuanRes = jianGuanStocks.find(
+            (item) => item.code === handleDm,
+          );
           return (
             <div
               key={item.dm}
@@ -187,7 +196,6 @@ export default (props: IProps) => {
                 isLikePrice ? 'is-like-price' : ''
               }`}
               onClick={() => {
-                const handleDm = item.dm.replace(/[a-z]/gi, '');
                 if (handleDm.startsWith('0')) {
                   window.open(
                     `https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`,
@@ -200,6 +208,23 @@ export default (props: IProps) => {
               }}
             >
               {`${item.mc}(${item.p.toString().split('.')[0]}元)`}
+              {!!jianGuanRes && (
+                <span
+                  className="jian-guan"
+                  onClick={(e) => {
+                    if (jianGuanRes.link) {
+                      window.open(jianGuanRes.link);
+                    } else {
+                      Toast.show({
+                        content: '未找到相关描述文件~',
+                      });
+                    }
+                    e.stopPropagation();
+                  }}
+                >
+                  <Tag color='danger'>监管</Tag>
+                </span>
+              )}
             </div>
           );
         });
@@ -213,7 +238,7 @@ export default (props: IProps) => {
         );
       });
     return content;
-  }, [limitTopStocks]);
+  }, [limitTopStocks, jianGuanStocks]);
 
   return (
     <div className="zgb">
