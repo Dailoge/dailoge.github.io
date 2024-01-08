@@ -186,14 +186,15 @@ export default (props: IProps) => {
           const isLikePrice =
             item.p >= beginLbMinPrice * Math.pow(1.1, Number(lbs)) &&
             item.p <= beginLbMaxPrice * Math.pow(1.1, Number(lbs));
+          const isLikeCJE = item.cje <= 1500000000;
           const jianGuanRes = jianGuanStocks.find(
-            (item) => item.code === handleDm,
+            (jianGuanItem) => jianGuanItem.code === handleDm,
           );
           return (
             <div
               key={item.dm}
               className={`limit-top-stocks-item ${
-                isLikePrice ? 'is-like-price' : ''
+                isLikePrice && isLikeCJE ? 'is-like-price' : ''
               }`}
               onClick={() => {
                 if (handleDm.startsWith('0')) {
