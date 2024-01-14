@@ -1,5 +1,6 @@
 import request from './request';
 import dayjs from 'dayjs';
+import { IStockBlockUp } from '@/types';
 
 // 底层调用同花顺的 jsonp 能力，https://m.10jqka.com.cn/stockpage/48_883900/?back_source=wxhy&share_hxapp=isc#refCountId=R_56307738_256.html&atab=effectStocks
 
@@ -32,6 +33,21 @@ export async function getStockLineInfoByThs(code: string, lineDays = 45) {
         percent,
       };
     });
+    return handleList;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getStockBlockUpByDate(date: string): Promise<IStockBlockUp[]> {
+  const handleDate = dayjs(date).format('YYYYMMDD');
+  try {
+    const requestAdapter = () => request(
+      `/getStockBlockUpByDate?date=${handleDate}`,
+    );
+    const res = await requestAdapter().catch(requestAdapter);
+    const handleList = res.data.data.data;
     return handleList;
   } catch (error) {
     console.error(error);

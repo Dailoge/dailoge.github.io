@@ -27,3 +27,22 @@ export interface IJianGuanStock {
   date: string;
   link: string;
 }
+
+export interface IStockBlockUp {
+  change: number; // 涨幅
+  code: string; // 板块 code
+  continuous_plate_num: number; // 连板家数
+  days: number; // 上榜天数
+  high: string; // 连板高度
+  high_num: number; // 不知道啥东西
+  limit_up_num: number; // 涨停家数
+  name: string; // 板块中文名
+  stock_list: Array<{
+    code: string; // 股票 code
+    continue_num: number; // 涨停高度
+    high: string; // 连板高度
+    name: string; // 股票名称
+    reason_info: string; // 涨停理由
+    reason_type: string; // 涨停概念
+  }>;
+}

@@ -3,18 +3,24 @@ import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
 import { Collapse, Toast, Tag } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
-import { getStockInfo, getJianGuanStock } from '@/services';
-import { IDateStock, IJianGuanStock } from '@/types';
+import {
+  getStockInfo,
+  getJianGuanStock,
+  getStockBlockUpByDate,
+} from '@/services';
+import { IDateStock, IJianGuanStock, IStockBlockUp } from '@/types';
 
 import './index.less';
 
 interface IProps {
   dateStocks: IDateStock[];
+  latestWorkDay: string;
 }
 
 export default (props: IProps) => {
   const { dateStocks } = props;
   const [jianGuanStocks, setJianGuanStocks] = useState<IJianGuanStock[]>([]);
+  const [stockBlockTop, setStockBlockTop] = useState<IStockBlockUp[]>([]);
   const [zgbJJFails, setZgbJJFails] = useState<
     Array<{
       date: string;
@@ -69,11 +75,12 @@ export default (props: IProps) => {
 
     const config = {
       data,
-      slider: {
-        end: 1,
-        start: 0,
-      },
-      height: 230,
+      // 滑动块先注释
+      // slider: {
+      //   end: 1,
+      //   start: 0,
+      // },
+      height: 200,
       yField: 'value',
       xField: 'date',
       yAxis: {
@@ -158,6 +165,9 @@ export default (props: IProps) => {
 
   useEffect(() => {
     getJianGuanStock().then(setJianGuanStocks);
+    getStockBlockUpByDate(props.latestWorkDay).then(
+      setStockBlockTop,
+    );
   }, []);
 
   // 大于 3 板的个股
@@ -165,7 +175,7 @@ export default (props: IProps) => {
     if (!dateStocks.length) return [];
     const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
     latestDayStocks.ztList.sort((a, b) => b.lbc - a.lbc);
-    return latestDayStocks.ztList.filter((item) => item.lbc >= 3);
+    return latestDayStocks.ztList.filter((item) => item.lbc >= 2);
   }, [dateStocks]);
 
   const renderLbContent = useMemo(() => {
@@ -190,6 +200,10 @@ export default (props: IProps) => {
           const jianGuanRes = jianGuanStocks.find(
             (jianGuanItem) => jianGuanItem.code === handleDm,
           );
+          const stockBlocks = stockBlockTop.filter((blockItem) =>
+            blockItem.stock_list.find((stock) => stock.code === handleDm),
+          );
+          console.log(stockBlocks);
           return (
             <div
               key={item.dm}
@@ -223,7 +237,14 @@ export default (props: IProps) => {
                     e.stopPropagation();
                   }}
                 >
-                  <Tag color='danger'>监管</Tag>
+                  <Tag color="danger">监管</Tag>
+                </span>
+              )}
+              {stockBlocks.length > 0 && (
+                <span className="stock-block">
+                  <Tag color="primary">
+                    {stockBlocks.map((blockItem) => blockItem.name).join()}
+                  </Tag>
                 </span>
               )}
             </div>
@@ -239,7 +260,7 @@ export default (props: IProps) => {
         );
       });
     return content;
-  }, [limitTopStocks, jianGuanStocks]);
+  }, [limitTopStocks, jianGuanStocks, stockBlockTop]);
 
   return (
     <div className="zgb">

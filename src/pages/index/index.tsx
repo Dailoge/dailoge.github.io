@@ -6,6 +6,7 @@ import LbNumComp from './components/lbNum';
 import JjFailNumComp from './components/jjFailNum';
 import MarketAmountComp from './components/marketAmount';
 import LbJJComp from './components/lbJJ';
+// import BlockTopComp from './components/blockTop';
 import { getZTDTStocksByBiYing } from '@/services';
 import { getRecentWorkdays } from '@/utils';
 import { IDateStock } from '@/types';
@@ -37,7 +38,11 @@ export default function HomePage() {
   return (
     <div className="index-container">
       <ZtdtComp dateStocks={dateStocks} />
-      <ZgbComp dateStocks={dateStocks} />
+      <ZgbComp
+        dateStocks={dateStocks}
+        latestWorkDay={recentWorkdays[0]}
+      />
+      {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
       <LbJJComp recentWorkCountDays={recentWorkCountDays} />
       <MarketAmountComp recentWorkdays={recentWorkdays} />
       <JjFailNumComp dateStocks={dateStocks} />
