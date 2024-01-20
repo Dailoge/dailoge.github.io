@@ -5,7 +5,7 @@ import { IZTDTStockInfo } from '@/types';
 
 // 底层调用必盈 api，https://ad.biyingapi.com/apidoc.html
 /**
- *
+ * @desc 获取涨跌停个数，但是有 10 分钟的延迟
  * @export
  * @param {string} date, ex: 2023-11-24
  * @return {*}  {Promise<IZTDTStockInfo[]>}

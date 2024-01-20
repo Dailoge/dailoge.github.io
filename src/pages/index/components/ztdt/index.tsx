@@ -34,7 +34,7 @@ export default (props: IProps) => {
         category: '跌停',
         dtTitle: item.dtList
           .sort((a, b) => b.lbc - a.lbc)
-          .map((dt) => `${dt.mc}(${dt.lbc}板)`)
+          .map((dt) => `${dt.name}(${dt.lbc}板)`)
           .join(', '),
       });
     });

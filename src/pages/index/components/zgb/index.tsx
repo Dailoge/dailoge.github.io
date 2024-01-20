@@ -51,13 +51,13 @@ export default (props: IProps) => {
       // 最高板同时可能有多个
       const lbName = list
         .filter((item) => item.lbc === list[0].lbc)
-        .map((item) => item.mc)
+        .map((item) => item.name)
         .join();
       data.push({
         date: dayjs(item.date).format('MM-DD'),
         value: Number(list[0].lbc),
         isZgb: false,
-        code: list[0].dm,
+        code: list[0].code,
         originDate: item.date,
         name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
         lbName,
@@ -190,12 +190,12 @@ export default (props: IProps) => {
       .sort((a, b) => Number(b) - Number(a))
       .map((lbs) => {
         const limitTopStocksLine = lbMap[lbs].map((item) => {
-          const handleDm = item.dm.replace(/[a-z]/gi, '');
+          const handleDm = item.code.replace(/[a-z]/gi, '');
           const beginLbMinPrice = 6;
           const beginLbMaxPrice = 16;
           const isLikePrice =
-            item.p >= beginLbMinPrice * Math.pow(1.1, Number(lbs)) &&
-            item.p <= beginLbMaxPrice * Math.pow(1.1, Number(lbs));
+            item.price >= beginLbMinPrice * Math.pow(1.1, Number(lbs)) &&
+            item.price <= beginLbMaxPrice * Math.pow(1.1, Number(lbs));
           const isLikeCJE = item.cje <= 1500000000;
           const jianGuanRes = jianGuanStocks.find(
             (jianGuanItem) => jianGuanItem.code === handleDm,
@@ -203,10 +203,9 @@ export default (props: IProps) => {
           const stockBlocks = stockBlockTop.filter((blockItem) =>
             blockItem.stock_list.find((stock) => stock.code === handleDm),
           );
-          console.log(stockBlocks);
           return (
             <div
-              key={item.dm}
+              key={item.code}
               className={`limit-top-stocks-item ${
                 isLikePrice && isLikeCJE ? 'is-like-price' : ''
               }`}
@@ -222,7 +221,7 @@ export default (props: IProps) => {
                 }
               }}
             >
-              {`${item.mc}(${item.p.toString().split('.')[0]}元)`}
+              {`${item.name}(${item.price.toString().split('.')[0]}元)`}
               {!!jianGuanRes && (
                 <span
                   className="jian-guan"

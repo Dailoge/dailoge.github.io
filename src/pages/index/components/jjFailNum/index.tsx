@@ -23,7 +23,7 @@ export default (props: IProps) => {
       const dtList = item.dtList;
       const preZtList = index === 0 ? [] : dateStocks[index - 1].ztList;
       const jjFailList = dtList.filter((i) =>
-        preZtList.find((j) => i.dm === j.dm),
+        preZtList.find((j) => i.code === j.code),
       );
       data.push({
         date: dayjs(item.date).format('MM-DD'),
@@ -31,15 +31,15 @@ export default (props: IProps) => {
         dtName: jjFailList
           .map((i) => {
             const preZt = preZtList.find(
-              (j) => i.dm === j.dm,
+              (j) => i.code === j.code,
             ) as IZTDTStockInfo;
             return {
-              mc: i.mc,
+              name: i.name,
               lbc: preZt.lbc,
             };
           })
           .sort((a, b) => b.lbc - a.lbc)
-          .map((item) => `${item.mc}(${item.lbc}板)`)
+          .map((item) => `${item.name}(${item.lbc}板)`)
           .join(),
       });
     });

@@ -7,7 +7,7 @@ import JjFailNumComp from './components/jjFailNum';
 import MarketAmountComp from './components/marketAmount';
 import LbJJComp from './components/lbJJ';
 // import BlockTopComp from './components/blockTop';
-import { getZTDTStocksByBiYing } from '@/services';
+import { getZTDTStockByDate } from '@/services';
 import { getRecentWorkdays } from '@/utils';
 import { IDateStock } from '@/types';
 
@@ -23,7 +23,7 @@ export default function HomePage() {
   const getZTDTData = useCallback(async () => {
     return Promise.all(
       recentWorkdays.map(async (date) => {
-        const data = await getZTDTStocksByBiYing(date);
+        const data = await getZTDTStockByDate(date);
         return { date, ztList: data.ztList, dtList: data.dtList };
       }),
     );

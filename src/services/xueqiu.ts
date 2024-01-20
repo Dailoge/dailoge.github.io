@@ -22,7 +22,7 @@ export async function getStockInfo(code: string, date: string) {
       }
     }
     const data = res?.data?.data?.data;
-    if (!data) return null;
+    if (!data || !data.column) return null;
     const percentIndex = data.column.findIndex(
       (key: string) => key === 'percent',
     );
