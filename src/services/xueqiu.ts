@@ -3,7 +3,13 @@ import dayjs from 'dayjs';
 import { getStorageDataByZgbFail, setStorageDataByZgbFail } from '../utils';
 
 // 底层调用雪球服务，https://xueqiu.com/S/SH600839
-
+/**
+ * @desc 获取股价具体信息
+ * @export
+ * @param {string} code, 必须带上是 SH 还是 SZ
+ * @param {string} date
+ * @return {*}
+ */
 export async function getStockInfo(code: string, date: string) {
   try {
     let res;
@@ -12,8 +18,10 @@ export async function getStockInfo(code: string, date: string) {
     if (storageData) {
       res = storageData;
     } else {
+      const prefix =
+        code.startsWith('00') || code.startsWith('300') ? 'SZ' : 'SH';
       res = await request(
-        `/getStockInfo?code=${code.toUpperCase()}&timestamp=${dayjs(
+        `/getStockInfo?code=${prefix + code}&timestamp=${dayjs(
           date,
         ).valueOf()}`,
       );
@@ -30,7 +38,9 @@ export async function getStockInfo(code: string, date: string) {
     const closeIndex = data.column.findIndex((key: string) => key === 'close');
     const highIndex = data.column.findIndex((key: string) => key === 'high');
     const lowIndex = data.column.findIndex((key: string) => key === 'low');
-    const amountIndex = data.column.findIndex((key: string) => key === 'amount');
+    const amountIndex = data.column.findIndex(
+      (key: string) => key === 'amount',
+    );
     const percent: number = data.item[0][percentIndex];
     const open: number = data.item[0][openIndex];
     const close: number = data.item[0][closeIndex];

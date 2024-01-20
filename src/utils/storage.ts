@@ -1,4 +1,4 @@
-const STORAGE_STOCK_CACHE = '_STORAGE_STOCK_CACHE_THS'; // 每天涨跌停的缓存 key
+const STORAGE_STOCK_CACHE = '_STORAGE_STOCK_CACHE_THS_'; // 每天涨跌停的缓存 key
 const STORAGE_ZGB_FAIL_CACHE = '_STORAGE_ZGB_FAIL_CACHE_'; // 最高晋级失败的缓存 key
 
 function getStorageData(cacheKey: string,  options: { key: string },) {
