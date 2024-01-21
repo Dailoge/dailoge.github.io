@@ -1,6 +1,6 @@
 import request from './request';
 import dayjs from 'dayjs';
-import { getStorageDataByZgbFail, setStorageDataByZgbFail } from '../utils';
+import { getStorageInfoByDate, setStorageInfoByDate } from '../utils';
 
 // 底层调用雪球服务，https://xueqiu.com/S/SH600839
 /**
@@ -12,24 +12,29 @@ import { getStorageDataByZgbFail, setStorageDataByZgbFail } from '../utils';
  */
 export async function getStockInfo(code: string, date: string) {
   try {
-    let res;
-    const storageData = getStorageDataByZgbFail(code + '_' + date);
+    let result;
+    const storageData = getStorageInfoByDate(code + '_' + date);
     const isToday = dayjs().format('YYYY-MM-DD') === date;
     if (storageData) {
-      res = storageData;
+      result = storageData;
     } else {
-      const prefix =
-        code.startsWith('00') || code.startsWith('300') ? 'SZ' : 'SH';
-      res = await request(
+      let prefix = '';
+      if (code.startsWith('00') || code.startsWith('300')) {
+        prefix = 'SZ';
+      } else if (code.startsWith('600') || code.startsWith('688')) {
+        prefix = 'SH';
+      }
+      const response = await request(
         `/getStockInfo?code=${prefix + code}&timestamp=${dayjs(
           date,
         ).valueOf()}`,
       );
+      result = response.data
       if (!isToday) {
-        setStorageDataByZgbFail(code + '_' + date, res);
+        setStorageInfoByDate(code + '_' + date, response.data);
       }
     }
-    const data = res?.data?.data?.data;
+    const data = result?.data?.data;
     if (!data || !data.column) return null;
     const percentIndex = data.column.findIndex(
       (key: string) => key === 'percent',

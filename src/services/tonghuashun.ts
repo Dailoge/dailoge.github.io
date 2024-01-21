@@ -1,6 +1,6 @@
 import request from './request';
 import dayjs from 'dayjs';
-import { getStorageDataByDate, setStorageDataByDate } from '../utils';
+import { getStorageZTDTDataByDate, setStorageZTDTDataByDate } from '../utils';
 import { IStockBlockUp, IZTDTStockInfo } from '@/types';
 
 // 底层调用同花顺的 jsonp 能力，https://m.10jqka.com.cn/stockpage/48_883900/?back_source=wxhy&share_hxapp=isc#refCountId=R_56307738_256.html&atab=effectStocks
@@ -20,20 +20,20 @@ export async function getZTDTStockByDate(date: string): Promise<{
   try {
     const requestAdapter = () =>
       request(`/getZTDTStockByDate?date=${handleDate}`);
-    let res;
-    const storageData = getStorageDataByDate(date);
+    let result;
+    const storageData = getStorageZTDTDataByDate(date);
     const isToday = dayjs().format('YYYY-MM-DD') === date;
     // 如果是当天不能走缓存也不能设置缓存
     if (storageData && !isToday) {
-      res = storageData;
+      result = storageData;
     } else {
       // 因为是 serverless，服务重启要时间，这里支持二次重试
-      res = await requestAdapter().catch(requestAdapter);
+      const response = await requestAdapter().catch(requestAdapter);
+      result = response.data;
       if (!isToday) {
-        setStorageDataByDate(date, res);
+        setStorageZTDTDataByDate(date, response.data);
       }
     }
-    const data = res.data.data;
     const handleKeyMap = (list: Array<any>) => {
       return list.map((item) => {
         const lbcReg = /(.*)天(.*)板/;
@@ -58,10 +58,9 @@ export async function getZTDTStockByDate(date: string): Promise<{
         };
       });
     };
-    console.log(handleKeyMap(data.ztInfo.info));
     return {
-      ztList: handleKeyMap(data.ztInfo.info),
-      dtList: handleKeyMap(data.dtInfo.info),
+      ztList: handleKeyMap(result.data.ztInfo.info),
+      dtList: handleKeyMap(result.data.dtInfo.info),
     };
   } catch (error) {
     console.error(error);

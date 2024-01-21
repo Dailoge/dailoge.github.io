@@ -8,7 +8,7 @@ import MarketAmountComp from './components/marketAmount';
 import LbJJComp from './components/lbJJ';
 // import BlockTopComp from './components/blockTop';
 import { getZTDTStockByDate } from '@/services';
-import { getRecentWorkdays } from '@/utils';
+import { getRecentWorkdays, optimizeStorage } from '@/utils';
 import { IDateStock } from '@/types';
 
 import './index.less';
@@ -32,6 +32,9 @@ export default function HomePage() {
   useEffect(() => {
     getZTDTData().then((allDateStocks) => {
       setDateStocks(reverse(allDateStocks));
+    });
+    optimizeStorage({
+      minDay: recentWorkdays[recentWorkdays.length - 1],
     });
   }, []);
 

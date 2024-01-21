@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import request from './request';
-import { getStorageDataByDate, setStorageDataByDate } from '../utils';
+import { getStorageZTDTDataByDate, setStorageZTDTDataByDate } from '../utils';
 import { IZTDTStockInfo } from '@/types';
 
 // 底层调用必盈 api，https://ad.biyingapi.com/apidoc.html
@@ -16,20 +16,21 @@ export async function getZTDTStocksByBiYing(date: string): Promise<{
 }> {
   try {
     const requestAdapter = () => request(`/release/zt-dt?date=${date}`);
-    let res;
-    const storageData = getStorageDataByDate(date);
+    let result;
+    const storageData = getStorageZTDTDataByDate(date);
     const isToday = dayjs().format('YYYY-MM-DD') === date;
     // 如果是当天不能走缓存也不能设置缓存
     if (storageData && !isToday) {
-      res = storageData;
+      result = storageData;
     } else {
       // 因为是 serverless，服务重启要时间，这里支持二次重试
-      res = await requestAdapter().catch(requestAdapter);
+      const response = await requestAdapter().catch(requestAdapter);
+      result = response.data;
       if (!isToday) {
-        setStorageDataByDate(date, res);
+        setStorageZTDTDataByDate(date, response.data);
       }
     }
-    return res?.data?.data;
+    return result?.data;
   } catch (error) {
     console.error(error);
     return {
