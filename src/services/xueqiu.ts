@@ -21,7 +21,7 @@ export async function getStockInfo(code: string, date: string) {
       let prefix = '';
       if (code.startsWith('00') || code.startsWith('300')) {
         prefix = 'SZ';
-      } else if (code.startsWith('600') || code.startsWith('688')) {
+      } else if (code.startsWith('60') || code.startsWith('688')) {
         prefix = 'SH';
       }
       const response = await request(

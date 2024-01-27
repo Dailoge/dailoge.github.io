@@ -210,13 +210,13 @@ export default (props: IProps) => {
                 isLikePrice && isLikeCJE ? 'is-like-price' : ''
               }`}
               onClick={() => {
-                if (handleDm.startsWith('0')) {
+                if (handleDm.startsWith('60')) {
                   window.open(
-                    `https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`,
+                    `https://wap.eastmoney.com/quote/stock/1.${handleDm}.html`,
                   );
                 } else {
                   window.open(
-                    `https://wap.eastmoney.com/quote/stock/1.${handleDm}.html`,
+                    `https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`,
                   );
                 }
               }}
@@ -237,6 +237,13 @@ export default (props: IProps) => {
                   }}
                 >
                   <Tag color="danger">监管</Tag>
+                </span>
+              )}
+              {item.code.startsWith('300') && (
+                <span
+                  className="chuangyeban"
+                >
+                  <Tag color="default">创</Tag>
                 </span>
               )}
               {stockBlocks.length > 0 && (
