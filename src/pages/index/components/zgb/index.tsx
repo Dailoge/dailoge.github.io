@@ -54,7 +54,7 @@ export default (props: IProps) => {
         .map((item) => item.name)
         .join();
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: Number(list[0].lbc),
         isZgb: false,
         code: list[0].code,

@@ -29,7 +29,7 @@ export default (props: IProps) => {
         const amount =
           ((shData?.amount || 0) + (szData?.amount || 0)) / 100000000;
         return {
-          date: dayjs(date).format('MM-DD'),
+          date: dayjs(date).format('MMDD'),
           amount: Math.round(amount),
           shData,
           szData,

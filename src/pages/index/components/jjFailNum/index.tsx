@@ -26,7 +26,7 @@ export default (props: IProps) => {
         preZtList.find((j) => i.code === j.code),
       );
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: jjFailList.length,
         dtName: jjFailList
           .map((i) => {

@@ -25,27 +25,27 @@ export default (props: IProps) => {
       const lb5b = list.filter((item) => Number(item.lbc) === 5).length;
       const lb6bAndUp = list.filter((item) => Number(item.lbc) >= 6).length;
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: lb6bAndUp,
         category: '6板+',
       });
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: lb5b,
         category: '5板',
       });
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: lb4b,
         category: '4板',
       });
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: lb3b,
         category: '3板',
       });
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: lb2b,
         category: '2板',
       });

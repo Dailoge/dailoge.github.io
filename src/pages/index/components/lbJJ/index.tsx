@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Line } from '@ant-design/plots';
+import dayjs from 'dayjs';
 import { getStockLineInfoByThs } from '@/services';
 
 import './index.less';
@@ -26,7 +27,12 @@ export default (props: IProps) => {
     lbjj.length;
 
     const config = {
-      data: lbjj,
+      data: lbjj.map(item => {
+        return {
+          ...item,
+          date: dayjs(item.date).format('MMDD'),
+        }
+      }),
       height: 230,
       yField: 'percent',
       xField: 'date',

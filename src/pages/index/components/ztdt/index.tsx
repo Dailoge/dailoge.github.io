@@ -24,12 +24,12 @@ export default (props: IProps) => {
       const ztValue = item.ztList.length;
       const dtValue = item.dtList.length;
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: ztValue,
         category: '涨停',
       });
       data.push({
-        date: dayjs(item.date).format('MM-DD'),
+        date: dayjs(item.date).format('MMDD'),
         value: dtValue,
         category: '跌停',
         dtTitle: item.dtList
