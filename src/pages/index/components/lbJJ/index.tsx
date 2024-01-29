@@ -20,19 +20,14 @@ export default (props: IProps) => {
     }>
   >([]);
 
-  // 市场总成交额趋势
-  const marketAmountConfig = useMemo(() => {
-    const marketAmoutAvg =
+  // 连板赚钱效应趋势
+  const llMakeMoneyConfig = useMemo(() => {
+    const llMakeMoneyAvg =
     lbjj.reduce((pre, item) => pre + item.percent, 0) /
     lbjj.length;
 
     const config = {
-      data: lbjj.map(item => {
-        return {
-          ...item,
-          date: dayjs(item.date).format('MMDD'),
-        }
-      }),
+      data: lbjj,
       height: 230,
       yField: 'percent',
       xField: 'date',
@@ -52,8 +47,8 @@ export default (props: IProps) => {
       annotations: [
         {
           type: 'line',
-          start: ['min', marketAmoutAvg],
-          end: ['max', marketAmoutAvg],
+          start: ['min', llMakeMoneyAvg],
+          end: ['max', llMakeMoneyAvg],
           style: {
             stroke: '#1890ff',
             lineDash: [4, 2],
@@ -70,9 +65,9 @@ export default (props: IProps) => {
   }, []);
 
   return (
-    <div className="market-amount">
+    <div className="ll-make-money">
       <div className="title">连板赚钱效应趋势</div>
-      <Line {...marketAmountConfig} />
+      <Line {...llMakeMoneyConfig} />
     </div>
   );
 };

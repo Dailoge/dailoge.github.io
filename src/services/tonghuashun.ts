@@ -93,7 +93,7 @@ export async function getStockLineInfoByThs(code: string, lineDays = 45) {
             10000,
         ) / 100;
       return {
-        date: dayjs(date).format('MM-DD'),
+        date: dayjs(date).format('MMDD'),
         open,
         close,
         percent,
