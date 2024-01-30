@@ -42,6 +42,9 @@ export async function getZTDTStockByDate(date: string): Promise<{
         if (regRes && regRes[1] === regRes[2]) {
           lbc = Number(regRes[1]);
         }
+        if (regRes && Number(regRes[1]) === Number(regRes[2]) + 1) {
+          lbc = Number(regRes[2]) - 1;
+        }
         return {
           code: item.code,
           name: item.name,

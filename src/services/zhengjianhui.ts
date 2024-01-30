@@ -21,7 +21,7 @@ export async function getJianGuanStock(): Promise<IJianGuanStock[]> {
         code: item.stockcode,
         name: item.extGSJC,
         date: item.createTime,
-        link: item.docURL,
+        link: 'http://' + item.docURL,
       });
     });
     shenzhen[0].data.forEach((item: any) => {
