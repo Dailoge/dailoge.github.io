@@ -40,10 +40,10 @@ export default function HomePage() {
 
   return (
     <div className="index-container">
-      <div className="header">
+      <div className="index-header">
         <img className='logo' src="https://s11.ax1x.com/2024/02/04/pFl2rKx.png" />
       </div>
-      <div className="content">
+      <div className="index-content">
         <ZtdtComp dateStocks={dateStocks} />
         <ZgbComp
           dateStocks={dateStocks}
