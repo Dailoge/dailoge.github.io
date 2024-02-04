@@ -48,7 +48,7 @@ export default (props: IProps) => {
 
     const config = {
       data,
-      height: 320,
+      height: 250,
       yField: 'value',
       xField: 'date',
       seriesField: 'category',
