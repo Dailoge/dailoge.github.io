@@ -27,7 +27,7 @@ export interface ILbStock {
     code: string;
     continue_num: number;
     market_id: number;
-  }>
+  }>;
 }
 
 export interface IJianGuanStock {
@@ -54,4 +54,16 @@ export interface IStockBlockUp {
     reason_info: string; // 涨停理由
     reason_type: string; // 涨停概念
   }>;
+}
+
+export interface IHotStock {
+  analyse: string;
+  analyse_title: string;
+  code: string;
+  hot_rank_chg: number;
+  market: number;
+  name: string;
+  order: number;
+  rate: string;
+  rise_and_fall: number;
 }

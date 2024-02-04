@@ -8,8 +8,15 @@ import {
   getLbStockByDate,
   getJianGuanStock,
   getStockBlockUpByDate,
+  getHotStockTop,
 } from '@/services';
-import { IDateStock, ILbStock, IJianGuanStock, IStockBlockUp } from '@/types';
+import {
+  IDateStock,
+  ILbStock,
+  IJianGuanStock,
+  IStockBlockUp,
+  IHotStock,
+} from '@/types';
 
 import './index.less';
 
@@ -29,6 +36,7 @@ export default (props: IProps) => {
   >([]);
   const [jianGuanStocks, setJianGuanStocks] = useState<IJianGuanStock[]>([]);
   const [stockBlockTop, setStockBlockTop] = useState<IStockBlockUp[]>([]);
+  const [hotTopStocks, setHotTopStocks] = useState<IHotStock[]>([]);
   const [zgbJJFails, setZgbJJFails] = useState<
     Array<{
       date: string;
@@ -65,7 +73,7 @@ export default (props: IProps) => {
     }[] = [];
     limitTopStocks.forEach((item) => {
       const zgbItem = item.lbStockList[0];
-      const lbName = zgbItem.code_list.map(l => l.name).join();
+      const lbName = zgbItem.code_list.map((l) => l.name).join();
       data.push({
         date: dayjs(item.date).format('MMDD'),
         value: zgbItem.height,
@@ -180,6 +188,7 @@ export default (props: IProps) => {
     getLbStockData().then((list) => setLimitTopStocks(reverse(list)));
     getJianGuanStock().then(setJianGuanStocks);
     getStockBlockUpByDate(props.latestWorkDay).then(setStockBlockTop);
+    getHotStockTop().then(setHotTopStocks);
   }, []);
 
   const renderLbContent = useMemo(() => {
@@ -187,7 +196,7 @@ export default (props: IProps) => {
     const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
     const latestDayZtList = latestDayStocks.ztList;
     const latestDayLbData = limitTopStocks[limitTopStocks.length - 1];
-    const content = latestDayLbData.lbStockList.map((limitTopItem) => {
+    const content = latestDayLbData?.lbStockList?.map((limitTopItem) => {
       const limitTopStocksLine = limitTopItem.code_list.map((lbItem) => {
         const item = latestDayZtList.find((i) => i.name === lbItem.name);
         if (!item) {
@@ -210,6 +219,9 @@ export default (props: IProps) => {
         );
         const stockBlocks = stockBlockTop.filter((blockItem) =>
           blockItem.stock_list.find((stock) => stock.code === handleDm),
+        );
+        const hotOrderRes = hotTopStocks.find(
+          (hotItem) => hotItem.code === handleDm,
         );
         return (
           <div
@@ -247,11 +259,10 @@ export default (props: IProps) => {
                 <Tag color="danger">监管</Tag>
               </span>
             )}
-            {item.code.startsWith('300') && (
-              <span className="chuangyeban">
-                <Tag color="default">创</Tag>
-              </span>
-            )}
+            <span className="stock-info">
+              {item.code.startsWith('300') && <Tag color="default">创</Tag>}
+              {!!hotOrderRes && <Tag color="default">人气第{hotOrderRes.order}</Tag>}
+            </span>
             {stockBlocks.length > 0 && (
               <span className="stock-block">
                 <Tag color="primary">
@@ -270,7 +281,7 @@ export default (props: IProps) => {
       );
     });
     return content;
-  }, [limitTopStocks, dateStocks, jianGuanStocks, stockBlockTop]);
+  }, [limitTopStocks, dateStocks, jianGuanStocks, stockBlockTop, hotTopStocks]);
 
   return (
     <div className="zgb">

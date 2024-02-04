@@ -6,7 +6,7 @@ import {
   getStorageLbDataByDate,
   setStorageLbDataByDate,
 } from '../utils';
-import { IStockBlockUp, ILbStock, IZTDTStockInfo } from '@/types';
+import { IStockBlockUp, ILbStock, IZTDTStockInfo, IHotStock } from '@/types';
 
 // 底层调用同花顺的 jsonp 能力，https://m.10jqka.com.cn/stockpage/48_883900/?back_source=wxhy&share_hxapp=isc#refCountId=R_56307738_256.html&atab=effectStocks
 
@@ -110,7 +110,7 @@ export async function getLbStockByDate(date: string): Promise<ILbStock[]> {
 }
 
 /**
- * @desc 获取概念涨跌幅
+ * @desc 获取概念涨跌幅，如连板概念
  * @export
  * @param {string} code
  * @param {number} [lineDays=45]
@@ -160,6 +160,25 @@ export async function getStockBlockUpByDate(
       request(`/getStockBlockUpByDate?date=${handleDate}`);
     const res = await requestAdapter().catch(requestAdapter);
     const handleList = res.data.data.data;
+    return handleList;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+/**
+ * @desc 获取实时热度榜
+ *
+ * @export
+ * @param {string} date
+ * @return {*}  {Promise<IHotStock[]>}
+ */
+export async function getHotStockTop(): Promise<IHotStock[]> {
+  try {
+    const requestAdapter = () => request(`/getHotStockTop`);
+    const res = await requestAdapter().catch(requestAdapter);
+    const handleList = res.data.data.stock_list;
     return handleList;
   } catch (error) {
     console.error(error);
