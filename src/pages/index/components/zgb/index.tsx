@@ -5,10 +5,11 @@ import { Collapse, Toast, Tag } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
 import {
   getStockInfo,
+  getLbStockByDate,
   getJianGuanStock,
   getStockBlockUpByDate,
 } from '@/services';
-import { IDateStock, IJianGuanStock, IStockBlockUp } from '@/types';
+import { IDateStock, ILbStock, IJianGuanStock, IStockBlockUp } from '@/types';
 
 import './index.less';
 
@@ -19,6 +20,7 @@ interface IProps {
 
 export default (props: IProps) => {
   const { dateStocks } = props;
+  const [limitTopStocks, setLimitTopStocks] = useState<ILbStock[]>([]);
   const [jianGuanStocks, setJianGuanStocks] = useState<IJianGuanStock[]>([]);
   const [stockBlockTop, setStockBlockTop] = useState<IStockBlockUp[]>([]);
   const [zgbJJFails, setZgbJJFails] = useState<
@@ -164,109 +166,97 @@ export default (props: IProps) => {
   }, [zgbConfig]);
 
   useEffect(() => {
+    getLbStockByDate(props.latestWorkDay).then(setLimitTopStocks);
     getJianGuanStock().then(setJianGuanStocks);
-    getStockBlockUpByDate(props.latestWorkDay).then(
-      setStockBlockTop,
-    );
+    getStockBlockUpByDate(props.latestWorkDay).then(setStockBlockTop);
   }, []);
 
-  // 大于 3 板的个股
-  const limitTopStocks = useMemo(() => {
-    if (!dateStocks.length) return [];
-    const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
-    latestDayStocks.ztList.sort((a, b) => b.lbc - a.lbc);
-    return latestDayStocks.ztList.filter((item) => item.lbc >= 2);
-  }, [dateStocks]);
-
   const renderLbContent = useMemo(() => {
-    const lbMap: { [key: number | string]: IDateStock['ztList'] } = {};
-    limitTopStocks.forEach((item) => {
-      if (!lbMap[item.lbc]) {
-        lbMap[item.lbc] = [];
-      }
-      lbMap[item.lbc].push(item);
-    });
-    const content = Object.keys(lbMap)
-      .sort((a, b) => Number(b) - Number(a))
-      .map((lbs) => {
-        const limitTopStocksLine = lbMap[lbs].map((item) => {
-          const handleDm = item.code.replace(/[a-z]/gi, '');
-          const beginLbMinPrice = 6;
-          const beginLbMaxPrice = 16;
-          const isLikePrice =
-            item.price >= beginLbMinPrice * Math.pow(1.1, Number(lbs)) &&
-            item.price <= beginLbMaxPrice * Math.pow(1.1, Number(lbs));
-          const isLikeCJE = item.cje <= 1500000000;
-          const jianGuanRes = jianGuanStocks.find(
-            (jianGuanItem) => jianGuanItem.code === handleDm,
-          );
-          const stockBlocks = stockBlockTop.filter((blockItem) =>
-            blockItem.stock_list.find((stock) => stock.code === handleDm),
-          );
-          return (
-            <div
-              key={item.code}
-              className={`limit-top-stocks-item ${
-                isLikePrice && isLikeCJE ? 'is-like-price' : ''
-              }`}
-              onClick={() => {
-                if (handleDm.startsWith('60')) {
-                  window.open(
-                    `https://wap.eastmoney.com/quote/stock/1.${handleDm}.html`,
-                  );
-                } else {
-                  window.open(
-                    `https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`,
-                  );
-                }
-              }}
-            >
-              {`${item.name}(${item.price.toString().split('.')[0]}元)`}
-              {!!jianGuanRes && (
-                <span
-                  className="jian-guan"
-                  onClick={(e) => {
-                    if (jianGuanRes.link) {
-                      window.open(jianGuanRes.link);
-                    } else {
-                      Toast.show({
-                        content: '未找到相关描述文件~',
-                      });
-                    }
-                    e.stopPropagation();
-                  }}
-                >
-                  <Tag color="danger">监管</Tag>
-                </span>
-              )}
-              {item.code.startsWith('300') && (
-                <span
-                  className="chuangyeban"
-                >
-                  <Tag color="default">创</Tag>
-                </span>
-              )}
-              {stockBlocks.length > 0 && (
-                <span className="stock-block">
-                  <Tag color="primary">
-                    {stockBlocks.map((blockItem) => blockItem.name).join()}
-                  </Tag>
-                </span>
-              )}
-            </div>
-          );
-        });
+    if (!dateStocks.length) return null;
+    const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
+    const latestDayZtList = latestDayStocks.ztList;
+    const content = limitTopStocks.map((limitTopItem) => {
+      const limitTopStocksLine = limitTopItem.code_list.map((lbItem) => {
+        const item = latestDayZtList.find((i) => i.name === lbItem.name);
+        if (!item) {
+          Toast.show({
+            content: `${lbItem.name} 在当日涨停板中未找到~`,
+          });
+          return null;
+        }
+        const handleDm = item.code;
+        const beginLbMinPrice = 6;
+        const beginLbMaxPrice = 16;
+        const isLikePrice =
+          item.price >= beginLbMinPrice * Math.pow(1.1, Number(limitTopItem.height)) &&
+          item.price <= beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
+        const isLikeCJE = item.cje <= 1500000000;
+        const jianGuanRes = jianGuanStocks.find(
+          (jianGuanItem) => jianGuanItem.code === handleDm,
+        );
+        const stockBlocks = stockBlockTop.filter((blockItem) =>
+          blockItem.stock_list.find((stock) => stock.code === handleDm),
+        );
         return (
-          <div className="limit-top-stocks-line" key={lbs}>
-            <div className="limit-top-stocks-lbs">{lbs}板</div>
-            <div className="limit-top-stocks-container">
-              {limitTopStocksLine}
-            </div>
+          <div
+            key={item.code}
+            className={`limit-top-stocks-item ${
+              isLikePrice && isLikeCJE ? 'is-like-price' : ''
+            }`}
+            onClick={() => {
+              if (handleDm.startsWith('60')) {
+                window.open(
+                  `https://wap.eastmoney.com/quote/stock/1.${handleDm}.html`,
+                );
+              } else {
+                window.open(
+                  `https://wap.eastmoney.com/quote/stock/0.${handleDm}.html`,
+                );
+              }
+            }}
+          >
+            {`${item.name}(${item.price.toString().split('.')[0]}元)`}
+            {!!jianGuanRes && (
+              <span
+                className="jian-guan"
+                onClick={(e) => {
+                  if (jianGuanRes.link) {
+                    window.open(jianGuanRes.link);
+                  } else {
+                    Toast.show({
+                      content: '未找到相关描述文件~',
+                    });
+                  }
+                  e.stopPropagation();
+                }}
+              >
+                <Tag color="danger">监管</Tag>
+              </span>
+            )}
+            {item.code.startsWith('300') && (
+              <span className="chuangyeban">
+                <Tag color="default">创</Tag>
+              </span>
+            )}
+            {stockBlocks.length > 0 && (
+              <span className="stock-block">
+                <Tag color="primary">
+                  {stockBlocks.map((blockItem) => blockItem.name).join()}
+                </Tag>
+              </span>
+            )}
           </div>
         );
       });
+      return (
+        <div className="limit-top-stocks-line" key={limitTopItem.height}>
+          <div className="limit-top-stocks-lbs">{limitTopItem.height}板</div>
+          <div className="limit-top-stocks-container">{limitTopStocksLine}</div>
+        </div>
+      );
+    });
     return content;
-  }, [limitTopStocks, jianGuanStocks, stockBlockTop]);
+  }, [limitTopStocks, dateStocks, jianGuanStocks, stockBlockTop]);
 
   return (
     <div className="zgb">

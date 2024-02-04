@@ -19,6 +19,17 @@ export interface IDateStock {
   dtList: IZTDTStockInfo[];
 }
 
+export interface ILbStock {
+  number: number;
+  height: number;
+  code_list: Array<{
+    name: string;
+    code: string;
+    continue_num: number;
+    market_id: number;
+  }>
+}
+
 export interface IJianGuanStock {
   name: string;
   code: string;

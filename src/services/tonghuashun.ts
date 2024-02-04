@@ -1,12 +1,12 @@
 import request from './request';
 import dayjs from 'dayjs';
 import { getStorageZTDTDataByDate, setStorageZTDTDataByDate } from '../utils';
-import { IStockBlockUp, IZTDTStockInfo } from '@/types';
+import { IStockBlockUp, ILbStock, IZTDTStockInfo } from '@/types';
 
 // 底层调用同花顺的 jsonp 能力，https://m.10jqka.com.cn/stockpage/48_883900/?back_source=wxhy&share_hxapp=isc#refCountId=R_56307738_256.html&atab=effectStocks
 
 /**
- * @desc 获取概念风口
+ * @desc 获取指定日期的涨跌个股
  *
  * @export
  * @param {string} date
@@ -75,6 +75,29 @@ export async function getZTDTStockByDate(date: string): Promise<{
 }
 
 /**
+ * @desc 获取指定日期的连板个股
+ *
+ * @export
+ * @param {string} date
+ * @return {*}  {Promise<ILbStock[]>}
+ */
+export async function getLbStockByDate(
+  date: string,
+): Promise<ILbStock[]> {
+  const handleDate = dayjs(date).format('YYYYMMDD');
+  try {
+    const requestAdapter = () =>
+      request(`/getLbStockByDate?date=${handleDate}`);
+    const res = await requestAdapter().catch(requestAdapter);
+    const handleList = res.data.data;
+    return handleList;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+/**
  * @desc 获取概念涨跌幅
  * @export
  * @param {string} code
@@ -110,7 +133,7 @@ export async function getStockLineInfoByThs(code: string, lineDays = 45) {
 }
 
 /**
- * @desc 获取概念风口
+ * @desc 获取指定日期的概念风口
  *
  * @export
  * @param {string} date
