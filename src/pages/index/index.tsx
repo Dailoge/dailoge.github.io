@@ -40,17 +40,22 @@ export default function HomePage() {
 
   return (
     <div className="index-container">
-      <ZtdtComp dateStocks={dateStocks} />
-      <ZgbComp
-        dateStocks={dateStocks}
-        recentWorkdays={recentWorkdays}
-        latestWorkDay={recentWorkdays[0]}
-      />
-      {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
-      <LbJJComp recentWorkCountDays={recentWorkCountDays} />
-      <MarketAmountComp recentWorkdays={recentWorkdays} />
-      <JjFailNumComp dateStocks={dateStocks} />
-      <LbNumComp dateStocks={dateStocks} />
+      <div className="header">
+        <img className='logo' src="https://s11.ax1x.com/2024/02/04/pFl2rKx.png" />
+      </div>
+      <div className="content">
+        <ZtdtComp dateStocks={dateStocks} />
+        <ZgbComp
+          dateStocks={dateStocks}
+          recentWorkdays={recentWorkdays}
+          latestWorkDay={recentWorkdays[0]}
+        />
+        {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
+        <LbJJComp recentWorkCountDays={recentWorkCountDays} />
+        <MarketAmountComp recentWorkdays={recentWorkdays} />
+        <JjFailNumComp dateStocks={dateStocks} />
+        <LbNumComp dateStocks={dateStocks} />
+      </div>
     </div>
   );
 }
