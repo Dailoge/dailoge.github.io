@@ -70,7 +70,7 @@ export default (props: IProps) => {
         date: dayjs(item.date).format('MMDD'),
         value: zgbItem.height,
         isZgb: false,
-        code: zgbItem.code_list.map(l => l.code).join(),
+        code: zgbItem.code_list[0].code,
         originDate: item.date,
         name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
         lbName,
