@@ -14,7 +14,7 @@ import { IDateStock } from '@/types';
 import './index.less';
 
 // 获取最近的两个月
-const recentWorkCountDays = 45;
+const recentWorkCountDays = 46;
 const recentWorkdays = getRecentWorkdays(recentWorkCountDays);
 
 export default function HomePage() {
