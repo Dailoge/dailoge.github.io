@@ -1,7 +1,10 @@
 import dayjs from 'dayjs';
 
-const STORAGE_STOCK_CACHE = '_STORAGE_STOCK_ZTDT_CACHE_THS_NEW_'; // 每天涨跌停的缓存 key
-const STORAGE_STOCK_INFO_CACHE = '_STORAGE_STOCK_INFO_CACHE_V1'; // 个股信息的缓存 key
+const storageKeyMap = {
+  STORAGE_STOCK_ZTDT_CACHE: '_STORAGE_STOCK_ZTDT_CACHE_THS_NEW_', // 每天涨跌停的缓存 key
+  STORAGE_STOCK_LB_CACHE: '_STORAGE_STOCK_LB_CACHE_', // 每天连板的缓存 key
+  STORAGE_STOCK_INFO_CACHE: '_STORAGE_STOCK_INFO_CACHE_V1', // 个股信息的缓存 key
+}
 
 function getStorageData(cacheKey: string, options: { key: string }) {
   try {
@@ -34,23 +37,31 @@ function setStorageData(
 }
 
 export function getStorageZTDTDataByDate(date: string) {
-  return getStorageData(STORAGE_STOCK_CACHE, { key: date });
+  return getStorageData(storageKeyMap.STORAGE_STOCK_ZTDT_CACHE, { key: date });
 }
 
 export function setStorageZTDTDataByDate(date: string, data: any) {
-  return setStorageData(STORAGE_STOCK_CACHE, { key: date, value: data });
+  return setStorageData(storageKeyMap.STORAGE_STOCK_ZTDT_CACHE, { key: date, value: data });
 }
 
 export function getStorageInfoByDate(key: string) {
-  return getStorageData(STORAGE_STOCK_INFO_CACHE, { key });
+  return getStorageData(storageKeyMap.STORAGE_STOCK_INFO_CACHE, { key });
 }
 
 export function setStorageInfoByDate(key: string, data: any) {
-  return setStorageData(STORAGE_STOCK_INFO_CACHE, { key, value: data });
+  return setStorageData(storageKeyMap.STORAGE_STOCK_INFO_CACHE, { key, value: data });
+}
+
+export function getStorageLbDataByDate(key: string) {
+  return getStorageData(storageKeyMap.STORAGE_STOCK_LB_CACHE, { key });
+}
+
+export function setStorageLbDataByDate(key: string, data: any) {
+  return setStorageData(storageKeyMap.STORAGE_STOCK_LB_CACHE, { key, value: data });
 }
 
 export function optimizeStorage({ minDay }: { minDay: string }) {
-  const currCacheKeys = [STORAGE_STOCK_CACHE, STORAGE_STOCK_INFO_CACHE];
+  const currCacheKeys = Object.values(storageKeyMap);
   for (let i = 0; i < localStorage.length; i++) {
     const cacheKey = localStorage.key(i) as string;
     if (!currCacheKeys.includes(cacheKey)) {

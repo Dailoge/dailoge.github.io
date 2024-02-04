@@ -43,6 +43,7 @@ export default function HomePage() {
       <ZtdtComp dateStocks={dateStocks} />
       <ZgbComp
         dateStocks={dateStocks}
+        recentWorkdays={recentWorkdays}
         latestWorkDay={recentWorkdays[0]}
       />
       {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}

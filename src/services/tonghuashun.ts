@@ -1,6 +1,11 @@
 import request from './request';
 import dayjs from 'dayjs';
-import { getStorageZTDTDataByDate, setStorageZTDTDataByDate } from '../utils';
+import {
+  getStorageZTDTDataByDate,
+  setStorageZTDTDataByDate,
+  getStorageLbDataByDate,
+  setStorageLbDataByDate,
+} from '../utils';
 import { IStockBlockUp, ILbStock, IZTDTStockInfo } from '@/types';
 
 // 底层调用同花顺的 jsonp 能力，https://m.10jqka.com.cn/stockpage/48_883900/?back_source=wxhy&share_hxapp=isc#refCountId=R_56307738_256.html&atab=effectStocks
@@ -42,9 +47,6 @@ export async function getZTDTStockByDate(date: string): Promise<{
         if (regRes && regRes[1] === regRes[2]) {
           lbc = Number(regRes[1]);
         }
-        if (regRes && Number(regRes[1]) === Number(regRes[2]) + 1) {
-          lbc = Number(regRes[2]) - 1;
-        }
         return {
           code: item.code,
           name: item.name,
@@ -81,15 +83,25 @@ export async function getZTDTStockByDate(date: string): Promise<{
  * @param {string} date
  * @return {*}  {Promise<ILbStock[]>}
  */
-export async function getLbStockByDate(
-  date: string,
-): Promise<ILbStock[]> {
+export async function getLbStockByDate(date: string): Promise<ILbStock[]> {
   const handleDate = dayjs(date).format('YYYYMMDD');
   try {
     const requestAdapter = () =>
       request(`/getLbStockByDate?date=${handleDate}`);
-    const res = await requestAdapter().catch(requestAdapter);
-    const handleList = res.data.data;
+    let result;
+    const storageData = getStorageLbDataByDate(date);
+    const isToday = dayjs().format('YYYY-MM-DD') === date;
+    // 如果是当天不能走缓存也不能设置缓存
+    if (storageData && !isToday) {
+      result = storageData;
+    } else {
+      const response = await requestAdapter().catch(requestAdapter);
+      result = response.data;
+      if (!isToday) {
+        setStorageLbDataByDate(date, response.data);
+      }
+    }
+    const handleList = result.data;
     return handleList;
   } catch (error) {
     console.error(error);

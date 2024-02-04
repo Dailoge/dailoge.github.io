@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
 import { Collapse, Toast, Tag } from 'antd-mobile';
@@ -15,12 +15,18 @@ import './index.less';
 
 interface IProps {
   dateStocks: IDateStock[];
+  recentWorkdays: string[];
   latestWorkDay: string;
 }
 
 export default (props: IProps) => {
-  const { dateStocks } = props;
-  const [limitTopStocks, setLimitTopStocks] = useState<ILbStock[]>([]);
+  const { dateStocks, recentWorkdays } = props;
+  const [limitTopStocks, setLimitTopStocks] = useState<
+    Array<{
+      date: string;
+      lbStockList: ILbStock[];
+    }>
+  >([]);
   const [jianGuanStocks, setJianGuanStocks] = useState<IJianGuanStock[]>([]);
   const [stockBlockTop, setStockBlockTop] = useState<IStockBlockUp[]>([]);
   const [zgbJJFails, setZgbJJFails] = useState<
@@ -34,6 +40,18 @@ export default (props: IProps) => {
     }>
   >([]);
 
+  const getLbStockData = useCallback(async () => {
+    return Promise.all(
+      recentWorkdays.map(async (date) => {
+        const lbStocks = await getLbStockByDate(date);
+        return {
+          date,
+          lbStockList: lbStocks,
+        };
+      }),
+    );
+  }, []);
+
   // 最高板 config
   const zgbConfig = useMemo(() => {
     const data: {
@@ -45,21 +63,14 @@ export default (props: IProps) => {
       name: string;
       lbName: string;
     }[] = [];
-    dateStocks.forEach((item, index) => {
-      const list = item.ztList.length
-        ? item.ztList
-        : dateStocks[index - 1]?.ztList;
-      list.sort((a, b) => Number(b.lbc) - Number(a.lbc));
-      // 最高板同时可能有多个
-      const lbName = list
-        .filter((item) => item.lbc === list[0].lbc)
-        .map((item) => item.name)
-        .join();
+    limitTopStocks.forEach((item) => {
+      const zgbItem = item.lbStockList[0];
+      const lbName = zgbItem.code_list.map(l => l.name).join();
       data.push({
         date: dayjs(item.date).format('MMDD'),
-        value: Number(list[0].lbc),
+        value: zgbItem.height,
         isZgb: false,
-        code: list[0].code,
+        code: zgbItem.code_list.map(l => l.code).join(),
         originDate: item.date,
         name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
         lbName,
@@ -126,7 +137,7 @@ export default (props: IProps) => {
       ],
     };
     return config;
-  }, [dateStocks]);
+  }, [limitTopStocks]);
 
   useEffect(() => {
     const data = zgbConfig.data;
@@ -166,7 +177,7 @@ export default (props: IProps) => {
   }, [zgbConfig]);
 
   useEffect(() => {
-    getLbStockByDate(props.latestWorkDay).then(setLimitTopStocks);
+    getLbStockData().then((list) => setLimitTopStocks(reverse(list)));
     getJianGuanStock().then(setJianGuanStocks);
     getStockBlockUpByDate(props.latestWorkDay).then(setStockBlockTop);
   }, []);
@@ -175,7 +186,8 @@ export default (props: IProps) => {
     if (!dateStocks.length) return null;
     const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
     const latestDayZtList = latestDayStocks.ztList;
-    const content = limitTopStocks.map((limitTopItem) => {
+    const latestDayLbData = limitTopStocks[limitTopStocks.length - 1];
+    const content = latestDayLbData.lbStockList.map((limitTopItem) => {
       const limitTopStocksLine = limitTopItem.code_list.map((lbItem) => {
         const item = latestDayZtList.find((i) => i.name === lbItem.name);
         if (!item) {
@@ -188,8 +200,10 @@ export default (props: IProps) => {
         const beginLbMinPrice = 6;
         const beginLbMaxPrice = 16;
         const isLikePrice =
-          item.price >= beginLbMinPrice * Math.pow(1.1, Number(limitTopItem.height)) &&
-          item.price <= beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
+          item.price >=
+            beginLbMinPrice * Math.pow(1.1, Number(limitTopItem.height)) &&
+          item.price <=
+            beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
         const isLikeCJE = item.cje <= 1500000000;
         const jianGuanRes = jianGuanStocks.find(
           (jianGuanItem) => jianGuanItem.code === handleDm,
