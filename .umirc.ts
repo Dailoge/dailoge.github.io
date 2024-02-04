@@ -5,6 +5,9 @@ const px2vw = require('postcss-px-to-viewport');
 export default defineConfig({
   title: '情绪指标',
   links: [{ rel: 'icon', href: '/favicon.webp' }],
+  metas: [
+    { name: 'theme-color', content: '#ff0000' },
+  ],
   routes: [
     { path: '/', component: 'index' },
     { path: '/docs', component: 'docs' },
