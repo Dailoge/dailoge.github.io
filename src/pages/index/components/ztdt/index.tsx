@@ -14,12 +14,14 @@ export default (props: IProps) => {
 
   // 涨跌停 config
   const zdtConfig = useMemo(() => {
-    const data: {
+    type IDataItem = {
       date: string;
       value: number;
       dtTitle?: string;
+      total: number;
       category: string;
-    }[] = [];
+    };
+    const data: IDataItem[] = [];
     dateStocks.forEach((item) => {
       const ztValue = item.ztList.length;
       const dtValue = item.dtList.length;
@@ -27,11 +29,13 @@ export default (props: IProps) => {
         date: dayjs(item.date).format('MMDD'),
         value: ztValue,
         category: '涨停',
+        total: item.ztTotal,
       });
       data.push({
         date: dayjs(item.date).format('MMDD'),
         value: dtValue,
         category: '跌停',
+        total: item.dtTotal,
         dtTitle: item.dtList
           .sort((a, b) => b.lbc - a.lbc)
           .map((dt) => `${dt.name}(${dt.lbc}板)`)
@@ -75,7 +79,7 @@ export default (props: IProps) => {
                 lineHeight: '20px',
               }}
             >
-              跌停: {content}
+              跌停: {content}; 总计 {data?.[1]?.data.total} 家
               <p style={{ textAlign: 'right' }}>{date}</p>
             </div>
           );
@@ -83,7 +87,7 @@ export default (props: IProps) => {
       },
       // label
       label: {
-        formatter: (item: { value: any }) => item.value,
+        formatter: (item: IDataItem) => item.total > 100 ? '100+' : item.total,
       },
       // 辅助线
       annotations: [

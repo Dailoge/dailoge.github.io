@@ -16,7 +16,9 @@ export interface IZTDTStockInfo {
 export interface IDateStock {
   date: string;
   ztList: IZTDTStockInfo[];
+  ztTotal: number;
   dtList: IZTDTStockInfo[];
+  dtTotal: number;
 }
 
 export interface ILbStock {

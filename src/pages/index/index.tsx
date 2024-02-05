@@ -24,7 +24,7 @@ export default function HomePage() {
     return Promise.all(
       recentWorkdays.map(async (date) => {
         const data = await getZTDTStockByDate(date);
-        return { date, ztList: data.ztList, dtList: data.dtList };
+        return { date, ...data };
       }),
     );
   }, []);
@@ -41,7 +41,10 @@ export default function HomePage() {
   return (
     <div className="index-container">
       <div className="index-header">
-        <img className='logo' src="https://s11.ax1x.com/2024/02/04/pFl2rKx.png" />
+        <img
+          className="logo"
+          src="https://s11.ax1x.com/2024/02/04/pFl2rKx.png"
+        />
       </div>
       <div className="index-content">
         <ZtdtComp dateStocks={dateStocks} />

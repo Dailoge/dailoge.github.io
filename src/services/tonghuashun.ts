@@ -19,7 +19,9 @@ import { IStockBlockUp, ILbStock, IZTDTStockInfo, IHotStock } from '@/types';
  */
 export async function getZTDTStockByDate(date: string): Promise<{
   ztList: IZTDTStockInfo[];
+  ztTotal: number;
   dtList: IZTDTStockInfo[];
+  dtTotal: number;
 }> {
   const handleDate = dayjs(date).format('YYYYMMDD');
   try {
@@ -65,13 +67,17 @@ export async function getZTDTStockByDate(date: string): Promise<{
     };
     return {
       ztList: handleKeyMap(result.data.ztInfo.info),
+      ztTotal: result.data.ztInfo.page.total,
       dtList: handleKeyMap(result.data.dtInfo.info),
+      dtTotal: result.data.dtInfo.page.total,
     };
   } catch (error) {
     console.error(error);
     return {
       ztList: [],
+      ztTotal: 0,
       dtList: [],
+      dtTotal: 0,
     };
   }
 }
