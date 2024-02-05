@@ -21,7 +21,7 @@ export default (props: IProps) => {
   >([]);
 
   // 连板赚钱效应趋势
-  const llMakeMoneyConfig = useMemo(() => {
+  const lbMakeMoneyConfig = useMemo(() => {
     const llMakeMoneyAvg =
       lbjj.reduce((pre, item) => pre + item.percent, 0) / lbjj.length;
 
@@ -68,14 +68,14 @@ export default (props: IProps) => {
   }, []);
 
   return (
-    <div className="ll-make-money">
+    <div className="lb-make-money">
       <div className="title">
         <span>连板赚钱效应趋势</span>
         <Button className='reload-btn' size="small" color="primary" onClick={queryLbMakeMoneyInfo}>
           刷新
         </Button>
       </div>
-      <Line {...llMakeMoneyConfig} />
+      <Line {...lbMakeMoneyConfig} />
     </div>
   );
 };
