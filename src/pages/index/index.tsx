@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { reverse } from 'lodash-es';
+import { DotLoading } from 'antd-mobile';
 import ZtdtComp from './components/ztdt';
 import ZgbComp from './components/zgb';
 import LbNumComp from './components/lbNum';
@@ -18,6 +19,7 @@ const recentWorkCountDays = 37;
 const recentWorkdays = getRecentWorkdays(recentWorkCountDays);
 
 export default function HomePage() {
+  const [loading, setLoading] = useState(true);
   const [dateStocks, setDateStocks] = useState<Array<IDateStock>>([]);
 
   const getZTDTData = useCallback(async () => {
@@ -32,11 +34,21 @@ export default function HomePage() {
   useEffect(() => {
     getZTDTData().then((allDateStocks) => {
       setDateStocks(reverse(allDateStocks));
+      setLoading(false);
     });
     optimizeStorage({
       minDay: recentWorkdays[recentWorkdays.length - 1],
     });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="loading">
+        <DotLoading color="currentColor" />
+        <div className="text">加载中</div>
+      </div>
+    );
+  }
 
   return (
     <div className="index-container">

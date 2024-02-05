@@ -8,6 +8,7 @@ export default defineConfig({
   metas: [
     { name: 'theme-color', content: '#ff0000' },
   ],
+  hash: true,
   routes: [
     { path: '/', component: 'index' },
     { path: '/docs', component: 'docs' },
