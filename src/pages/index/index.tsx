@@ -5,7 +5,7 @@ import ZgbComp from './components/zgb';
 import LbNumComp from './components/lbNum';
 import JjFailNumComp from './components/jjFailNum';
 import MarketAmountComp from './components/marketAmount';
-import LbJJComp from './components/lbJJ';
+import LbMakeMoneyComp from './components/lbMakeMoney';
 // import BlockTopComp from './components/blockTop';
 import { getZTDTStockByDate } from '@/services';
 import { getRecentWorkdays, optimizeStorage } from '@/utils';
@@ -54,7 +54,7 @@ export default function HomePage() {
           latestWorkDay={recentWorkdays[0]}
         />
         {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
-        <LbJJComp recentWorkCountDays={recentWorkCountDays} />
+        <LbMakeMoneyComp recentWorkCountDays={recentWorkCountDays} />
         <MarketAmountComp recentWorkdays={recentWorkdays} />
         <JjFailNumComp dateStocks={dateStocks} />
         <LbNumComp dateStocks={dateStocks} />

@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Line } from '@ant-design/plots';
-import dayjs from 'dayjs';
+import { Button } from 'antd-mobile';
 import { getStockLineInfoByThs } from '@/services';
 
 import './index.less';
@@ -23,8 +23,7 @@ export default (props: IProps) => {
   // 连板赚钱效应趋势
   const llMakeMoneyConfig = useMemo(() => {
     const llMakeMoneyAvg =
-    lbjj.reduce((pre, item) => pre + item.percent, 0) /
-    lbjj.length;
+      lbjj.reduce((pre, item) => pre + item.percent, 0) / lbjj.length;
 
     const config = {
       data: lbjj,
@@ -60,13 +59,22 @@ export default (props: IProps) => {
     return config;
   }, [lbjj]);
 
-  useEffect(() => {
+  const queryLbMakeMoneyInfo = useCallback(() => {
     getStockLineInfoByThs('883958', recentWorkCountDays).then(setLbjj);
+  }, [recentWorkCountDays]);
+
+  useEffect(() => {
+    queryLbMakeMoneyInfo();
   }, []);
 
   return (
     <div className="ll-make-money">
-      <div className="title">连板赚钱效应趋势</div>
+      <div className="title">
+        <span>连板赚钱效应趋势</span>
+        <Button className='reload-btn' size="small" color="primary" onClick={queryLbMakeMoneyInfo}>
+          刷新
+        </Button>
+      </div>
       <Line {...llMakeMoneyConfig} />
     </div>
   );
