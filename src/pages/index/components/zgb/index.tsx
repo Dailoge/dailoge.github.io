@@ -73,6 +73,7 @@ export default (props: IProps) => {
     }[] = [];
     limitTopStocks.forEach((item) => {
       const zgbItem = item.lbStockList[0];
+      if (!zgbItem) return;
       const lbName = zgbItem.code_list.map((l) => l.name).join();
       data.push({
         date: dayjs(item.date).format('MMDD'),
@@ -199,21 +200,15 @@ export default (props: IProps) => {
     const content = latestDayLbData?.lbStockList?.map((limitTopItem) => {
       const limitTopStocksLine = limitTopItem.code_list.map((lbItem) => {
         const item = latestDayZtList.find((i) => i.name === lbItem.name);
-        if (!item) {
-          Toast.show({
-            content: `${lbItem.name} 在当日涨停板中未找到~`,
-          });
-          return null;
-        }
-        const handleDm = item.code;
+        const handleDm = lbItem.code;
         const beginLbMinPrice = 6;
         const beginLbMaxPrice = 16;
         const isLikePrice =
-          item.price >=
+          (item?.price as number) >=
             beginLbMinPrice * Math.pow(1.1, Number(limitTopItem.height)) &&
-          item.price <=
+          (item?.price as number) <=
             beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
-        const isLikeCJE = item.cje <= 1500000000;
+        const isLikeCJE = (item?.cje as number) <= 1500000000;
         const jianGuanRes = jianGuanStocks.find(
           (jianGuanItem) => jianGuanItem.code === handleDm,
         );
@@ -225,7 +220,7 @@ export default (props: IProps) => {
         );
         return (
           <div
-            key={item.code}
+            key={lbItem.code}
             className={`limit-top-stocks-item ${
               isLikePrice && isLikeCJE ? 'is-like-price' : ''
             }`}
@@ -241,7 +236,9 @@ export default (props: IProps) => {
               }
             }}
           >
-            {`${item.name}(${item.price.toString().split('.')[0]}元)`}
+            {`${lbItem.name}(${
+              item?.price.toString().split('.')[0] || '--'
+            }元)`}
             {!!jianGuanRes && (
               <span
                 className="jian-guan"
@@ -260,8 +257,10 @@ export default (props: IProps) => {
               </span>
             )}
             <span className="stock-info">
-              {item.code.startsWith('300') && <Tag color="default">创</Tag>}
-              {!!hotOrderRes && <Tag color="default">人气第{hotOrderRes.order}</Tag>}
+              {lbItem.code.startsWith('300') && <Tag color="default">创</Tag>}
+              {!!hotOrderRes && (
+                <Tag color="default">人气第{hotOrderRes.order}</Tag>
+              )}
             </span>
             {stockBlocks.length > 0 && (
               <span className="stock-block">

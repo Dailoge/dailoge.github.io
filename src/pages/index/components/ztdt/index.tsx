@@ -87,7 +87,7 @@ export default (props: IProps) => {
       },
       // label
       label: {
-        formatter: (item: IDataItem) => item.total > 100 ? '100+' : item.total,
+        formatter: (item: IDataItem) => item.total > 200 ? '200+' : item.total,
       },
       // 辅助线
       annotations: [

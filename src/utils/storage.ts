@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 const storageKeyMap = {
-  STORAGE_STOCK_ZTDT_CACHE: '_STORAGE_STOCK_ZTDT_CACHE_THS_NEW_', // 每天涨跌停的缓存 key
+  STORAGE_STOCK_ZTDT_CACHE: '_STORAGE_STOCK_ZTDT_CACHE_THS_V2', // 每天涨跌停的缓存 key
   STORAGE_STOCK_LB_CACHE: '_STORAGE_STOCK_LB_CACHE_', // 每天连板的缓存 key
   STORAGE_STOCK_INFO_CACHE: '_STORAGE_STOCK_INFO_CACHE_V1', // 个股信息的缓存 key
 }
