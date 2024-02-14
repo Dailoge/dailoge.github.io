@@ -74,20 +74,27 @@ export default (props: IProps) => {
           if (!content) return;
           return (
             <div
+              className="tooltip"
               style={{
                 padding: '2px',
                 lineHeight: '20px',
               }}
             >
-              跌停: {content}; 总计 {data?.[1]?.data.total} 家
-              <p style={{ textAlign: 'right' }}>{date}</p>
+              <p className="text">
+                总计 {data?.[0]?.data.total} 家涨停，{data?.[1]?.data.total} 家跌停；
+              </p>
+              <p className="text">跌停: {content}；</p>
+              <p className="text" style={{ textAlign: 'right' }}>
+                {date}
+              </p>
             </div>
           );
         },
       },
       // label
       label: {
-        formatter: (item: IDataItem) => item.total > 200 ? '200+' : item.total,
+        formatter: (item: IDataItem) =>
+          item.total > 200 ? '200+' : item.total,
       },
       // 辅助线
       annotations: [
@@ -118,7 +125,7 @@ export default (props: IProps) => {
 
   return (
     <div className="zt-dt">
-       <div className="zt-dt">
+      <div className="zt-dt">
         <div className="title">涨跌停趋势</div>
         <Line {...zdtConfig} />
       </div>
