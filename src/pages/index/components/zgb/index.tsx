@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
-import { Collapse, Toast, Tag } from 'antd-mobile';
+import { Button, Collapse, Toast, Tag } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
 import {
   getStockInfo,
@@ -288,7 +288,18 @@ export default (props: IProps) => {
     <div className="zgb">
       <div className="title">最高板趋势</div>
       <Line {...zgbConfig} />
-      <div className="limit-top-stocks">{renderLbContent}</div>
+      <div className="limit-top-stocks">
+        {renderLbContent}
+        <Button
+          className="top-stocks-btn"
+          color="primary"
+          onClick={() => {
+            window.open('https://eq.10jqka.com.cn/frontend/thsTopRank/index.html?tabName=regu&client_userid=vTteA&back_source=hyperlink&share_hxapp=isc&fontzoom=no#/');
+          }}
+        >
+          查看人气排行榜
+        </Button>
+      </div>
       <Collapse accordion>
         <Collapse.Panel key="1" title="最高板晋级失败后表现">
           <div className="zgb-jj-fails-warp">
