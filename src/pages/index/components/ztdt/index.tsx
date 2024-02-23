@@ -71,7 +71,6 @@ export default (props: IProps) => {
         position: 'top',
         customContent: (date: string, data: any) => {
           const content = data?.[1]?.data.dtTitle;
-          if (!content) return;
           return (
             <div
               className="tooltip"
@@ -81,9 +80,10 @@ export default (props: IProps) => {
               }}
             >
               <p className="text">
-                总计 {data?.[0]?.data.total} 家涨停，{data?.[1]?.data.total} 家跌停；
+                总计 {data?.[0]?.data.total} 家涨停，{data?.[1]?.data.total}{' '}
+                家跌停；
               </p>
-              <p className="text">跌停: {content}；</p>
+              {content && <p className="text">跌停: {content}；</p>}
               <p className="text" style={{ textAlign: 'right' }}>
                 {date}
               </p>

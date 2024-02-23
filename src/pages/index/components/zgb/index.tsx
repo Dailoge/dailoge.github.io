@@ -257,7 +257,7 @@ export default (props: IProps) => {
               </span>
             )}
             <span className="stock-info">
-              {lbItem.code.startsWith('300') && <Tag color="default">创</Tag>}
+              {lbItem.code.startsWith('30') && <Tag color="warning">创</Tag>}
               {!!hotOrderRes && (
                 <Tag color="default">人气第{hotOrderRes.order}</Tag>
               )}
