@@ -259,7 +259,9 @@ export default (props: IProps) => {
             <span className="stock-info">
               {lbItem.code.startsWith('30') && <Tag color="warning">创</Tag>}
               {!!hotOrderRes && (
-                <Tag color="default">人气第{hotOrderRes.order}</Tag>
+                <Tag color={hotOrderRes.order <= 5 ? 'success' : 'default'}>
+                  人气第{hotOrderRes.order}
+                </Tag>
               )}
             </span>
             {stockBlocks.length > 0 && (
