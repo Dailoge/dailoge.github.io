@@ -10,6 +10,7 @@ import {
   getStockBlockUpByDate,
   getHotStockTop,
 } from '@/services';
+import { formatFDE } from '@/utils';
 import {
   IDateStock,
   ILbStock,
@@ -198,7 +199,7 @@ export default (props: IProps) => {
     const latestDayZtList = latestDayStocks.ztList;
     const latestDayLbData = limitTopStocks[limitTopStocks.length - 1];
     const content = latestDayLbData?.lbStockList?.map((limitTopItem) => {
-      const limitTopStocksLine = limitTopItem.code_list.map((lbItem) => {
+      const limitTopStocksLine = limitTopItem?.code_list?.map((lbItem) => {
         const item = latestDayZtList.find((i) => i.name === lbItem.name);
         const handleDm = lbItem.code;
         const beginLbMinPrice = 6;
@@ -208,7 +209,8 @@ export default (props: IProps) => {
             beginLbMinPrice * Math.pow(1.1, Number(limitTopItem.height)) &&
           (item?.price as number) <=
             beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
-        const isLikeCJE = (item?.cje as number) <= 1500000000;
+        const isZhongJun = (item?.cje as number) >= 2500000000; // 大于 25 亿
+        const isBigFDE = (item?.fde as number) > 400000000;
         const jianGuanRes = jianGuanStocks.find(
           (jianGuanItem) => jianGuanItem.code === handleDm,
         );
@@ -222,7 +224,7 @@ export default (props: IProps) => {
           <div
             key={lbItem.code}
             className={`limit-top-stocks-item ${
-              isLikePrice && isLikeCJE ? 'is-like-price' : ''
+              isLikePrice ? 'is-like-price' : ''
             }`}
             onClick={() => {
               if (handleDm.startsWith('60')) {
@@ -258,6 +260,12 @@ export default (props: IProps) => {
             )}
             <span className="stock-info">
               {lbItem.code.startsWith('30') && <Tag color="warning">创</Tag>}
+              {isZhongJun && <Tag color="#2db7f5">中军</Tag>}
+              {
+                <Tag color={isBigFDE ? '#17d068' : 'default'}>
+                  {formatFDE(item?.fde as number)}
+                </Tag>
+              }
               {!!hotOrderRes && (
                 <Tag color={hotOrderRes.order <= 5 ? 'success' : 'default'}>
                   人气第{hotOrderRes.order}
@@ -294,7 +302,9 @@ export default (props: IProps) => {
           className="top-stocks-btn"
           color="primary"
           onClick={() => {
-            window.open('https://eq.10jqka.com.cn/frontend/thsTopRank/index.html?tabName=regu&client_userid=vTteA&back_source=hyperlink&share_hxapp=isc&fontzoom=no#/');
+            window.open(
+              'https://eq.10jqka.com.cn/frontend/thsTopRank/index.html?tabName=regu&client_userid=vTteA&back_source=hyperlink&share_hxapp=isc&fontzoom=no#/',
+            );
           }}
         >
           查看人气排行榜

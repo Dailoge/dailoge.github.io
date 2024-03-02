@@ -9,7 +9,7 @@ export interface IZTDTStockInfo {
   lbc: number; // 连续涨停次数
   fbt: string; // 第一次封板时间（HH:mm:ss）
   lbt: string; // 最后封板时间（HH:mm:ss）
-  zj: number; // 封单资金（元）
+  fde: number; // 封单资金（元）
   kbcs: number; // 开板次数
 }
 

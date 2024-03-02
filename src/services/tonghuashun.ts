@@ -60,7 +60,7 @@ export async function getZTDTStockByDate(date: string): Promise<{
           lbc, // 连续涨停次数
           fbt: item.first_limit_down_time, // 第一次封板时间（HH:mm:ss）
           lbt: item.last_limit_down_time, // 最后封板时间（HH:mm:ss）
-          zj: item.order_amount, // 封单资金（元）
+          fde: item.order_amount, // 封单资金（元）
           kbcs: item.open_num, // 开板次数
         };
       });
