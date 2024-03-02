@@ -104,7 +104,7 @@ export default (props: IProps) => {
       //   end: 1,
       //   start: 0,
       // },
-      height: 200,
+      height: 180,
       yField: 'value',
       xField: 'date',
       yAxis: {
