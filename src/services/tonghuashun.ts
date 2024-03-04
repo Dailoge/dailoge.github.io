@@ -166,7 +166,7 @@ export async function getStockBlockUpByDate(
       request(`/getStockBlockUpByDate?date=${handleDate}`);
     const res = await requestAdapter().catch(requestAdapter);
     const handleList = res.data.data.data;
-    return handleList;
+    return handleList || [];
   } catch (error) {
     console.error(error);
     return [];

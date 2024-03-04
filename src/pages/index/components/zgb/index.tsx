@@ -74,7 +74,7 @@ export default (props: IProps) => {
       lbName: string;
     }[] = [];
     limitTopStocks.forEach((item) => {
-      const zgbItem = item.lbStockList[0];
+      const zgbItem = item.lbStockList?.[0];
       if (!zgbItem) return;
       const lbName = zgbItem.code_list.map((l) => l.name).join();
       data.push({
