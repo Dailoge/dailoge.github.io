@@ -197,7 +197,7 @@ export default (props: IProps) => {
   const renderBlockTopSelectContent = useMemo(() => {
     const topBlockList = stockBlockTop.slice(0, 9);
     const options = topBlockList.map((item, index) => {
-      const change = item.change.toFixed(1);
+      const change = item.change?.toFixed(1);
       return {
         label: `${index+1}. ${item.name}(${item.limit_up_num}家,${change}%)`,
         value: item.code,
