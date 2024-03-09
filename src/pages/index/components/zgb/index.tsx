@@ -199,7 +199,7 @@ export default (props: IProps) => {
     const options = topBlockList.map((item, index) => {
       const change = item.change?.toFixed(1) || 0;
       return {
-        label: `${index+1}. ${item.name}(${item.limit_up_num}家,${change}%)`,
+        label: `${index + 1}. ${item.name}(${item.limit_up_num}家,${change}%)`,
         value: item.code,
       };
     });
@@ -219,7 +219,22 @@ export default (props: IProps) => {
     const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
     const latestDayZtList = latestDayStocks.ztList;
     const latestDayLbData = limitTopStocks[limitTopStocks.length - 1];
-    const content = latestDayLbData?.lbStockList?.map((limitTopItem) => {
+    const lbStockList = [...(latestDayLbData?.lbStockList || [])];
+    const zhongjunList = latestDayZtList
+      .filter((item) => {
+        return (item?.cje as number) >= 2500000000; // 大于 25 亿
+      })
+      .sort((a, b) => Number(a.fbt) - Number(b.fbt));
+    if (zhongjunList.length > 0) {
+      const zhongjunInfo = {
+        number: zhongjunList.length,
+        // TODO：height 类型是数字的
+        height: '中军',
+        code_list: zhongjunList,
+      } as any as ILbStock;
+      lbStockList.push(zhongjunInfo);
+    }
+    const content = lbStockList.map((limitTopItem) => {
       const limitTopStocksLine = limitTopItem?.code_list
         ?.map((lbItem) => {
           const item = latestDayZtList.find((i) => i.name === lbItem.name);
@@ -335,7 +350,7 @@ export default (props: IProps) => {
       <Line {...zgbConfig} />
       {limitTopStocks.length > 0 && (
         <div className="limit-top-stocks">
-          {renderBlockTopSelectContent}
+          {/* {renderBlockTopSelectContent} */}
           <div className="lb-content-container">
             {renderLbContent}
             <Button

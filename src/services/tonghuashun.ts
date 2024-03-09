@@ -41,8 +41,9 @@ export async function getZTDTStockByDate(date: string): Promise<{
         setStorageZTDTDataByDate(date, response.data);
       }
     }
-    const handleKeyMap = (list: Array<any>) => {
+    const handleKeyMap = (list: Array<any>, type: 'zt' | 'dt') => {
       return list.map((item) => {
+        const isZt = type === 'zt';
         const lbcReg = /(.*)天(.*)板/;
         const regRes = lbcReg.exec(item.high_days); // 9天9板、9天5板
         let lbc = 1;
@@ -58,17 +59,17 @@ export async function getZTDTStockByDate(date: string): Promise<{
           ltsz: item.currency_value, // 流通市值（元）
           hs: item.turnover_rate, // 换手率（%）
           lbc, // 连续涨停次数
-          fbt: item.first_limit_down_time, // 第一次封板时间（HH:mm:ss）
-          lbt: item.last_limit_down_time, // 最后封板时间（HH:mm:ss）
+          fbt: isZt ? item.first_limit_up_time : item.first_limit_down_time, // 第一次封板时间（HH:mm:ss）
+          lbt: isZt ? item.last_limit_up_time : item.last_limit_down_time, // 最后封板时间（HH:mm:ss）
           fde: item.order_amount, // 封单资金（元）
           kbcs: item.open_num, // 开板次数
         };
       });
     };
     return {
-      ztList: handleKeyMap(result.data.ztInfo.info),
+      ztList: handleKeyMap(result.data.ztInfo.info, 'zt'),
       ztTotal: result.data.ztInfo.page.total,
-      dtList: handleKeyMap(result.data.dtInfo.info),
+      dtList: handleKeyMap(result.data.dtInfo.info, 'dt'),
       dtTotal: result.data.dtInfo.page.total,
     };
   } catch (error) {
