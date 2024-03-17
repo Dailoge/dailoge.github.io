@@ -63,6 +63,7 @@ export async function getZTDTStockByDate(date: string): Promise<{
           lbt: isZt ? item.last_limit_up_time : item.last_limit_down_time, // 最后封板时间（HH:mm:ss）
           fde: item.order_amount, // 封单资金（元）
           kbcs: item.open_num, // 开板次数
+          type: item.limit_up_type, // 涨停类型
         };
       });
     };

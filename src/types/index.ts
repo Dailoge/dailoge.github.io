@@ -11,6 +11,7 @@ export interface IZTDTStockInfo {
   lbt: string; // 最后封板时间（HH:mm:ss）
   fde: number; // 封单资金（元）
   kbcs: number; // 开板次数
+  type: string; // 涨停类型
 }
 
 export interface IDateStock {

@@ -74,7 +74,7 @@ export default (props: IProps) => {
       codeList: ILbStock['code_list'];
       name: string;
       lbName: string;
-    }
+    };
     const data: IData[] = [];
     limitTopStocks.forEach((item, index) => {
       const zgbItem = item.lbStockList?.[0];
@@ -136,9 +136,8 @@ export default (props: IProps) => {
           if (item.isZgb) {
             return `${item.name}(${item.value})`;
           }
-          if(item.codeList.length === 1) {
-            if(item.value > data[item.index -1]?.value)
-            return '🐲';
+          if (item.codeList.length === 1) {
+            if (item.value > data[item.index - 1]?.value) return '🐲';
           }
           return item.value;
         },
@@ -227,7 +226,10 @@ export default (props: IProps) => {
   const renderLbContent = useMemo(() => {
     if (!dateStocks.length) return null;
     const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
-    const latestDayZtList = latestDayStocks.ztList;
+    // 按第一次涨停时间排序
+    const latestDayZtList = latestDayStocks.ztList
+      .slice(0, -1)
+      .sort((a, b) => Number(a.fbt) - Number(b.fbt));
     const latestDayLbData = limitTopStocks[limitTopStocks.length - 1];
     const lbStockList = [...(latestDayLbData?.lbStockList || [])];
     const zhongjunList = latestDayZtList
@@ -247,7 +249,10 @@ export default (props: IProps) => {
     const content = lbStockList.map((limitTopItem) => {
       const limitTopStocksLine = limitTopItem?.code_list
         ?.map((lbItem) => {
-          const item = latestDayZtList.find((i) => i.name === lbItem.name);
+          const ztListIndex = latestDayZtList.findIndex(
+            (i) => i.name === lbItem.name,
+          );
+          const item = latestDayZtList[ztListIndex];
           const handleDm = lbItem.code;
           const beginLbMinPrice = 6;
           const beginLbMaxPrice = 16;
@@ -257,7 +262,7 @@ export default (props: IProps) => {
             (item?.price as number) <=
               beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
           const isZhongJun = (item?.cje as number) >= 2500000000; // 大于 25 亿
-          const isBigFDE = (item?.fde as number) > 400000000;
+          const isBigFDE = (item?.fde as number) > 300000000;
           const jianGuanRes = jianGuanStocks.find(
             (jianGuanItem) => jianGuanItem.code === handleDm,
           );
@@ -277,9 +282,7 @@ export default (props: IProps) => {
           return (
             <div
               key={lbItem.code}
-              className={`limit-top-stocks-item ${
-                isLikePrice ? 'is-like-price' : ''
-              }`}
+              className={`limit-top-stocks-item`}
               onClick={() => {
                 if (handleDm.startsWith('60')) {
                   window.open(
@@ -313,6 +316,16 @@ export default (props: IProps) => {
                 </span>
               )}
               <span className="stock-info">
+                {dayjs(Number(item.fbt) * 1000).isBefore(
+                  dayjs(Number(item.fbt) * 1000)
+                    .set('hour', 10)
+                    .set('minute', 30),
+                ) && (
+                  <Tag color={ztListIndex < 10 ? 'warning' : 'default'}>
+                    {ztListIndex + 1}
+                  </Tag>
+                )}
+                <Tag color={'default'}>{item.type}</Tag>
                 {lbItem.code.startsWith('30') && <Tag color="warning">创</Tag>}
                 {isZhongJun && <Tag color="#2db7f5">中军</Tag>}
                 {
@@ -320,9 +333,9 @@ export default (props: IProps) => {
                     {formatFDE(item?.fde as number)}
                   </Tag>
                 }
-                {!!hotOrderRes && (
+                {!!hotOrderRes && hotOrderRes.order <= 30 && (
                   <Tag color={hotOrderRes.order <= 5 ? 'success' : 'default'}>
-                    人气第{hotOrderRes.order}
+                    人气{hotOrderRes.order}
                   </Tag>
                 )}
               </span>
