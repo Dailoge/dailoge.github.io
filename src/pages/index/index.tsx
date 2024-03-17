@@ -3,6 +3,7 @@ import { reverse } from 'lodash-es';
 import { DotLoading } from 'antd-mobile';
 import ZtdtComp from './components/ztdt';
 import ZgbComp from './components/zgb';
+import ZjNumComp from './components/zjNum';
 import LbNumComp from './components/lbNum';
 import JjFailNumComp from './components/jjFailNum';
 import MarketAmountComp from './components/marketAmount';
@@ -65,6 +66,7 @@ export default function HomePage() {
           recentWorkdays={recentWorkdays}
           latestWorkDay={recentWorkdays[0]}
         />
+        <ZjNumComp dateStocks={dateStocks} />
         {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
         <LbMakeMoneyComp recentWorkCountDays={recentWorkCountDays} />
         <MarketAmountComp recentWorkdays={recentWorkdays} />
