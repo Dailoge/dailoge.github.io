@@ -64,33 +64,39 @@ export default (props: IProps) => {
 
   // 最高板 config
   const zgbConfig = useMemo(() => {
-    const data: {
+    type IData = {
+      index: number;
       date: string; // 12-01
       originDate: string; // 2023-12-01
       value: number;
       isZgb: boolean;
       code: string;
+      codeList: ILbStock['code_list'];
       name: string;
       lbName: string;
-    }[] = [];
-    limitTopStocks.forEach((item) => {
+    }
+    const data: IData[] = [];
+    limitTopStocks.forEach((item, index) => {
       const zgbItem = item.lbStockList?.[0];
       if (!zgbItem) return;
       const lbName = zgbItem.code_list.map((l) => l.name).join();
       data.push({
+        index,
         date: dayjs(item.date).format('MMDD'),
         value: zgbItem.height,
         isZgb: false,
         code: zgbItem.code_list[0].code,
+        codeList: zgbItem.code_list,
         originDate: item.date,
         name: lbName.length > 7 ? lbName.substring(0, 8) + '...' : lbName,
         lbName,
       });
     });
     data.forEach((item, index) => {
+      const preValue = index === 0 ? 0 : data[index - 1].value;
       const nextValue = index === data.length - 1 ? 0 : data[index + 1].value;
       // 算出波峰，即是最高板
-      if (item.value >= nextValue) {
+      if (preValue < item.value && item.value > nextValue) {
         item.isZgb = true;
       }
     });
@@ -104,15 +110,15 @@ export default (props: IProps) => {
       //   end: 1,
       //   start: 0,
       // },
-      height: 180,
+      height: 220,
       yField: 'value',
       xField: 'date',
       yAxis: {
-        min: 2, // 设置Y轴的最小值
+        min: 3, // 设置Y轴的最小值
       },
       tooltip: {
         title: 'lbName',
-        formatter: (datum: { value: number; date: string }) => {
+        formatter: (datum: IData) => {
           return { name: datum.value, value: datum.date };
         },
       },
@@ -126,9 +132,13 @@ export default (props: IProps) => {
       },
       // label
       label: {
-        formatter: (item: { value: string; name: string; isZgb: boolean }) => {
+        formatter: (item: IData) => {
           if (item.isZgb) {
             return `${item.name}(${item.value})`;
+          }
+          if(item.codeList.length === 1) {
+            if(item.value > data[item.index -1]?.value)
+            return '🐲';
           }
           return item.value;
         },
