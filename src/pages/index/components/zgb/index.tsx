@@ -279,7 +279,7 @@ export default (props: IProps) => {
               return null;
             }
           }
-          if(!item) return null;
+          if (!item) return null;
           return (
             <div
               key={lbItem.code}
