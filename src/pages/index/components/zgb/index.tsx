@@ -10,7 +10,7 @@ import {
   getStockBlockUpByDate,
   getHotStockTop,
 } from '@/services';
-import { formatFDE } from '@/utils';
+import { formatBigAmountMoney } from '@/utils';
 import {
   IDateStock,
   ILbStock,
@@ -326,17 +326,16 @@ export default (props: IProps) => {
                     {ztListIndex + 1}
                   </Tag>
                 )}
-                <Tag color={'default'}>{item.type}</Tag>
+                <Tag color='default'>{item.type}</Tag>
+                <Tag color='default'>{formatBigAmountMoney(item.ltsz)}:{formatBigAmountMoney(item.cje)}</Tag>
                 {lbItem.code.startsWith('30') && <Tag color="warning">创</Tag>}
                 {isZhongJun && <Tag color="#2db7f5">中军</Tag>}
-                {
-                  <Tag color={isBigFDE ? '#17d068' : 'default'}>
-                    {formatFDE(item?.fde as number)}
-                  </Tag>
-                }
+                {isBigFDE && (
+                  <Tag color="#17d068">{formatBigAmountMoney(item?.fde as number)}</Tag>
+                )}
                 {!!hotOrderRes && hotOrderRes.order <= 30 && (
                   <Tag color={hotOrderRes.order <= 5 ? 'success' : 'default'}>
-                    人气{hotOrderRes.order}
+                    🔥{hotOrderRes.order}
                   </Tag>
                 )}
               </span>
