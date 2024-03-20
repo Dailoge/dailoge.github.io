@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { reverse } from 'lodash-es';
-import { DotLoading } from 'antd-mobile';
+import { Skeleton } from 'antd-mobile';
 import ZtdtComp from './components/ztdt';
 import ZgbComp from './components/zgb';
-import ZjNumComp from './components/zjNum';
+// import ZjNumComp from './components/zjNum';
 import LbNumComp from './components/lbNum';
 import JjFailNumComp from './components/jjFailNum';
 import MarketAmountComp from './components/marketAmount';
@@ -45,8 +45,10 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="loading">
-        <DotLoading color="currentColor" />
-        <div className="text">加载中</div>
+        <Skeleton.Title animated />
+        <Skeleton.Paragraph lineCount={5} animated />
+        <Skeleton.Title animated />
+        <Skeleton.Paragraph lineCount={6} animated />
       </div>
     );
   }
@@ -66,7 +68,7 @@ export default function HomePage() {
           recentWorkdays={recentWorkdays}
           latestWorkDay={recentWorkdays[0]}
         />
-        <ZjNumComp dateStocks={dateStocks} />
+        {/* <ZjNumComp dateStocks={dateStocks} /> */}
         {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
         <LbMakeMoneyComp recentWorkCountDays={recentWorkCountDays} />
         <MarketAmountComp recentWorkdays={recentWorkdays} />

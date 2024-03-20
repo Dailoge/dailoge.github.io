@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Line } from '@ant-design/plots';
-import { Button } from 'antd-mobile';
+import { Button, Toast } from 'antd-mobile';
+import { CloseCircleOutline } from 'antd-mobile-icons';
 import { getStockLineInfoByThs } from '@/services';
 
 import './index.less';
@@ -46,10 +47,10 @@ export default (props: IProps) => {
       annotations: [
         {
           type: 'line',
-          start: ['min', llMakeMoneyAvg],
-          end: ['max', llMakeMoneyAvg],
+          start: ['min', 6],
+          end: ['max', 6],
           style: {
-            stroke: '#1890ff',
+            stroke: '#f13611',
             lineDash: [4, 2],
             lineWidth: 2,
           },
@@ -62,6 +63,17 @@ export default (props: IProps) => {
   const queryLbMakeMoneyInfo = useCallback(() => {
     getStockLineInfoByThs('883958', recentWorkCountDays).then(setLbjj);
   }, [recentWorkCountDays]);
+
+  useEffect(() => {
+    if(lbjj.length) {
+      if(lbjj[lbjj.length - 1].percent >= 6) {
+        Toast.show({
+          content: '短线情绪高潮，及时清仓~',
+          icon: <CloseCircleOutline />
+        })
+      }
+    }
+  }, [lbjj])
 
   useEffect(() => {
     queryLbMakeMoneyInfo();
