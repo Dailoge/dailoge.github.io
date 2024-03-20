@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
-import { Button, Collapse, Toast, Tag, Selector } from 'antd-mobile';
+import { Button, Collapse, Toast, Tag, Selector, SelectorOption } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
 import {
   getStockInfo,
@@ -146,10 +146,20 @@ export default (props: IProps) => {
       annotations: [
         {
           type: 'line',
-          start: ['min', zgbAvg],
-          end: ['max', zgbAvg],
+          start: ['min', 7],
+          end: ['max', 7],
           style: {
             stroke: '#1890ff',
+            lineDash: [4, 2],
+            lineWidth: 2,
+          },
+        },
+        {
+          type: 'line',
+          start: ['min', 5],
+          end: ['max', 5],
+          style: {
+            stroke: '#f13611',
             lineDash: [4, 2],
             lineWidth: 2,
           },
@@ -204,16 +214,18 @@ export default (props: IProps) => {
   }, []);
 
   const renderBlockTopSelectContent = useMemo(() => {
-    const topBlockList = stockBlockTop.slice(0, 9);
-    const options = topBlockList.map((item, index) => {
+    const topBlockList = stockBlockTop.slice(0, 3);
+    const options = topBlockList.map((item) => {
       const change = item.change?.toFixed(1) || 0;
       return {
-        label: `${index + 1}. ${item.name}(${item.limit_up_num}家,${change}%)`,
+        label: item.name,
+        description: `${item.limit_up_num}家,${change}%`,
         value: item.code,
       };
     });
     return (
       <div className="block-top-select-container">
+        <div className='hot-block-top-title'>概念</div>
         <Selector
           options={options}
           defaultValue={selectTopBlockValue}
@@ -342,7 +354,7 @@ export default (props: IProps) => {
               {stockBlocks.length > 0 && (
                 <span className="stock-block">
                   <Tag color="primary">
-                    {stockBlocks.map((blockItem) => blockItem.name).join()}
+                    {stockBlocks[0]?.name}
                   </Tag>
                 </span>
               )}
@@ -373,7 +385,7 @@ export default (props: IProps) => {
       <Line {...zgbConfig} />
       {limitTopStocks.length > 0 && (
         <div className="limit-top-stocks">
-          {/* {renderBlockTopSelectContent} */}
+          {renderBlockTopSelectContent}
           <div className="lb-content-container">
             {renderLbContent}
             <Button
