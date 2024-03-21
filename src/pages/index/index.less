@@ -1,20 +1,16 @@
-.loading {
-  width: 100vw;
-  height: 100vh;
-  // font-size: 48px;
-  // color: #ff3141;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // .text {
-  //   font-size: 36px;
-  // }
-}
 .index-container {
   width: 750px;
   min-height: 100vh;
+  position: relative;
   overflow-x: hidden;
   overflow-y: scroll;
+  .loading {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fdfdfd;
+    z-index: 1000;
+  }
   .index-header {
     display: flex;
     background-color: #ff0000;

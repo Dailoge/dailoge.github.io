@@ -41,22 +41,18 @@ export default function HomePage() {
       minDay: recentWorkdays[recentWorkdays.length - 1],
     });
   }, []);
-
-  if (loading) {
-    return (
-      <div className="loading">
-        <Skeleton.Title animated />
-        <Skeleton.Paragraph lineCount={5} animated />
-        <Skeleton.Title animated />
-        <Skeleton.Paragraph lineCount={6} animated />
-        <Skeleton.Title animated />
-        <Skeleton.Paragraph lineCount={6} animated />
-      </div>
-    );
-  }
-
   return (
     <div className="index-container">
+      {loading && (
+        <div className="loading">
+          <Skeleton.Title animated />
+          <Skeleton.Paragraph lineCount={5} animated />
+          <Skeleton.Title animated />
+          <Skeleton.Paragraph lineCount={6} animated />
+          <Skeleton.Title animated />
+          <Skeleton.Paragraph lineCount={6} animated />
+        </div>
+      )}
       <div className="index-header">
         <img
           className="logo"
