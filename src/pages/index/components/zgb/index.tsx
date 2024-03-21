@@ -1,7 +1,14 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
-import { Button, Collapse, Toast, Tag, Selector, SelectorOption } from 'antd-mobile';
+import {
+  Button,
+  Collapse,
+  Toast,
+  Tag,
+  Selector,
+  SelectorOption,
+} from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
 import {
   getStockInfo,
@@ -214,6 +221,7 @@ export default (props: IProps) => {
   }, []);
 
   const renderBlockTopSelectContent = useMemo(() => {
+    if (!stockBlockTop.length) return null;
     const topBlockList = stockBlockTop.slice(0, 3);
     const options = topBlockList.map((item) => {
       const change = item.change?.toFixed(1) || 0;
@@ -225,7 +233,7 @@ export default (props: IProps) => {
     });
     return (
       <div className="block-top-select-container">
-        <div className='hot-block-top-title'>概念</div>
+        <div className="hot-block-top-title">概念</div>
         <Selector
           options={options}
           defaultValue={selectTopBlockValue}
@@ -284,7 +292,7 @@ export default (props: IProps) => {
           const hotOrderRes = hotTopStocks.find(
             (hotItem) => hotItem.code === handleDm,
           );
-          if (selectTopBlockValue.length) {
+          if (selectTopBlockValue.length && stockBlocks.length) {
             if (
               !stockBlocks.find((item) => item.code === selectTopBlockValue[0])
             ) {
@@ -338,12 +346,17 @@ export default (props: IProps) => {
                     {ztListIndex + 1}
                   </Tag>
                 )}
-                <Tag color='default'>{item.type}</Tag>
-                <Tag color='default'>{formatBigAmountMoney(item.ltsz)}:{formatBigAmountMoney(item.cje)}</Tag>
+                <Tag color="default">{item.type}</Tag>
+                <Tag color="default">
+                  {formatBigAmountMoney(item.ltsz)}:
+                  {formatBigAmountMoney(item.cje)}
+                </Tag>
                 {lbItem.code.startsWith('30') && <Tag color="warning">创</Tag>}
                 {isZhongJun && <Tag color="#2db7f5">中军</Tag>}
                 {isBigFDE && (
-                  <Tag color="#17d068">{formatBigAmountMoney(item?.fde as number)}</Tag>
+                  <Tag color="#17d068">
+                    {formatBigAmountMoney(item?.fde as number)}
+                  </Tag>
                 )}
                 {!!hotOrderRes && hotOrderRes.order <= 30 && (
                   <Tag color={hotOrderRes.order <= 5 ? 'success' : 'default'}>
@@ -353,9 +366,7 @@ export default (props: IProps) => {
               </span>
               {stockBlocks.length > 0 && (
                 <span className="stock-block">
-                  <Tag color="primary">
-                    {stockBlocks[0]?.name}
-                  </Tag>
+                  <Tag color="primary">{stockBlocks[0]?.name}</Tag>
                 </span>
               )}
             </div>

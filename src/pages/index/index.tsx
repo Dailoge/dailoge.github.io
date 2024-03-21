@@ -49,6 +49,8 @@ export default function HomePage() {
         <Skeleton.Paragraph lineCount={5} animated />
         <Skeleton.Title animated />
         <Skeleton.Paragraph lineCount={6} animated />
+        <Skeleton.Title animated />
+        <Skeleton.Paragraph lineCount={6} animated />
       </div>
     );
   }
