@@ -6,6 +6,7 @@ import {
   Collapse,
   Toast,
   Tag,
+  Popup,
   Selector,
   SelectorOption,
 } from 'antd-mobile';
@@ -43,7 +44,12 @@ export default (props: IProps) => {
     }>
   >([]);
   const [jianGuanStocks, setJianGuanStocks] = useState<IJianGuanStock[]>([]);
-  const [stockBlockTop, setStockBlockTop] = useState<IStockBlockUp[]>([]);
+  const [stockBlockTop, setStockBlockTop] = useState<
+    Array<{
+      date: string;
+      blockUpList: IStockBlockUp[];
+    }>
+  >([]);
   const [hotTopStocks, setHotTopStocks] = useState<IHotStock[]>([]);
   const [zgbJJFails, setZgbJJFails] = useState<
     Array<{
@@ -56,6 +62,8 @@ export default (props: IProps) => {
     }>
   >([]);
   const [selectTopBlockValue, setSelectTopBlockValue] = useState<string[]>([]);
+  const [blockUpPopUpVisible, setBlockUpPopUpVisible] =
+    useState<boolean>(false);
 
   const getLbStockData = useCallback(async () => {
     return Promise.all(
@@ -64,6 +72,18 @@ export default (props: IProps) => {
         return {
           date,
           lbStockList: lbStocks,
+        };
+      }),
+    );
+  }, []);
+
+  const getBlockUpData = useCallback(async () => {
+    return Promise.all(
+      recentWorkdays.map(async (date, index) => {
+        const blockUpList = await getStockBlockUpByDate(date, index === 0);
+        return {
+          date,
+          blockUpList,
         };
       }),
     );
@@ -176,6 +196,67 @@ export default (props: IProps) => {
     return config;
   }, [limitTopStocks]);
 
+  const blockUpLineConfig = useMemo(() => {
+    type IData = {
+      date: string;
+      change: number;
+      limit_up_num: number;
+    };
+    const data: Array<IData> = [];
+    stockBlockTop.forEach((item) => {
+      const findRes = item.blockUpList.find(
+        (blockItem) => blockItem.code === selectTopBlockValue[0],
+      );
+      data.push({
+        date: dayjs(item.date).format('MMDD'),
+        change: findRes ? findRes.change : 0,
+        limit_up_num: findRes ? findRes.limit_up_num : 0,
+      });
+    });
+    const config = {
+      data,
+      height: 200,
+      yField: 'limit_up_num',
+      xField: 'date',
+      tooltip: {
+        title: '涨停数',
+        formatter: (item: IData) => {
+          return { name: item.limit_up_num, value: item.date };
+        },
+      },
+      point: {
+        size: 4,
+        style: {
+          lineWidth: 1,
+          fillOpacity: 1,
+        },
+        shape: 'circle',
+      },
+      // label
+      label: {
+        formatter: (item: IData) => {
+          if (item.change) {
+            return item.change.toFixed(0) + '%';
+          }
+        },
+      },
+      // 辅助线
+      annotations: [
+        {
+          type: 'line',
+          start: ['min', 15],
+          end: ['max', 15],
+          style: {
+            stroke: '#f13611',
+            lineDash: [4, 2],
+            lineWidth: 2,
+          },
+        },
+      ],
+    };
+    return config;
+  }, [stockBlockTop, selectTopBlockValue]);
+
   useEffect(() => {
     const data = zgbConfig.data;
     const zbgJJFail: {
@@ -216,13 +297,17 @@ export default (props: IProps) => {
   useEffect(() => {
     getLbStockData().then((list) => setLimitTopStocks(reverse(list)));
     getJianGuanStock().then(setJianGuanStocks);
-    getStockBlockUpByDate(props.latestWorkDay).then(setStockBlockTop);
+    getBlockUpData().then((list) => setStockBlockTop(reverse(list)));
     getHotStockTop().then(setHotTopStocks);
   }, []);
 
+  const latestDayBlockUpList = useMemo(() => {
+    return stockBlockTop[stockBlockTop.length - 1]?.blockUpList || [];
+  }, [stockBlockTop]);
+
   const renderBlockTopSelectContent = useMemo(() => {
     if (!stockBlockTop.length) return null;
-    const topBlockList = stockBlockTop.slice(0, 3);
+    const topBlockList = latestDayBlockUpList.slice(0, 3);
     const options = topBlockList.map((item) => {
       const change = item.change?.toFixed(1) || 0;
       return {
@@ -274,19 +359,19 @@ export default (props: IProps) => {
           );
           const item = latestDayZtList[ztListIndex];
           const handleDm = lbItem.code;
-          const beginLbMinPrice = 6;
-          const beginLbMaxPrice = 16;
-          const isLikePrice =
-            (item?.price as number) >=
-              beginLbMinPrice * Math.pow(1.1, Number(limitTopItem.height)) &&
-            (item?.price as number) <=
-              beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
+          // const beginLbMinPrice = 6;
+          // const beginLbMaxPrice = 16;
+          // const isLikePrice =
+          //   (item?.price as number) >=
+          //     beginLbMinPrice * Math.pow(1.1, Number(limitTopItem.height)) &&
+          //   (item?.price as number) <=
+          //     beginLbMaxPrice * Math.pow(1.1, Number(limitTopItem.height));
           const isZhongJun = (item?.cje as number) >= 2500000000; // 大于 25 亿
           const isBigFDE = (item?.fde as number) > 300000000;
           const jianGuanRes = jianGuanStocks.find(
             (jianGuanItem) => jianGuanItem.code === handleDm,
           );
-          const stockBlocks = stockBlockTop.filter((blockItem) =>
+          const stockBlocks = latestDayBlockUpList.filter((blockItem) =>
             blockItem.stock_list.find((stock) => stock.code === handleDm),
           );
           const hotOrderRes = hotTopStocks.find(
@@ -390,6 +475,12 @@ export default (props: IProps) => {
     selectTopBlockValue,
   ]);
 
+  useEffect(() => {
+    if (selectTopBlockValue[0]) {
+      setBlockUpPopUpVisible(true);
+    }
+  }, [selectTopBlockValue]);
+
   return (
     <div className="zgb">
       <div className="title">最高板趋势</div>
@@ -452,6 +543,30 @@ export default (props: IProps) => {
           </div>
         </Collapse.Panel>
       </Collapse>
+      <Popup
+        visible={blockUpPopUpVisible}
+        onMaskClick={() => {
+          setBlockUpPopUpVisible(false);
+        }}
+        onClose={() => {
+          setBlockUpPopUpVisible(false);
+        }}
+        bodyStyle={{ height: '40vh' }}
+      >
+        <div className="block-up-popup-container">
+          <div className="title">
+            {
+              latestDayBlockUpList.find(
+                (item) => item.code === selectTopBlockValue[0],
+              )?.name
+            }
+            涨停数趋势
+          </div>
+          <div style={{ height: '32vh' }}>
+            <Line {...blockUpLineConfig} />
+          </div>
+        </div>
+      </Popup>
     </div>
   );
 };

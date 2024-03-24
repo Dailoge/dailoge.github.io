@@ -4,6 +4,7 @@ const storageKeyMap = {
   STORAGE_STOCK_ZTDT_CACHE: '_STORAGE_STOCK_ZTDT_CACHE_THS_V2', // 每天涨跌停的缓存 key
   STORAGE_STOCK_LB_CACHE: '_STORAGE_STOCK_LB_CACHE_', // 每天连板的缓存 key
   STORAGE_STOCK_INFO_CACHE: '_STORAGE_STOCK_INFO_CACHE_V1', // 个股信息的缓存 key
+  STORAGE_STOCK_BLOCK_UP_CACHE: '_STORAGE_STOCK_BLOCK_UP_CACHE_V2', // 每天概念排行榜缓存 key
 }
 
 function getStorageData(cacheKey: string, options: { key: string }) {
@@ -58,6 +59,14 @@ export function getStorageLbDataByDate(key: string) {
 
 export function setStorageLbDataByDate(key: string, data: any) {
   return setStorageData(storageKeyMap.STORAGE_STOCK_LB_CACHE, { key, value: data });
+}
+
+export function getStorageBlockUpByDate(key: string) {
+  return getStorageData(storageKeyMap.STORAGE_STOCK_BLOCK_UP_CACHE, { key });
+}
+
+export function setStorageBlockUpByDate(key: string, data: any) {
+  return setStorageData(storageKeyMap.STORAGE_STOCK_BLOCK_UP_CACHE, { key, value: data });
 }
 
 export function optimizeStorage({ minDay }: { minDay: string }) {

@@ -1,10 +1,13 @@
 import request from './request';
 import dayjs from 'dayjs';
+import { cloneDeep } from 'lodash-es';
 import {
   getStorageZTDTDataByDate,
   setStorageZTDTDataByDate,
   getStorageLbDataByDate,
   setStorageLbDataByDate,
+  getStorageBlockUpByDate,
+  setStorageBlockUpByDate,
 } from '../utils';
 import { IStockBlockUp, ILbStock, IZTDTStockInfo, IHotStock } from '@/types';
 
@@ -161,13 +164,29 @@ export async function getStockLineInfoByThs(code: string, lineDays = 45) {
  */
 export async function getStockBlockUpByDate(
   date: string,
+  noUseStorage: boolean,
 ): Promise<IStockBlockUp[]> {
   const handleDate = dayjs(date).format('YYYYMMDD');
   try {
     const requestAdapter = () =>
       request(`/getStockBlockUpByDate?date=${handleDate}`);
-    const res = await requestAdapter().catch(requestAdapter);
-    const handleList: IStockBlockUp[] = res.data.data.data || [];
+    let result;
+    const storageData = getStorageBlockUpByDate(date);
+    const isToday = dayjs().format('YYYY-MM-DD') === date;
+    // 如果是当天不能走缓存也不能设置缓存
+    if (storageData && !isToday && !noUseStorage) {
+      result = storageData;
+    } else {
+      const response = await requestAdapter().catch(requestAdapter);
+      result = cloneDeep(response.data);
+      if (!isToday) {
+        response.data.data.data.forEach((item: IStockBlockUp) => {
+          item.stock_list = [];
+        })
+        setStorageBlockUpByDate(date, response.data);
+      }
+    }
+    const handleList: IStockBlockUp[] = result.data.data;
     handleList.sort((a, b) => b.change - a.change);
     return handleList;
   } catch (error) {
