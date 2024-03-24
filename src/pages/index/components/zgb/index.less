@@ -10,7 +10,7 @@
       overflow-x: scroll;
       .hot-block-top-title {
         background-color: #f4f4f4;
-        flex-basis: 90px;
+        flex: 0 0 90px;
         font-size: 24px;
         color: #333;
         font-weight: 600;
@@ -19,6 +19,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+      .adm-space {
+        overflow-x: scroll;
+        flex-wrap: nowrap;
+        display: flex;
       }
       .adm-space-item {
         padding-bottom: 0;

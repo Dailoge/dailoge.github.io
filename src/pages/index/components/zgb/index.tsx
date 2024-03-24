@@ -307,7 +307,7 @@ export default (props: IProps) => {
 
   const renderBlockTopSelectContent = useMemo(() => {
     if (!stockBlockTop.length) return null;
-    const topBlockList = latestDayBlockUpList.slice(0, 3);
+    const topBlockList = latestDayBlockUpList.slice(0, 6);
     const options = topBlockList.map((item) => {
       const change = item.change?.toFixed(1) || 0;
       return {
