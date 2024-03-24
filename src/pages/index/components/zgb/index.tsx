@@ -9,6 +9,7 @@ import {
   Popup,
   Selector,
   SelectorOption,
+  Input,
 } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
 import {
@@ -62,6 +63,7 @@ export default (props: IProps) => {
     }>
   >([]);
   const [selectTopBlockValue, setSelectTopBlockValue] = useState<string[]>([]);
+  const [blockCodeValue, setBlockCodeValue] = useState<string>('');
   const [blockUpPopUpVisible, setBlockUpPopUpVisible] =
     useState<boolean>(false);
 
@@ -204,9 +206,13 @@ export default (props: IProps) => {
     };
     const data: Array<IData> = [];
     stockBlockTop.forEach((item) => {
-      const findRes = item.blockUpList.find(
-        (blockItem) => blockItem.code === selectTopBlockValue[0],
-      );
+      const findRes = item.blockUpList.find((blockItem) => {
+        if (blockCodeValue) {
+          return blockItem.code === blockCodeValue;
+        } else {
+          return blockItem.code === selectTopBlockValue[0];
+        }
+      });
       data.push({
         date: dayjs(item.date).format('MMDD'),
         change: findRes ? findRes.change : 0,
@@ -255,7 +261,7 @@ export default (props: IProps) => {
       ],
     };
     return config;
-  }, [stockBlockTop, selectTopBlockValue]);
+  }, [stockBlockTop, selectTopBlockValue, blockCodeValue]);
 
   useEffect(() => {
     const data = zgbConfig.data;
@@ -478,6 +484,7 @@ export default (props: IProps) => {
   useEffect(() => {
     if (selectTopBlockValue[0]) {
       setBlockUpPopUpVisible(true);
+      setBlockCodeValue('');
     }
   }, [selectTopBlockValue]);
 
@@ -555,12 +562,23 @@ export default (props: IProps) => {
       >
         <div className="block-up-popup-container">
           <div className="title">
-            {
-              latestDayBlockUpList.find(
-                (item) => item.code === selectTopBlockValue[0],
-              )?.name
-            }
-            涨停数趋势
+            <div className="text">
+              {
+                latestDayBlockUpList.find((item) =>
+                  blockCodeValue
+                    ? item.code === blockCodeValue
+                    : item.code === selectTopBlockValue[0],
+                )?.name
+              }
+              涨停数趋势
+            </div>
+            <Input
+              placeholder="还可以输入具体概念代码查询"
+              value={blockCodeValue}
+              onChange={(val) => {
+                setBlockCodeValue(val);
+              }}
+            />
           </div>
           <div style={{ height: '32vh' }}>
             <Line {...blockUpLineConfig} />
