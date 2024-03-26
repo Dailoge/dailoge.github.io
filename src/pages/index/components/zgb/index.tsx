@@ -339,7 +339,7 @@ export default (props: IProps) => {
     const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
     // 按第一次涨停时间排序
     const latestDayZtList = latestDayStocks.ztList
-      .slice(0, -1)
+      .slice(0)
       .sort((a, b) => Number(a.fbt) - Number(b.fbt));
     const latestDayLbData = limitTopStocks[limitTopStocks.length - 1];
     const lbStockList = [...(latestDayLbData?.lbStockList || [])];
@@ -390,7 +390,10 @@ export default (props: IProps) => {
               return null;
             }
           }
-          if (!item) return null;
+          if (!item) {
+            console.warn('未找到个股', lbItem.name);
+            return null;
+          };
           return (
             <div
               key={lbItem.code}
