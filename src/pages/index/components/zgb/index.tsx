@@ -391,7 +391,7 @@ export default (props: IProps) => {
             }
           }
           if (!item) {
-            console.warn('未找到个股', lbItem.name);
+            console.warn('未找到个股~', lbItem.name);
             return null;
           }
           return (
