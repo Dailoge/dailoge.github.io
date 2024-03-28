@@ -383,7 +383,7 @@ export default (props: IProps) => {
           const hotOrderRes = hotTopStocks.find(
             (hotItem) => hotItem.code === handleDm,
           );
-          if (selectTopBlockValue.length && stockBlocks.length) {
+          if (selectTopBlockValue.length) {
             if (
               !stockBlocks.find((item) => item.code === selectTopBlockValue[0])
             ) {
@@ -393,7 +393,7 @@ export default (props: IProps) => {
           if (!item) {
             console.warn('未找到个股', lbItem.name);
             return null;
-          };
+          }
           return (
             <div
               key={lbItem.code}
