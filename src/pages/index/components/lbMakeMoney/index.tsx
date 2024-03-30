@@ -23,12 +23,12 @@ export default (props: IProps) => {
 
   // 连板赚钱效应趋势
   const lbMakeMoneyConfig = useMemo(() => {
-    const llMakeMoneyAvg =
-      lbjj.reduce((pre, item) => pre + item.percent, 0) / lbjj.length;
+    // const llMakeMoneyAvg =
+    //   lbjj.reduce((pre, item) => pre + item.percent, 0) / lbjj.length;
 
     const config = {
       data: lbjj,
-      height: 230,
+      height: 150,
       yField: 'percent',
       xField: 'date',
       point: {

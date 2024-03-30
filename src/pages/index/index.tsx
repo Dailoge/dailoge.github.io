@@ -69,8 +69,8 @@ export default function HomePage() {
         {/* <ZjNumComp dateStocks={dateStocks} /> */}
         {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
         <LbMakeMoneyComp recentWorkCountDays={recentWorkCountDays} />
-        <MarketAmountComp recentWorkdays={recentWorkdays} />
         <JjFailNumComp dateStocks={dateStocks} />
+        <MarketAmountComp recentWorkdays={recentWorkdays} />
         <LbNumComp dateStocks={dateStocks} />
       </div>
     </div>

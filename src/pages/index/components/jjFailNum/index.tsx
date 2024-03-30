@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
+import { Toast } from 'antd-mobile';
+import { CloseCircleOutline } from 'antd-mobile-icons';
 import { IDateStock, IZTDTStockInfo } from '@/types';
 
 import './index.less';
@@ -11,6 +13,9 @@ interface IProps {
 
 export default (props: IProps) => {
   const { dateStocks } = props;
+  const [medianJJFailList, setMedianJJFailList] = useState<IZTDTStockInfo[]>(
+    [],
+  );
 
   // 晋级失败跌停 config
   const jjFailConfig = useMemo(() => {
@@ -25,31 +30,31 @@ export default (props: IProps) => {
       const jjFailList = dtList.filter((i) =>
         preZtList.find((j) => i.code === j.code),
       );
+      const medianJJFailList = jjFailList
+        .map((i) => {
+          const preZt = preZtList.find(
+            (j) => i.code === j.code,
+          ) as IZTDTStockInfo;
+          return preZt;
+        })
+        .filter(item => item.lbc >= 4)
+        .sort((a, b) => b.lbc - a.lbc);
+      setMedianJJFailList(medianJJFailList);
       data.push({
         date: dayjs(item.date).format('MMDD'),
-        value: jjFailList.length,
-        dtName: jjFailList
-          .map((i) => {
-            const preZt = preZtList.find(
-              (j) => i.code === j.code,
-            ) as IZTDTStockInfo;
-            return {
-              name: i.name,
-              lbc: preZt.lbc,
-            };
-          })
-          .sort((a, b) => b.lbc - a.lbc)
+        value: medianJJFailList.length,
+        dtName: medianJJFailList
           .map((item) => `${item.name}(${item.lbc}板)`)
           .join(),
       });
     });
 
-    const jjFailAvg =
-      data.reduce((pre, item) => pre + item.value, 0) / data.length;
+    // const jjFailAvg =
+    //   data.reduce((pre, item) => pre + item.value, 0) / data.length;
 
     const config = {
       data,
-      height: 230,
+      height: 150,
       yField: 'value',
       xField: 'date',
       point: {
@@ -75,10 +80,10 @@ export default (props: IProps) => {
       annotations: [
         {
           type: 'line',
-          start: ['min', jjFailAvg],
-          end: ['max', jjFailAvg],
+          start: ['min', 2],
+          end: ['max', 2],
           style: {
-            stroke: '#1890ff',
+            stroke: '#f13611',
             lineDash: [4, 2],
             lineWidth: 2,
           },
@@ -87,6 +92,15 @@ export default (props: IProps) => {
     };
     return config;
   }, [dateStocks]);
+
+  useEffect(() => {
+    if (medianJJFailList.length >= 2) {
+      Toast.show({
+        content: '中位股出现明显亏钱效应，及时清仓~',
+        icon: <CloseCircleOutline />,
+      });
+    }
+  }, [medianJJFailList]);
 
   return (
     <div className="jj-fail">
