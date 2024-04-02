@@ -121,6 +121,28 @@ export async function getLbStockByDate(date: string): Promise<ILbStock[]> {
 }
 
 /**
+ * @desc 获取概念当天涨跌幅，如连板概念
+ * @export
+ * @param {string} code
+ */
+export async function getStockTodayInfoByThs(code: string) {
+  try {
+    const requestAdapter = () =>
+      request(`/getStockTodayInfoByThs?code=${code}`);
+    const res = await requestAdapter().catch(requestAdapter);
+    const todayInfo = res.data.data;
+    return {
+      date: todayInfo['1'],
+      open: todayInfo['7'],
+      close: todayInfo['11'],
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+/**
  * @desc 获取概念涨跌幅，如连板概念
  * @export
  * @param {string} code
@@ -140,11 +162,18 @@ export async function getStockLineInfoByThs(
   try {
     const requestAdapter = () =>
       request(`/getStockLineInfoByThs?code=${code}&lineDays=${lineDays}`);
-    const res = await requestAdapter().catch(requestAdapter);
+    const [res, todayInfo] = await Promise.all([
+      requestAdapter().catch(requestAdapter),
+      getStockTodayInfoByThs(code),
+    ]);
     const list = res.data.data.data.split(';');
     const handleList = list.map((item: string, index: number) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [date, open, maxValue, minValue, close] = item.split(',');
+      let [date, open, maxValue, minValue, close] = item.split(',');
+      if (date === todayInfo?.date) {
+        open = todayInfo.open;
+        close = todayInfo.close;
+      }
       const yesterdayClose = index === 0 ? open : list[index - 1].split(',')[4];
       const percent =
         Math.round(
@@ -162,28 +191,6 @@ export async function getStockLineInfoByThs(
   } catch (error) {
     console.error(error);
     return [];
-  }
-}
-
-/**
- * @desc 获取概念当天涨跌幅，如连板概念
- * @export
- * @param {string} code
- */
-export async function getStockTodayInfoByThs(code: string) {
-  try {
-    const requestAdapter = () =>
-      request(`/getStockTodayInfoByThs?code=${code}`);
-    const res = await requestAdapter().catch(requestAdapter);
-    const todayInfo = res.data.data;
-    return {
-      date: dayjs(todayInfo['1']).format('MMDD'),
-      open: todayInfo['7'],
-      close: todayInfo['11'],
-    };
-  } catch (error) {
-    console.error(error);
-    return null;
   }
 }
 

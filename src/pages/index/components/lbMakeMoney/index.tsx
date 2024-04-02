@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Line } from '@ant-design/plots';
 import { Button, Toast } from 'antd-mobile';
 import { CloseCircleOutline } from 'antd-mobile-icons';
-import { getStockLineInfoByThs, getStockTodayInfoByThs } from '@/services';
+import { getStockLineInfoByThs } from '@/services';
 
 import './index.less';
 
@@ -62,19 +62,6 @@ export default (props: IProps) => {
 
   const queryLbMakeMoneyInfo = useCallback(async () => {
     const lbjjData = await getStockLineInfoByThs('883958', recentWorkCountDays);
-    const todayInfo = await getStockTodayInfoByThs('883958');
-    lbjjData.forEach((item, index) => {
-      if (item.date === todayInfo?.date) {
-        item.open = todayInfo.open;
-        item.close = todayInfo.close;
-        item.percent =
-          Math.round(
-            ((Number(todayInfo.close) - Number(lbjjData[index - 1].close)) /
-              Number(lbjjData[index - 1].close)) *
-              10000,
-          ) / 100;
-      }
-    });
     setLbjj(lbjjData);
   }, [recentWorkCountDays]);
 
