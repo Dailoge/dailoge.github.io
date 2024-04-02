@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Line } from '@ant-design/plots';
 import { Button, Toast } from 'antd-mobile';
 import { CloseCircleOutline } from 'antd-mobile-icons';
-import { getStockLineInfoByThs } from '@/services';
+import { getStockLineInfoByThs, getStockTodayInfoByThs } from '@/services';
 
 import './index.less';
 
@@ -60,20 +60,34 @@ export default (props: IProps) => {
     return config;
   }, [lbjj]);
 
-  const queryLbMakeMoneyInfo = useCallback(() => {
-    getStockLineInfoByThs('883958', recentWorkCountDays).then(setLbjj);
+  const queryLbMakeMoneyInfo = useCallback(async () => {
+    const lbjjData = await getStockLineInfoByThs('883958', recentWorkCountDays);
+    const todayInfo = await getStockTodayInfoByThs('883958');
+    lbjjData.forEach((item, index) => {
+      if (item.date === todayInfo?.date) {
+        item.open = todayInfo.open;
+        item.close = todayInfo.close;
+        item.percent =
+          Math.round(
+            ((Number(todayInfo.close) - Number(lbjjData[index - 1].close)) /
+              Number(lbjjData[index - 1].close)) *
+              10000,
+          ) / 100;
+      }
+    });
+    setLbjj(lbjjData);
   }, [recentWorkCountDays]);
 
   useEffect(() => {
-    if(lbjj.length) {
-      if(lbjj[lbjj.length - 1].percent >= 6) {
+    if (lbjj.length) {
+      if (lbjj[lbjj.length - 1].percent >= 6) {
         Toast.show({
           content: '短线情绪高潮，及时清仓~',
-          icon: <CloseCircleOutline />
-        })
+          icon: <CloseCircleOutline />,
+        });
       }
     }
-  }, [lbjj])
+  }, [lbjj]);
 
   useEffect(() => {
     queryLbMakeMoneyInfo();
@@ -83,7 +97,12 @@ export default (props: IProps) => {
     <div className="lb-make-money">
       <div className="title">
         <span>连板赚钱效应趋势</span>
-        <Button className='reload-btn' size="small" color="primary" onClick={queryLbMakeMoneyInfo}>
+        <Button
+          className="reload-btn"
+          size="small"
+          color="primary"
+          onClick={queryLbMakeMoneyInfo}
+        >
           刷新
         </Button>
       </div>

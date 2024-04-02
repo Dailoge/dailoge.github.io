@@ -126,7 +126,17 @@ export async function getLbStockByDate(date: string): Promise<ILbStock[]> {
  * @param {string} code
  * @param {number} [lineDays=45]
  */
-export async function getStockLineInfoByThs(code: string, lineDays = 45) {
+export async function getStockLineInfoByThs(
+  code: string,
+  lineDays = 45,
+): Promise<
+  Array<{
+    date: string;
+    open: number;
+    close: number;
+    percent: number;
+  }>
+> {
   try {
     const requestAdapter = () =>
       request(`/getStockLineInfoByThs?code=${code}&lineDays=${lineDays}`);
@@ -152,6 +162,28 @@ export async function getStockLineInfoByThs(code: string, lineDays = 45) {
   } catch (error) {
     console.error(error);
     return [];
+  }
+}
+
+/**
+ * @desc 获取概念当天涨跌幅，如连板概念
+ * @export
+ * @param {string} code
+ */
+export async function getStockTodayInfoByThs(code: string) {
+  try {
+    const requestAdapter = () =>
+      request(`/getStockTodayInfoByThs?code=${code}`);
+    const res = await requestAdapter().catch(requestAdapter);
+    const todayInfo = res.data.data;
+    return {
+      date: dayjs(todayInfo['1']).format('MMDD'),
+      open: todayInfo['7'],
+      close: todayInfo['11'],
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 }
 
@@ -182,7 +214,7 @@ export async function getStockBlockUpByDate(
       if (!isToday) {
         response.data.data.data.forEach((item: IStockBlockUp) => {
           item.stock_list = [];
-        })
+        });
         setStorageBlockUpByDate(date, response.data);
       }
     }
