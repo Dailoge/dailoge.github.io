@@ -46,11 +46,13 @@ export default function HomePage() {
       {loading && (
         <div className="loading">
           <Skeleton.Title animated />
-          <Skeleton.Paragraph lineCount={5} animated />
+          <Skeleton.Paragraph lineCount={10} animated />
           <Skeleton.Title animated />
-          <Skeleton.Paragraph lineCount={6} animated />
+          <Skeleton.Paragraph lineCount={10} animated />
           <Skeleton.Title animated />
-          <Skeleton.Paragraph lineCount={6} animated />
+          <Skeleton.Paragraph lineCount={10} animated />
+          <Skeleton.Title animated />
+          <Skeleton.Paragraph lineCount={10} animated />
         </div>
       )}
       <div className="index-header">
