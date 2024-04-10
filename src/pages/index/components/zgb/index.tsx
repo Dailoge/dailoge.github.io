@@ -184,6 +184,14 @@ export default (props: IProps) => {
           },
         },
         {
+          type: 'text',
+          position: [-2.9, 8],
+          content: '危险',
+          style: {
+            fill: '#f13611',
+          },
+        },
+        {
           type: 'line',
           start: ['min', 5],
           end: ['max', 5],
@@ -191,6 +199,14 @@ export default (props: IProps) => {
             stroke: '#1890ff',
             lineDash: [4, 2],
             lineWidth: 2,
+          },
+        },
+        {
+          type: 'text',
+          position: [0, 4.4],
+          content: '机会',
+          style: {
+            fill: '#1890ff',
           },
         },
       ],
