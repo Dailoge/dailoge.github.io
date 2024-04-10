@@ -175,10 +175,10 @@ export default (props: IProps) => {
       annotations: [
         {
           type: 'line',
-          start: ['min', 7],
-          end: ['max', 7],
+          start: ['min', 8],
+          end: ['max', 8],
           style: {
-            stroke: '#1890ff',
+            stroke: '#f13611',
             lineDash: [4, 2],
             lineWidth: 2,
           },
@@ -188,7 +188,7 @@ export default (props: IProps) => {
           start: ['min', 5],
           end: ['max', 5],
           style: {
-            stroke: '#f13611',
+            stroke: '#1890ff',
             lineDash: [4, 2],
             lineWidth: 2,
           },
