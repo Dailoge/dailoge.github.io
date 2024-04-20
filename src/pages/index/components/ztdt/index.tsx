@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { Line } from '@ant-design/plots';
+import { Toast } from 'antd-mobile';
+import { CloseCircleOutline } from 'antd-mobile-icons';
 import { IDateStock } from '@/types';
 
 import './index.less';
@@ -121,6 +123,16 @@ export default (props: IProps) => {
       ],
     };
     return config;
+  }, [dateStocks]);
+
+  useEffect(() => {
+    const lastDateDtTotal = dateStocks[dateStocks.length - 1].dtTotal;
+    if (lastDateDtTotal >= 20) {
+      Toast.show({
+        content: '跌停个股大幅增加，请及时清仓~',
+        icon: <CloseCircleOutline />,
+      });
+    }
   }, [dateStocks]);
 
   return (
