@@ -104,7 +104,7 @@ export default (props: IProps) => {
 
   return (
     <div className="jj-fail">
-      <div className="title">晋级失败跌停趋势</div>
+      <div className="title">2 板及以上晋级失败跌停趋势</div>
       <Line {...jjFailConfig} />
     </div>
   );
