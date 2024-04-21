@@ -126,6 +126,7 @@ export default (props: IProps) => {
   }, [dateStocks]);
 
   useEffect(() => {
+    if (dateStocks.length === 0) return;
     const lastDateDtTotal = dateStocks[dateStocks.length - 1].dtTotal;
     if (lastDateDtTotal >= 20) {
       Toast.show({
