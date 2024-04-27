@@ -138,10 +138,8 @@ export default (props: IProps) => {
 
   return (
     <div className="zt-dt">
-      <div className="zt-dt">
-        <div className="title">涨跌停趋势</div>
-        <Line {...zdtConfig} />
-      </div>
+      <div className="title">涨跌停趋势</div>
+      <Line {...zdtConfig} />
     </div>
   );
 };
