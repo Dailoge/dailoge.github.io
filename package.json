@@ -16,6 +16,7 @@
     "antd-mobile": "^5.33.0",
     "antd-mobile-icons": "^0.3.0",
     "axios": "^1.6.2",
+    "classnames": "^2.5.1",
     "dayjs": "^1.11.10",
     "lodash-es": "4",
     "react": "^18.2.0",

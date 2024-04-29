@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { reverse } from 'lodash-es';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { reverse, cloneDeep } from 'lodash-es';
 import { Skeleton } from 'antd-mobile';
 import ZtdtComp from './components/ztdt';
 import ZgbComp from './components/zgb';
@@ -42,6 +42,20 @@ export default function HomePage() {
       minDay: recentWorkdays[recentWorkdays.length - 1],
     });
   }, []);
+
+  const { latestDayZtList, latestDayDtList } = useMemo(() => {
+    if (dateStocks.length === 0)
+      return {
+        latestDayZtList: [],
+        latestDayDtList: [],
+      };
+    const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
+    return {
+      latestDayZtList: latestDayStocks.ztList,
+      latestDayDtList: latestDayStocks.dtList,
+    };
+  }, [dateStocks]);
+
   return (
     <div className="index-container">
       {loading && (
@@ -74,7 +88,11 @@ export default function HomePage() {
         <LbMakeMoneyComp recentWorkCountDays={recentWorkCountDays} />
         <JjFailNumComp dateStocks={dateStocks} />
         <MarketAmountComp recentWorkdays={recentWorkdays} />
-        <MatchLhbComp latestWorkDay={recentWorkdays[0]} />
+        <MatchLhbComp
+          latestWorkDay={recentWorkdays[0]}
+          latestDayZtList={latestDayZtList}
+          latestDayDtList={latestDayDtList}
+        />
         <LbNumComp dateStocks={dateStocks} />
       </div>
     </div>

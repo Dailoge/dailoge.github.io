@@ -2,16 +2,21 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { getMatchBuyLongHuBang } from '@/services';
 import { CalendarPicker } from 'antd-mobile';
+import classnames from 'classnames';
+import { CalendarOutline, RightOutline, LeftOutline } from 'antd-mobile-icons';
+import { IZTDTStockInfo } from '@/types';
 import './index.less';
 
 interface IProps {
   latestWorkDay: string;
+  latestDayZtList: IZTDTStockInfo[];
+  latestDayDtList: IZTDTStockInfo[];
 }
 
 const dayFormatStr = 'YYYY-MM-DD';
 
 export default (props: IProps) => {
-  const { latestWorkDay } = props;
+  const { latestWorkDay, latestDayZtList, latestDayDtList } = props;
   const [matchLhbData, setMatchLhbData] = useState(null);
   const [date, setDate] = useState(dayjs(latestWorkDay).format(dayFormatStr));
   const [matchSeq, setMatchSeq] = useState('712');
@@ -26,7 +31,10 @@ export default (props: IProps) => {
           {listData.map((item: any, index: number) => {
             return (
               <div key={index} className="list-item">
-                <div className="stockName">{item.stockName}</div>
+                <div className={classnames("stockName", {
+                  isZt: !!latestDayZtList.find(ztItem => ztItem.name === item.stockName),
+                  isDt: !!latestDayDtList.find(dtItem => dtItem.name === item.stockName),
+                })}>{item.stockName}</div>
                 <div className="countNum">{item.countNum}人</div>
               </div>
             );
@@ -67,10 +75,10 @@ export default (props: IProps) => {
             setDate(dayjs(date).subtract(1, 'day').format(dayFormatStr));
           }}
         >
-          《上一日
+          <LeftOutline />上一日
         </div>
         <div className="date" onClick={() => setCalendarVisible(true)}>
-          {date}
+          <CalendarOutline /> {date}
         </div>
         <div
           className="next"
@@ -78,7 +86,7 @@ export default (props: IProps) => {
             setDate(dayjs(date).add(1, 'day').format(dayFormatStr));
           }}
         >
-          下一日》
+          下一日<RightOutline />
         </div>
       </div>
       <CalendarPicker
