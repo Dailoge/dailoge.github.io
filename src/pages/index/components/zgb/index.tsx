@@ -9,15 +9,18 @@ import {
   Popup,
   Selector,
   SelectorOption,
+  Swiper,
   Input,
 } from 'antd-mobile';
 import { reverse, cloneDeep } from 'lodash-es';
+import classNames from 'classnames';
 import {
   getStockInfo,
   getLbStockByDate,
   getJianGuanStock,
   getStockBlockUpByDate,
   getHotStockTop,
+  getHotPlateTop,
 } from '@/services';
 import { formatBigAmountMoney } from '@/utils';
 import {
@@ -26,6 +29,7 @@ import {
   IJianGuanStock,
   IStockBlockUp,
   IHotStock,
+  IHotPlate,
 } from '@/types';
 
 import './index.less';
@@ -52,6 +56,7 @@ export default (props: IProps) => {
     }>
   >([]);
   const [hotTopStocks, setHotTopStocks] = useState<IHotStock[]>([]);
+  const [hotTopPlates, setHotTopPlates] = useState<IHotPlate[]>([]);
   const [zgbJJFails, setZgbJJFails] = useState<
     Array<{
       date: string;
@@ -90,6 +95,40 @@ export default (props: IProps) => {
       }),
     );
   }, []);
+
+  const renderSwiperForPlates = useMemo(() => {
+    const items = hotTopPlates.map((item, index) => (
+      <Swiper.Item key={index}>
+        <div className="plate-item">
+          <div className="plate-index">{index + 1}、</div>
+          <div className="plate-name">{item.name}</div>
+          <div className="plate-tag">{item.tag}</div>
+          <div
+            className={classNames(
+              'plate-rise',
+              item.rise_and_fall > 0 ? 'is-red' : 'is-green',
+            )}
+          >
+            {item.rise_and_fall.toFixed(2)}%
+          </div>
+          <div className="plate-rate">
+            {(Number(item.rate) / 10000).toFixed(1)}万热度
+          </div>
+        </div>
+      </Swiper.Item>
+    ));
+    return (
+      <Swiper
+        className="swiper-for-plates"
+        direction="vertical"
+        indicator={() => null}
+        loop
+        autoplay
+      >
+        {items}
+      </Swiper>
+    );
+  }, [hotTopPlates]);
 
   // 最高板 config
   const zgbConfig = useMemo(() => {
@@ -321,6 +360,12 @@ export default (props: IProps) => {
     getJianGuanStock().then(setJianGuanStocks);
     getBlockUpData().then((list) => setStockBlockTop(reverse(list)));
     getHotStockTop().then(setHotTopStocks);
+    getHotPlateTop().then((res) => {
+      const { industryList, conceptList } = res;
+      const list = [...industryList.slice(0, 2), ...conceptList.slice(0, 2)];
+      list.sort((a, b) => Number(b.rate) - Number(a.rate));
+      setHotTopPlates(list);
+    });
   }, []);
 
   const latestDayBlockUpList = useMemo(() => {
@@ -509,7 +554,10 @@ export default (props: IProps) => {
 
   return (
     <div className="zgb">
-      <div className="title">最高板趋势</div>
+      <div className="top-bar">
+        <div className="title">最高板趋势</div>
+        {renderSwiperForPlates}
+      </div>
       <Line {...zgbConfig} />
       {limitTopStocks.length > 0 && (
         <div className="limit-top-stocks">

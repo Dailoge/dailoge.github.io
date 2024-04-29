@@ -1,40 +1,58 @@
-  
-/* Reset browser defaults */  
-* {  
-  margin: 0;  
-  padding: 0;  
-  box-sizing: border-box;  
-}  
+/* Reset browser defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* Set base font size */  
-html {  
-  font-size: 16px;  
-}  
+/* Set base font size */
+html {
+  font-size: 16px;
+}
 
-/* Set default font family */  
-body {  
+/* Set default font family */
+body {
   // 增加 important 避免被 antd 的样式文件覆盖，可能导致构建和本地的字体优先级不一样。。。
   font-family: Arial, sans-serif !important;
   background-color: #fdfdfd;
-}  
+}
 
-/* Add some base styling */  
-h1, h2, h3, p {  
-  color: #333;  
-}  
+/* Add some base styling */
+h1,
+h2,
+h3,
+p {
+  color: #333;
+}
 
-/* Remove list styles */  
-ul, ol {  
-  list-style: none;  
-}  
+/* Remove list styles */
+ul,
+ol {
+  list-style: none;
+}
 
-/* Remove hyperlink styles */  
-a {  
-  text-decoration: none;  
-  color: inherit;  
+/* Remove hyperlink styles */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 .title {
   font-size: 24px;
   font-weight: 600;
   margin: 24px 0;
+}
+
+@font-face {
+  font-family: THS;
+  src: url('https://s.thsi.cn/cd/ths-frontend-common-lib-container/v1.3.5/common/font/THSJinRongTi-Medium.otf');
+}
+
+@font-face {
+  font-family: THS-Regular;
+  src: url('https://s.thsi.cn/cd/ths-frontend-common-lib-container/v1.3.5/common/font/THSJinRongTi-Regular.otf');
+}
+
+@font-face {
+  font-family: THS-Bold;
+  src: url('https://s.thsi.cn/cd/ths-frontend-common-lib-container/v1.3.5/common/font/THSJinRongTi-Bold.otf');
 }

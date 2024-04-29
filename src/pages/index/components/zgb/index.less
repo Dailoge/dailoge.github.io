@@ -1,5 +1,64 @@
 .zgb {
   margin-top: 16px;
+  .top-bar {
+    display: flex;
+    // align-items: center; // 用这个居中，swiper 会抖动一下
+    .title {
+      flex: 200px 1 1;
+    }
+    .swiper-for-plates {
+      margin-top: 24px;
+      font-size: 21px;
+      line-height: 30px;
+      color: #333;
+      font-weight: 500;
+      height: 30px;
+      overflow: hidden;
+      position: relative;
+      .adm-swiper-item {
+        transform: translateZ(0);
+        .plate-item {
+          height: 100%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          .plate-index {
+            font-family: THS;
+          }
+          .plate-name {
+            margin-right: 10px;
+          }
+          .plate-tag {
+            color: #f13611;
+            border: 1px solid #f13611;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-right: 15px;
+            padding: 0 4px;
+            line-height: 14px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+          }
+          .plate-rise {
+            margin-right: 15px;
+            font-family: THS;
+            &.is-red {
+              color: red;
+            }
+            &.is-green {
+              color: greenyellow;
+            }
+          }
+          .plate-rate {
+            color: #666;
+            font-weight: normal;
+            font-family: THS-Regular;
+          }
+        }
+      }
+    }
+  }
   .limit-top-stocks {
     margin-top: 15px;
     position: relative;
@@ -73,6 +132,7 @@
             margin: 0 8px 8px 0;
             background-color: #f4f4f4;
             font-size: 24px;
+            font-family: THS-Regular;
             cursor: pointer;
             padding: 20px 0;
             display: flex;
