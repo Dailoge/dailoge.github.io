@@ -9,7 +9,7 @@ import {
   getStorageBlockUpByDate,
   setStorageBlockUpByDate,
 } from '../utils';
-import { IStockBlockUp, ILbStock, IZTDTStockInfo, IHotStock } from '@/types';
+import { IStockBlockUp, ILbStock, IZTDTStockInfo, IHotStock, IHotPlate } from '@/types';
 
 // 底层调用同花顺的 jsonp 能力，https://m.10jqka.com.cn/stockpage/48_883900/?back_source=wxhy&share_hxapp=isc#refCountId=R_56307738_256.html&atab=effectStocks
 
@@ -235,7 +235,7 @@ export async function getStockBlockUpByDate(
 }
 
 /**
- * @desc 获取实时热度榜
+ * @desc 获取实时个股热度榜
  *
  * @export
  * @param {string} date
@@ -250,5 +250,38 @@ export async function getHotStockTop(): Promise<IHotStock[]> {
   } catch (error) {
     console.error(error);
     return [];
+  }
+}
+
+/**
+ * @desc 获取实时板块热度榜
+ *
+ * @export
+ * @param {string} date
+ * @return {*}  {Promise<IHotStock[]>}
+ */
+export async function getHotPlateTop(): Promise<{
+  conceptList: IHotPlate[],
+  industryList: IHotPlate[],
+}> {
+  try {
+    const requestConceptAdapter = () => request(`/getHotPlateTop?type=concept`);
+    const requestIndustryAdapter = () => request(`/getHotPlateTop?type=industry`);
+    const [conceptList, industryList] = await Promise.all([
+      requestConceptAdapter().catch(requestConceptAdapter),
+      requestIndustryAdapter().catch(requestIndustryAdapter),
+    ]).then(([conceptRes, industryRes]) => {
+      return [conceptRes.data.data.plate_list, industryRes.data.data.plate_list];
+    })
+    return {
+      conceptList,
+      industryList,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      conceptList: [],
+      industryList: [],
+    };
   }
 }

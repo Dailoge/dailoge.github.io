@@ -70,3 +70,21 @@ export interface IHotStock {
   rate: string;
   rise_and_fall: number;
 }
+
+export interface IHotPlate {
+  code: string;
+  rate: string; // 热度
+  rise_and_fall: number; // 涨幅
+  name: string;
+  hot_rank_chg: number;
+  market_id: number;
+  hot_tag: string; // '连续349天上榜'
+  tag: string; // '2家涨停'
+  order: 1; // 顺序
+}
+
+export interface ILongHuBang {
+  stockCode: string; // 'sh601099'
+  stockName: string; // '太平洋'
+  countNum: number; // 11
+}

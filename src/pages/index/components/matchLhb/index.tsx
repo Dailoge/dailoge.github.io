@@ -4,7 +4,8 @@ import { getMatchBuyLongHuBang } from '@/services';
 import { CalendarPicker } from 'antd-mobile';
 import classnames from 'classnames';
 import { CalendarOutline, RightOutline, LeftOutline } from 'antd-mobile-icons';
-import { IZTDTStockInfo } from '@/types';
+import { IZTDTStockInfo, ILongHuBang } from '@/types';
+
 import './index.less';
 
 interface IProps {
@@ -17,7 +18,15 @@ const dayFormatStr = 'YYYY-MM-DD';
 
 export default (props: IProps) => {
   const { latestWorkDay, latestDayZtList, latestDayDtList } = props;
-  const [matchLhbData, setMatchLhbData] = useState(null);
+  const [matchLhbData, setMatchLhbData] = useState<{
+    buySpLists: ILongHuBang[];
+    postSpLists: ILongHuBang[];
+    saleSpLists: ILongHuBang[];
+  }>({
+    buySpLists: [],
+    postSpLists: [],
+    saleSpLists: []
+  });
   const [date, setDate] = useState(dayjs(latestWorkDay).format(dayFormatStr));
   const [matchSeq, setMatchSeq] = useState('712');
   const [calendarVisible, setCalendarVisible] = useState(false);
@@ -31,10 +40,18 @@ export default (props: IProps) => {
           {listData.map((item: any, index: number) => {
             return (
               <div key={index} className="list-item">
-                <div className={classnames("stockName", {
-                  isZt: !!latestDayZtList.find(ztItem => ztItem.name === item.stockName),
-                  isDt: !!latestDayDtList.find(dtItem => dtItem.name === item.stockName),
-                })}>{item.stockName}</div>
+                <div
+                  className={classnames('stockName', {
+                    isZt: !!latestDayZtList.find(
+                      (ztItem) => ztItem.name === item.stockName,
+                    ),
+                    isDt: !!latestDayDtList.find(
+                      (dtItem) => dtItem.name === item.stockName,
+                    ),
+                  })}
+                >
+                  {item.stockName}
+                </div>
                 <div className="countNum">{item.countNum}人</div>
               </div>
             );
@@ -75,7 +92,8 @@ export default (props: IProps) => {
             setDate(dayjs(date).subtract(1, 'day').format(dayFormatStr));
           }}
         >
-          <LeftOutline />上一日
+          <LeftOutline />
+          上一日
         </div>
         <div className="date" onClick={() => setCalendarVisible(true)}>
           <CalendarOutline /> {date}
@@ -86,7 +104,8 @@ export default (props: IProps) => {
             setDate(dayjs(date).add(1, 'day').format(dayFormatStr));
           }}
         >
-          下一日<RightOutline />
+          下一日
+          <RightOutline />
         </div>
       </div>
       <CalendarPicker
@@ -100,9 +119,9 @@ export default (props: IProps) => {
         onMaskClick={() => setCalendarVisible(false)}
       />
       <div className="lhb-detail">
-        {listRender('持仓', matchLhbData?.postSplists)}
-        {listRender('买入', matchLhbData?.buySpLists)}
-        {listRender('卖出', matchLhbData?.saleSplists)}
+        {listRender('持仓', matchLhbData.postSpLists)}
+        {listRender('买入', matchLhbData.buySpLists)}
+        {listRender('卖出', matchLhbData.saleSpLists)}
       </div>
     </div>
   );
