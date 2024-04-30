@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import {
   getStockInfo,
   getLbStockByDate,
+  getStockLineInfoByThs,
   getJianGuanStock,
   getStockBlockUpByDate,
   getHotStockTop,
@@ -67,8 +68,16 @@ export default (props: IProps) => {
       openRadio?: string;
     }>
   >([]);
+  const [blockTrendData, setBlockTrendData] = useState<
+    Array<{
+      date: string;
+      open: number;
+      close: number;
+      percent: number;
+    }>
+  >([]);
   const [selectTopBlockValue, setSelectTopBlockValue] = useState<string[]>([]);
-  const [blockCodeValue, setBlockCodeValue] = useState<string>('');
+  const [blockCodeValue, setBlockCodeValue] = useState<string>(''); // 自定义输入的板块概念 code
   const [blockUpPopUpVisible, setBlockUpPopUpVisible] =
     useState<boolean>(false);
 
@@ -97,6 +106,7 @@ export default (props: IProps) => {
   }, []);
 
   const renderSwiperForPlates = useMemo(() => {
+    if (hotTopPlates.length === 0) return null;
     const items = hotTopPlates.map((item, index) => (
       <Swiper.Item key={index}>
         <div className="plate-item">
@@ -252,38 +262,16 @@ export default (props: IProps) => {
     };
     return config;
   }, [limitTopStocks]);
-
+  // 板块概念趋势 config
   const blockUpLineConfig = useMemo(() => {
-    type IData = {
-      date: string;
-      change: number;
-      limit_up_num: number;
-    };
-    const data: Array<IData> = [];
-    stockBlockTop.forEach((item) => {
-      const findRes = item.blockUpList.find((blockItem) => {
-        if (blockCodeValue) {
-          return blockItem.code === blockCodeValue;
-        } else {
-          return blockItem.code === selectTopBlockValue[0];
-        }
-      });
-      data.push({
-        date: dayjs(item.date).format('MMDD'),
-        change: findRes ? findRes.change : 0,
-        limit_up_num: findRes ? findRes.limit_up_num : 0,
-      });
-    });
     const config = {
-      data,
+      data: blockTrendData,
       height: 200,
-      yField: 'limit_up_num',
+      yField: 'percent',
       xField: 'date',
-      tooltip: {
-        title: '涨停数',
-        formatter: (item: IData) => {
-          return { name: item.limit_up_num, value: item.date };
-        },
+      // label
+      label: {
+        formatter: (item: { percent: number; date: string }) => item.percent,
       },
       point: {
         size: 4,
@@ -293,30 +281,30 @@ export default (props: IProps) => {
         },
         shape: 'circle',
       },
-      // label
-      label: {
-        formatter: (item: IData) => {
-          if (item.change) {
-            return item.change.toFixed(0) + '%';
-          }
-        },
-      },
       // 辅助线
       annotations: [
         {
           type: 'line',
-          start: ['min', 15],
-          end: ['max', 15],
+          start: ['min', 6],
+          end: ['max', 6],
           style: {
             stroke: '#f13611',
             lineDash: [4, 2],
             lineWidth: 2,
           },
         },
+        {
+          type: 'line',
+          start: ['min', 0],
+          end: ['max', 0],
+          style: {
+            stroke: '#000',
+          },
+        },
       ],
     };
     return config;
-  }, [stockBlockTop, selectTopBlockValue, blockCodeValue]);
+  }, [blockTrendData]);
 
   useEffect(() => {
     const data = zgbConfig.data;
@@ -552,6 +540,12 @@ export default (props: IProps) => {
     }
   }, [selectTopBlockValue]);
 
+  useEffect(() => {
+    const blockCode = selectTopBlockValue[0];
+    if (!blockCode) return;
+    getStockLineInfoByThs(blockCode, 22).then(setBlockTrendData);
+  }, [selectTopBlockValue]);
+
   return (
     <div className="zgb">
       <div className="top-bar">
@@ -640,12 +634,25 @@ export default (props: IProps) => {
               涨停数趋势
             </div>
             <Input
-              placeholder="还可以输入具体概念代码查询"
+              className='block-code-input'
+              style={{ width: '100px' }}
+              placeholder="输入具体概念代码查询"
               value={blockCodeValue}
               onChange={(val) => {
                 setBlockCodeValue(val);
               }}
             />
+            <Button
+              color="primary"
+              fill="solid"
+              onClick={() => {
+                getStockLineInfoByThs(blockCodeValue, 22).then(
+                  setBlockTrendData,
+                );
+              }}
+            >
+              查询
+            </Button>
           </div>
           <div style={{ height: '32vh' }}>
             <Line {...blockUpLineConfig} />
