@@ -102,7 +102,7 @@ export default (props: IProps) => {
         <div className="plate-item">
           <div className="plate-index">{index + 1}、</div>
           <div className="plate-name">{item.name}</div>
-          <div className="plate-tag">{item.tag}</div>
+          {item.tag && <div className="plate-tag">{item.tag}</div>}
           <div
             className={classNames(
               'plate-rise',

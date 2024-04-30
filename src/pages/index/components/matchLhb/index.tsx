@@ -41,7 +41,7 @@ export default (props: IProps) => {
             return (
               <div key={index} className="list-item">
                 <div
-                  className={classnames('stockName', {
+                  className={classnames('stock-name', {
                     isZt: !!latestDayZtList.find(
                       (ztItem) => ztItem.name === item.stockName,
                     ),
@@ -52,7 +52,7 @@ export default (props: IProps) => {
                 >
                   {item.stockName}
                 </div>
-                <div className="countNum">{item.countNum}人</div>
+                <div className="count-num">{item.countNum}人</div>
               </div>
             );
           })}
