@@ -7,7 +7,7 @@ import ZgbComp from './components/zgb';
 import LbNumComp from './components/lbNum';
 import JjFailNumComp from './components/jjFailNum';
 import MarketAmountComp from './components/marketAmount';
-import LbMakeMoneyComp from './components/lbMakeMoney';
+import MakeMoneyComp from './components/makeMoney';
 import MatchLhbComp from './components/matchLhb';
 // import BlockTopComp from './components/blockTop';
 import { getZTDTStockByDate } from '@/services';
@@ -85,7 +85,7 @@ export default function HomePage() {
         />
         {/* <ZjNumComp dateStocks={dateStocks} /> */}
         {/* <BlockTopComp recentWorkdays={recentWorkdays} /> */}
-        <LbMakeMoneyComp recentWorkCountDays={recentWorkCountDays} />
+        <MakeMoneyComp recentWorkCountDays={17} />
         <JjFailNumComp dateStocks={dateStocks} />
         <MarketAmountComp recentWorkdays={recentWorkdays} />
         <MatchLhbComp

@@ -9,7 +9,13 @@ import {
   getStorageBlockUpByDate,
   setStorageBlockUpByDate,
 } from '../utils';
-import { IStockBlockUp, ILbStock, IZTDTStockInfo, IHotStock, IHotPlate } from '@/types';
+import {
+  IStockBlockUp,
+  ILbStock,
+  IZTDTStockInfo,
+  IHotStock,
+  IHotPlate,
+} from '@/types';
 
 // 底层调用同花顺的 jsonp 能力，https://m.10jqka.com.cn/stockpage/48_883900/?back_source=wxhy&share_hxapp=isc#refCountId=R_56307738_256.html&atab=effectStocks
 
@@ -124,11 +130,12 @@ export async function getLbStockByDate(date: string): Promise<ILbStock[]> {
  * @desc 获取概念当天涨跌幅，如连板概念
  * @export
  * @param {string} code
+ * @param {string} type: 48 是 88 开头板块指数，hs 是 512、399 开头指数
  */
-export async function getStockTodayInfoByThs(code: string) {
+export async function getStockTodayInfoByThs(code: string, type: string) {
   try {
     const requestAdapter = () =>
-      request(`/getStockTodayInfoByThs?code=${code}`);
+      request(`/getStockTodayInfoByThs?code=${code}&type=${type}`);
     const res = await requestAdapter().catch(requestAdapter);
     const todayInfo = res.data.data;
     return {
@@ -160,11 +167,17 @@ export async function getStockLineInfoByThs(
   }>
 > {
   try {
+    let type = '48'; // type: 48 是 88 开头板块指数，hs 是 512、399 开头指数
+    if (code.startsWith('512') || code.startsWith('399')) {
+      type = 'hs';
+    }
     const requestAdapter = () =>
-      request(`/getStockLineInfoByThs?code=${code}&lineDays=${lineDays}`);
+      request(
+        `/getStockLineInfoByThs?code=${code}&lineDays=${lineDays}&type=${type}`,
+      );
     const [res, todayInfo] = await Promise.all([
       requestAdapter().catch(requestAdapter),
-      getStockTodayInfoByThs(code),
+      getStockTodayInfoByThs(code, type),
     ]);
     const list = res.data.data.data.split(';');
     const handleList = list.map((item: string, index: number) => {
@@ -261,18 +274,22 @@ export async function getHotStockTop(): Promise<IHotStock[]> {
  * @return {*}  {Promise<IHotStock[]>}
  */
 export async function getHotPlateTop(): Promise<{
-  conceptList: IHotPlate[],
-  industryList: IHotPlate[],
+  conceptList: IHotPlate[];
+  industryList: IHotPlate[];
 }> {
   try {
     const requestConceptAdapter = () => request(`/getHotPlateTop?type=concept`);
-    const requestIndustryAdapter = () => request(`/getHotPlateTop?type=industry`);
+    const requestIndustryAdapter = () =>
+      request(`/getHotPlateTop?type=industry`);
     const [conceptList, industryList] = await Promise.all([
       requestConceptAdapter().catch(requestConceptAdapter),
       requestIndustryAdapter().catch(requestIndustryAdapter),
     ]).then(([conceptRes, industryRes]) => {
-      return [conceptRes.data.data.plate_list, industryRes.data.data.plate_list];
-    })
+      return [
+        conceptRes.data.data.plate_list,
+        industryRes.data.data.plate_list,
+      ];
+    });
     return {
       conceptList,
       industryList,
