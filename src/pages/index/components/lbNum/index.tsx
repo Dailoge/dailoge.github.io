@@ -16,9 +16,12 @@ export default (props: IProps) => {
   const lbConfig = useMemo(() => {
     const data: { date: string; value: number; category: string }[] = [];
     dateStocks.slice(-16).forEach((item, index) => {
-      const list = item.ztList.length
+      const list = item.ztList.length > 0
         ? item.ztList
         : dateStocks[index - 1]?.ztList;
+      if (list === undefined) {
+        return;
+      }
       const lb2b = list.filter((item) => Number(item.lbc) === 2).length;
       const lb3b = list.filter((item) => Number(item.lbc) === 3).length;
       const lb4b = list.filter((item) => Number(item.lbc) === 4).length;
