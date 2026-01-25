@@ -8,7 +8,7 @@ import LbNumComp from './components/lbNum';
 import JjFailNumComp from './components/jjFailNum';
 import MarketAmountComp from './components/marketAmount';
 import MakeMoneyComp from './components/makeMoney';
-import MatchLhbComp from './components/matchLhb';
+// import MatchLhbComp from './components/matchLhb';
 // import BlockTopComp from './components/blockTop';
 import { getZTDTStockByDate } from '@/services';
 import { getRecentWorkdays, optimizeStorage } from '@/utils';
@@ -43,18 +43,18 @@ export default function HomePage() {
     });
   }, []);
 
-  const { latestDayZtList, latestDayDtList } = useMemo(() => {
-    if (dateStocks.length === 0)
-      return {
-        latestDayZtList: [],
-        latestDayDtList: [],
-      };
-    const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
-    return {
-      latestDayZtList: latestDayStocks.ztList,
-      latestDayDtList: latestDayStocks.dtList,
-    };
-  }, [dateStocks]);
+  // const { latestDayZtList, latestDayDtList } = useMemo(() => {
+  //   if (dateStocks.length === 0)
+  //     return {
+  //       latestDayZtList: [],
+  //       latestDayDtList: [],
+  //     };
+  //   const latestDayStocks = cloneDeep(dateStocks[dateStocks.length - 1]);
+  //   return {
+  //     latestDayZtList: latestDayStocks.ztList,
+  //     latestDayDtList: latestDayStocks.dtList,
+  //   };
+  // }, [dateStocks]);
 
   return (
     <div className="index-container">
@@ -88,11 +88,12 @@ export default function HomePage() {
         <MakeMoneyComp recentWorkCountDays={17} />
         <JjFailNumComp dateStocks={dateStocks} />
         <MarketAmountComp recentWorkdays={recentWorkdays} />
+        {/* 淘股吧把接口封了，调不了 猜测应该是做了 ip 屏蔽 
         <MatchLhbComp
           latestWorkDay={recentWorkdays[0]}
           latestDayZtList={latestDayZtList}
           latestDayDtList={latestDayDtList}
-        />
+        /> */}
         <LbNumComp dateStocks={dateStocks} />
       </div>
     </div>
