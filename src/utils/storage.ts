@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 
+// 当需要强制清除客户端缓存时，可以修改这里的 key
 const storageKeyMap = {
   STORAGE_STOCK_ZTDT_CACHE: '_STORAGE_STOCK_ZTDT_CACHE_THS_V2', // 每天涨跌停的缓存 key
-  STORAGE_STOCK_LB_CACHE: '_STORAGE_STOCK_LB_CACHE_', // 每天连板的缓存 key
-  STORAGE_STOCK_INFO_CACHE: '_STORAGE_STOCK_INFO_CACHE_V1', // 个股信息的缓存 key
+  STORAGE_STOCK_LB_CACHE: '_STORAGE_STOCK_LB_CACHE_V1', // 每天连板的缓存 key
+  STORAGE_STOCK_INFO_CACHE: '_STORAGE_STOCK_INFO_CACHE_V2', // 个股信息的缓存 key
   STORAGE_STOCK_BLOCK_UP_CACHE: '_STORAGE_STOCK_BLOCK_UP_CACHE_V2', // 每天概念排行榜缓存 key
 }
 
